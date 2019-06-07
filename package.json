@@ -1,0 +1,59 @@
+{
+  "name": "svelte-fa",
+  "version": "0.0.1",
+  "description": "Tiny FontAwesome 5 component for Svelte",
+  "keywords": [
+    "fontawesome",
+    "font-awesome",
+    "svelte",
+    "svelte.js",
+    "component",
+    "icon",
+    "svg"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Cweili/svelte-fa.git"
+  },
+  "author": "Cweili",
+  "license": "MIT",
+  "homepage": "https://cweili.github.io/svelte-fa/",
+  "bugs": {
+    "url": "https://github.com/Cweili/svelte-fa/issues"
+  },
+  "svelte": "src/fa.svelte",
+  "browser": "dist/svelte-fa.js",
+  "module": "dist/svelte-fa.mjs",
+  "main": "dist/svelte-fa.cjs.js",
+  "sideEffects": false,
+  "scripts": {
+    "build": "rollup -c",
+    "postbuild": "eslint --fix *.js src/*.svelte",
+    "build:docs": "cd docs && rollup -c",
+    "dev:build": "cd docs && rollup -c -w",
+    "dev:serve": "sirv docs --dev",
+    "dev": "run-p dev:build dev:serve",
+    "test": "jest test --coverage"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "@fortawesome/free-solid-svg-icons": "^5.7.2",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-jest": "^22.5.1",
+    "eslint-plugin-svelte3": "^1.2.2",
+    "jest": "^24.8.0",
+    "npm-run-all": "^4.1.5",
+    "rollup": "^1.11.3",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-commonjs": "^10.0.0",
+    "rollup-plugin-node-resolve": "^4.2.4",
+    "rollup-plugin-replace": "^2.2.0",
+    "rollup-plugin-svelte": "^5.0.3",
+    "sirv-cli": "^0.4.2",
+    "svelte": "^3.4.4"
+  }
+}
