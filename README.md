@@ -1,7 +1,5 @@
 # svelte-fa
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/Cweili/svelte-fa.svg)](https://greenkeeper.io/)
-
 [![npm][badge-version]][npm]
 [![bundle size][badge-size]][bundlephobia]
 [![npm downloads][badge-downloads]][npm]
@@ -30,9 +28,7 @@ import Fa from 'svelte-fa'
 import { faFlag } from '@fortawesome/free-solid-svg-icons'
 </script>
 
-<div>
-  <Fa icon={faFlag}/>
-</div>
+<Fa icon={faFlag}/>
 ```
 
 ## Properties
