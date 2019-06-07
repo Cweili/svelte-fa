@@ -18,21 +18,7 @@ const codes = {
   installation: [
     'npm install svelte-fa --save',
     `import Fa from 'svelte-fa'
-import { faFlag } from '@fortawesome/free-solid-svg-icons'
-
-`
-+ 'export '
-+ `default {
-  components: {
-    Fa
-  },
-
-  data() {
-    return {
-      faFlag
-    }
-  }
-}`,
+import { faFlag } from '@fortawesome/free-solid-svg-icons'`,
   ],
   basicUse: [
     '<Fa icon={faFlag} /> Flag',
