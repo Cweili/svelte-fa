@@ -1,4 +1,9 @@
 <script>
+let clazz;
+export { clazz as class };
+export let style = '';
+export let id;
+
 export let icon;
 export let fw;
 export let flip;
@@ -7,7 +12,7 @@ export let rotate;
 export let size;
 
 let i;
-let style;
+let s;
 let transform;
 
 $: i = (icon && icon.icon) || [0, 0, '', [], ''];
@@ -56,12 +61,12 @@ $: {
     overflow,
   };
   let styleStr = '';
-  for (const s in styleObj) {
-    if (styleObj[s]) {
-      styleStr += `${s}:${styleObj[s]};`;
+  for (const prop in styleObj) {
+    if (styleObj[prop]) {
+      styleStr += `${prop}:${styleObj[prop]};`;
     }
   }
-  style = styleStr;
+  s = `${styleStr};${style}`;
 }
 
 $: {
@@ -90,8 +95,10 @@ $: {
 
 {#if i[4]}
   <svg
+    id={id}
+    class={clazz}
+    style={s}
     viewBox={`0 0 ${i[0]} ${i[1]}`}
-    {style}
     aria-hidden="true"
     role="img"
     xmlns="http://www.w3.org/2000/svg"
