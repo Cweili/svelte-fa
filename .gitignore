@@ -37,4 +37,4 @@ package-lock.json
 .idea
 
 # Distributions
-dist
+/dist
