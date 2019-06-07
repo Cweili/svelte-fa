@@ -1,4 +1,7 @@
-import { faFlag } from '@fortawesome/free-solid-svg-icons';
+import {
+  faFlag,
+  faInfo,
+} from '@fortawesome/free-solid-svg-icons';
 import Fa from '..';
 
 let fa;
@@ -39,18 +42,47 @@ test('basic', async () => {
   expect(getFa()).toBeFalsy();
 
   await setProps({
+    id: 'a',
+    class: 'a',
+    style: 'color:red',
     icon: faFlag,
   });
+  expect(getFa().getAttribute('id')).toBe('a');
+  expect(getFa().getAttribute('class')).toBe('a');
+  expect(getFa().getAttribute('style')).toContain('color:red');
   expect(getFa().querySelector('path').getAttribute('d')).toBe(faFlag.icon[4]);
+
+  await setProps({
+    id: 'b',
+    class: 'b',
+    style: 'color:blue',
+    icon: faInfo,
+  });
+  expect(getFa().getAttribute('id')).toBe('b');
+  expect(getFa().getAttribute('class')).toBe('b');
+  expect(getFa().getAttribute('style')).toContain('color:blue');
+  expect(getFa().querySelector('path').getAttribute('d')).toBe(faInfo.icon[4]);
+
+  await setProps({
+    icon: null,
+  });
+  expect(getFa()).toBeFalsy();
 });
 
-test('fw', () => {
+test('fw', async () => {
   mountFa({
     fw: true,
   });
-  const style = getFa().getAttribute('style');
+  let style = getFa().getAttribute('style');
   expect(style).toContain('text-align:center');
   expect(style).toContain('width');
+
+  await setProps({
+    fw: null,
+  });
+  style = getFa().getAttribute('style');
+  expect(style).not.toContain('text-align:center');
+  expect(style).not.toContain('width');
 });
 
 test('pull', async () => {
@@ -115,10 +147,16 @@ test('flip', async () => {
   expect(transform).toContain('scale(1 -1)');
 });
 
-test('rotate', () => {
+test('rotate', async () => {
   mountFa({
     rotate: 90,
   });
-  const transform = getFa().querySelector('g > g').getAttribute('transform');
+  let transform = getFa().querySelector('g > g').getAttribute('transform');
   expect(transform).toContain('rotate(90 0 0)');
+
+  await setProps({
+    rotate: null,
+  });
+  transform = getFa().querySelector('g > g').getAttribute('transform');
+  expect(transform).not.toContain('rotate');
 });
