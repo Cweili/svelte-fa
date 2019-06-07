@@ -1,15 +1,15 @@
 <script>
-let clazz;
+let clazz = '';
 export { clazz as class };
-export let id;
+export let id = '';
 export let style = '';
 
 export let icon;
-export let fw;
-export let flip;
-export let pull;
-export let rotate;
-export let size;
+export let fw = false;
+export let flip = false;
+export let pull = false;
+export let rotate = false;
+export let size = false;
 
 let i;
 let s;
