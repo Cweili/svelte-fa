@@ -1,5 +1,7 @@
 # svelte-fa
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/Cweili/svelte-fa.svg)](https://greenkeeper.io/)
+
 [![npm][badge-version]][npm]
 [![bundle size][badge-size]][bundlephobia]
 [![npm downloads][badge-downloads]][npm]
