@@ -8,7 +8,7 @@
 
 [![github][badge-issues]][github]
 [![build][badge-build]][travis]
-[![coverage][badge-coverage]][codecov]
+[![coverage][badge-coverage]][coveralls]
 
 Tiny [FontAwesome 5][fontawesome] component for [Svelte][svelte].
 
@@ -23,34 +23,20 @@ npm install svelte-fa --save
 ## Usage
 
 ```html
-<template>
-  <div>
-    <fa icon={faFlag}/>
-  </div>
-</template>
-
 <script>
-  import Fa from 'svelte-fa'
-  import { faFlag } from '@fortawesome/free-solid-svg-icons'
-
-  export default {
-    components: {
-      Fa
-    },
-
-    data() {
-      return {
-        faFlag
-      }
-    }
-  }
+import Fa from 'svelte-fa'
+import { faFlag } from '@fortawesome/free-solid-svg-icons'
 </script>
+
+<div>
+  <Fa icon={faFlag}/>
+</div>
 ```
 
 ## Properties
 
 ```html
-<fa
+<Fa
   icon={faFlag}
   fw
   flip="horizontal"
@@ -83,8 +69,8 @@ npm install svelte-fa --save
 [badge-issues]: https://img.shields.io/github/issues/Cweili/svelte-fa.svg
 [github]: https://github.com/Cweili/svelte-fa
 
-[badge-build]: https://img.shields.io/travis/Cweili/svelte-fa/master.svg
-[travis]: https://travis-ci.org/Cweili/svelte-fa
+[badge-build]: https://img.shields.io/travis/com/Cweili/svelte-fa/master.svg
+[travis]: https://travis-ci.com/Cweili/svelte-fa
 
-[badge-coverage]: https://img.shields.io/codecov/c/github/Cweili/svelte-fa.svg
-[codecov]: https://codecov.io/gh/Cweili/svelte-fa
+[badge-coverage]: https://img.shields.io/coveralls/github/Cweili/svelte-fa/master.svg
+[coveralls]: https://coveralls.io/github/Cweili/svelte-fa?branch=master
