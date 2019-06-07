@@ -1,8 +1,8 @@
 <script>
 let clazz;
 export { clazz as class };
-export let style = '';
 export let id;
+export let style = '';
 
 export let icon;
 export let fw;
