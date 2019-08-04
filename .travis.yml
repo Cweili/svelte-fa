@@ -5,7 +5,8 @@ node_js:
 cache:
   directories:
     - node_modules
-script:
+before_install:
   - sh -c "$INIT"
+script:
   - npm run build
   - npm test -- --coverageReporters=text-lcov | npx coveralls
