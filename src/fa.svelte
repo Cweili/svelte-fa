@@ -10,6 +10,14 @@ export let flip = false;
 export let pull = false;
 export let rotate = false;
 export let size = false;
+export let color;
+
+// Duotone Icons
+export let primaryColor;
+export let secondaryColor;
+export let primaryOpacity = 1;
+export let secondaryOpacity = 0.4;
+export let swapOpacity = false;
 
 let i;
 let s;
@@ -107,11 +115,26 @@ $: {
       transform="translate(256 256)"
     >
       <g {transform}>
-        <path
-          d={i[4]}
-          fill="currentColor"
-          transform="translate(-256 -256)"
-        />
+        {#if typeof i[4] == 'string'}
+          <path
+            d={i[4]}
+            fill={color || primaryColor || 'currentColor'}
+            transform="translate(-256 -256)"
+          />
+        {:else}
+          <path
+            d={i[4][0]}
+            fill={secondaryColor || color || 'currentColor'}
+            fill-opacity={swapOpacity != false ? primaryOpacity : secondaryOpacity}
+            transform="translate(-256 -256)"
+          />
+          <path
+            d={i[4][1]}
+            fill={primaryColor || color || 'currentColor'}
+            fill-opacity={swapOpacity != false ? secondaryOpacity : primaryOpacity}
+            transform="translate(-256 -256)"
+          />
+        {/if}
       </g>
     </g>
   </svg>

@@ -69,6 +69,18 @@ test('basic', async () => {
   expect(getFa()).toBeFalsy();
 });
 
+test('color', async () => {
+  mountFa({
+    color: 'red',
+  });
+  expect(getFa().querySelector('path').getAttribute('fill')).toBe('red');
+
+  await setProps({
+    color: null,
+  });
+  expect(getFa().querySelector('path').getAttribute('fill')).toBe('currentColor');
+});
+
 test('fw', async () => {
   mountFa({
     fw: true,
