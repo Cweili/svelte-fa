@@ -9,7 +9,8 @@
     "svelte.js",
     "component",
     "icon",
-    "svg"
+    "svg",
+    "duotone"
   ],
   "repository": {
     "type": "git",
