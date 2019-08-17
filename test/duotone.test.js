@@ -1,10 +1,8 @@
 import {
-  faFlag as fasFlag,
-} from '@fortawesome/free-solid-svg-icons';
-import {
-  faFlag,
-  faInfo,
-} from '@fortawesome/pro-duotone-svg-icons';
+  fasFlag,
+  fadFlag,
+  fadInfo,
+} from '@cweili/fa-test-util';
 import Fa from '..';
 
 let fa;
@@ -20,7 +18,7 @@ function mountFa(props) {
   fa = new Fa({
     target: document.body,
     props: Object.assign({
-      icon: faFlag,
+      icon: fadFlag,
     }, props),
   });
 }
@@ -45,18 +43,18 @@ test('basic', async () => {
   expect(getFa()).toBeFalsy();
 
   await setProps({
-    icon: faFlag,
+    icon: fadFlag,
   });
   let paths = getFa().querySelectorAll('path');
-  expect(paths[0].getAttribute('d')).toBe(faFlag.icon[4][0]);
-  expect(paths[1].getAttribute('d')).toBe(faFlag.icon[4][1]);
+  expect(paths[0].getAttribute('d')).toBe(fadFlag.icon[4][0]);
+  expect(paths[1].getAttribute('d')).toBe(fadFlag.icon[4][1]);
 
   await setProps({
-    icon: faInfo,
+    icon: fadInfo,
   });
   paths = getFa().querySelectorAll('path');
-  expect(paths[0].getAttribute('d')).toBe(faInfo.icon[4][0]);
-  expect(paths[1].getAttribute('d')).toBe(faInfo.icon[4][1]);
+  expect(paths[0].getAttribute('d')).toBe(fadInfo.icon[4][0]);
+  expect(paths[1].getAttribute('d')).toBe(fadInfo.icon[4][1]);
 
   await setProps({
     icon: fasFlag,
@@ -64,11 +62,11 @@ test('basic', async () => {
   expect(getFa().querySelector('path').getAttribute('d')).toBe(fasFlag.icon[4]);
 
   await setProps({
-    icon: faFlag,
+    icon: fadFlag,
   });
   paths = getFa().querySelectorAll('path');
-  expect(paths[0].getAttribute('d')).toBe(faFlag.icon[4][0]);
-  expect(paths[1].getAttribute('d')).toBe(faFlag.icon[4][1]);
+  expect(paths[0].getAttribute('d')).toBe(fadFlag.icon[4][0]);
+  expect(paths[1].getAttribute('d')).toBe(fadFlag.icon[4][1]);
 });
 
 test('colors', async () => {

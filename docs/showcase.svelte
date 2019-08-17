@@ -5,7 +5,7 @@ import {
   faHome,
   faCog,
   faMagic,
-} from '@fortawesome/pro-duotone-svg-icons';
+} from '@fortawesome/free-solid-svg-icons';
 
 let model = {
   size: 5,
@@ -32,13 +32,32 @@ function setValue(prop, value) {
   <div class="row">
     <div class="col-md">
       <h1 class="hue">
-        <strong>svelte-fa</strong>
+        <strong><a href="https://github.com/Cweili/svelte-fa" target="_blank">svelte-fa</a></strong>
       </h1>
+      <p>
+        <a href="https://www.npmjs.com/package/svelte-fa" target="_blank">
+          <img src="https://img.shields.io/npm/v/svelte-fa.svg" alt="npm version">
+        </a>
+        <a href="https://bundlephobia.com/result?p=svelte-fa" target="_blank">
+          <img src="https://img.shields.io/bundlephobia/minzip/svelte-fa.svg" alt="bundle size">
+        </a>
+        <a href="https://github.com/Cweili/svelte-fa/blob/master/LICENSE" target="_blank">
+          <img src="https://img.shields.io/npm/l/svelte-fa.svg" alt="MIT licence">
+        </a>
+        <a href="https://www.npmjs.com/package/svelte-fa" target="_blank">
+          <img src="https://img.shields.io/npm/dt/svelte-fa.svg" alt="npm downloads">
+        </a>
+        <a href="https://github.com/Cweili/svelte-fa" target="_blank">
+          <img src="https://img.shields.io/github/issues/Cweili/svelte-fa.svg" alt="github issues">
+        </a>
+      </p>
       <p class="lead mb-5">
         Tiny <a
+          class="hue"
           href="https://fontawesome.com/"
           target="_blank"
         >FontAwesome 5</a> component for <a
+          class="hue"
           href="https://svelte.dev/"
           target="_blank"
         >Svelte</a>.
