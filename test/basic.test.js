@@ -44,23 +44,23 @@ test('basic', async () => {
   await setProps({
     id: 'a',
     class: 'a',
-    style: 'color:red',
+    style: 'color: red',
     icon: fasFlag,
   });
   expect(getFa().getAttribute('id')).toBe('a');
   expect(getFa().getAttribute('class')).toBe('a');
-  expect(getFa().getAttribute('style')).toContain('color:red');
+  expect(getFa().getAttribute('style')).toContain('color: red');
   expect(getFa().querySelector('path').getAttribute('d')).toBe(fasFlag.icon[4]);
 
   await setProps({
     id: 'b',
     class: 'b',
-    style: 'color:blue',
+    style: 'color: blue',
     icon: fasInfo,
   });
   expect(getFa().getAttribute('id')).toBe('b');
   expect(getFa().getAttribute('class')).toBe('b');
-  expect(getFa().getAttribute('style')).toContain('color:blue');
+  expect(getFa().getAttribute('style')).toContain('color: blue');
   expect(getFa().querySelector('path').getAttribute('d')).toBe(fasInfo.icon[4]);
 
   await setProps({
@@ -86,14 +86,14 @@ test('fw', async () => {
     fw: true,
   });
   let style = getFa().getAttribute('style');
-  expect(style).toContain('text-align:center');
+  expect(style).toContain('text-align: center');
   expect(style).toContain('width');
 
   await setProps({
     fw: null,
   });
   style = getFa().getAttribute('style');
-  expect(style).not.toContain('text-align:center');
+  expect(style).not.toContain('text-align: center');
   expect(style).not.toContain('width');
 });
 
@@ -102,13 +102,13 @@ test('pull', async () => {
     pull: 'left',
   });
   let style = getFa().getAttribute('style');
-  expect(style).toContain('float:left');
+  expect(style).toContain('float: left');
 
   await setProps({
     pull: 'right',
   });
   style = getFa().getAttribute('style');
-  expect(style).toContain('float:right');
+  expect(style).toContain('float: right');
 });
 
 test('size', async () => {
@@ -116,27 +116,27 @@ test('size', async () => {
     size: '2x',
   });
   let style = getFa().getAttribute('style');
-  expect(style).toContain('font-size:2em');
+  expect(style).toContain('font-size: 2em');
 
   await setProps({
     size: 'lg',
   });
   style = getFa().getAttribute('style');
-  expect(style).toContain('font-size:1.33333em');
-  expect(style).toContain('line-height:.75em');
-  expect(style).toContain('vertical-align:-.225em');
+  expect(style).toContain('font-size: 1.33333em');
+  expect(style).toContain('line-height: .75em');
+  expect(style).toContain('vertical-align: -.225em');
 
   await setProps({
     size: 'xs',
   });
   style = getFa().getAttribute('style');
-  expect(style).toContain('font-size:.75em');
+  expect(style).toContain('font-size: .75em');
 
   await setProps({
     size: 'sm',
   });
   style = getFa().getAttribute('style');
-  expect(style).toContain('font-size:.875em');
+  expect(style).toContain('font-size: .875em');
 });
 
 test('flip', async () => {

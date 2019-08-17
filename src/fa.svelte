@@ -1,7 +1,4 @@
 <script>
-let clazz = '';
-export { clazz as class };
-export let id = '';
 export let style = '';
 
 export let icon;
@@ -74,7 +71,7 @@ $: {
       styleStr += `${prop}:${styleObj[prop]};`;
     }
   }
-  s = `${styleStr};${style}`;
+  s = styleStr + style;
 }
 
 $: {
@@ -103,8 +100,7 @@ $: {
 
 {#if i[4]}
   <svg
-    id={id}
-    class={clazz}
+    {...$$props}
     style={s}
     viewBox={`0 0 ${i[0]} ${i[1]}`}
     aria-hidden="true"
