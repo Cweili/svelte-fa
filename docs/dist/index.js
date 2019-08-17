@@ -1859,7 +1859,7 @@
     });
     var docsimg0 = new Docs_img({
       props: {
-        src: "/assets/duotone-0.png",
+        src: "assets/duotone-0.png",
         alt: "duotone icons basic use"
       }
     });
@@ -1882,7 +1882,7 @@
     });
     var docsimg1 = new Docs_img({
       props: {
-        src: "/assets/duotone-1.png",
+        src: "assets/duotone-1.png",
         alt: "swapping duotone icons layer opacity"
       }
     });
@@ -1899,7 +1899,7 @@
     });
     var docsimg2 = new Docs_img({
       props: {
-        src: "/assets/duotone-2.png",
+        src: "assets/duotone-2.png",
         alt: "changing duotone icons opacity"
       }
     });
@@ -1910,7 +1910,7 @@
     });
     var docsimg3 = new Docs_img({
       props: {
-        src: "/assets/duotone-3.png",
+        src: "assets/duotone-3.png",
         alt: "changing duotone icons opacity"
       }
     });
@@ -1927,7 +1927,7 @@
     });
     var docsimg4 = new Docs_img({
       props: {
-        src: "/assets/duotone-4.png",
+        src: "assets/duotone-4.png",
         alt: "coloring duotone icons"
       }
     });
@@ -1944,7 +1944,7 @@
     });
     var docsimg5 = new Docs_img({
       props: {
-        src: "/assets/duotone-5.png",
+        src: "assets/duotone-5.png",
         alt: "duotone icons advanced use"
       }
     });
@@ -1955,7 +1955,7 @@
     });
     var docsimg6 = new Docs_img({
       props: {
-        src: "/assets/duotone-6.png",
+        src: "assets/duotone-6.png",
         alt: "duotone icons advanced use"
       }
     });
@@ -1966,7 +1966,7 @@
     });
     var docsimg7 = new Docs_img({
       props: {
-        src: "/assets/duotone-7.png",
+        src: "assets/duotone-7.png",
         alt: "duotone icons advanced use"
       }
     });
