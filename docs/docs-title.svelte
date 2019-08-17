@@ -14,7 +14,7 @@ $: id = title.toLowerCase().replace(/[^\w]/g, '-');
 <style>
 a,
 a:visited {
-  color: currentColor
+  color: currentColor;
 }
 
 small {
