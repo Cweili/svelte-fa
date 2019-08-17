@@ -16,12 +16,6 @@ import DocsCode from './docs-code.svelte';
 import DocsImg from './docs-img.svelte';
 import DocsTitle from './docs-title.svelte';
 
-const themeRavenclaw = {
-  secondaryOpacity: 1,
-  primaryColor: '#0438a1',
-  secondaryColor: '#6c6c6c',
-};
-
 const codes = {
   installation: [
     'npm install svelte-fa --save',
@@ -79,7 +73,7 @@ Gatsby believed in the green light, the orgastic future that year by year recede
   faFireAlt,
   faBusAlt,
   faFillDrip,
-} from '@fortawesome/pro-duotone-svg-icons';`,
+} from '@fortawesome/pro-duotone-svg-icons'`,
     `<Fa icon={faCamera} size="3x" />
 <Fa icon={faFireAlt} size="3x" />
 <Fa icon={faBusAlt} size="3x" />
@@ -127,7 +121,7 @@ Gatsby believed in the green light, the orgastic future that year by year recede
   secondaryOpacity: 1,
   primaryColor: '#0438a1',
   secondaryColor: '#6c6c6c',
-};`,
+}`,
       `<Fa icon={faHatWizard} size="3x" {...themeRavenclaw} />
 <Fa icon={faFlaskPotion} size="3x" {...themeRavenclaw} />
 <Fa icon={faWandMagic} size="3x" {...themeRavenclaw} />
