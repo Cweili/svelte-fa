@@ -1456,8 +1456,8 @@
 
   function add_css$2() {
     var style = element("style");
-    style.id = 'svelte-163f8cm-style';
-    style.textContent = "a.svelte-163f8cm,a.svelte-163f8cm:visited{color:currentColor\n}small.svelte-163f8cm{visibility:hidden}a:hover+small.svelte-163f8cm{visibility:visible}";
+    style.id = 'svelte-1yrtkpv-style';
+    style.textContent = "a.svelte-1yrtkpv,a.svelte-1yrtkpv:visited{color:currentColor}small.svelte-1yrtkpv{visibility:hidden}a:hover+small.svelte-1yrtkpv{visibility:visible}";
     append(document.head, style);
   }
 
@@ -1477,8 +1477,8 @@
         small = element("small");
         fa.$$.fragment.c();
         attr(a, "href", a_href_value = "#" + ctx.id);
-        attr(a, "class", "svelte-163f8cm");
-        attr(small, "class", "svelte-163f8cm");
+        attr(a, "class", "svelte-1yrtkpv");
+        attr(small, "class", "svelte-1yrtkpv");
         attr(h4, "id", ctx.id);
         attr(h4, "class", h4_class_value = "h" + ctx.level);
       },
@@ -1571,7 +1571,7 @@
       var _this;
 
       _this = _SvelteComponent.call(this) || this;
-      if (!document.getElementById("svelte-163f8cm-style")) add_css$2();
+      if (!document.getElementById("svelte-1yrtkpv-style")) add_css$2();
       init(_assertThisInitialized(_this), options, instance$3, create_fragment$3, safe_not_equal, ["level", "title"]);
       return _this;
     }
