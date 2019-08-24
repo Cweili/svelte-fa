@@ -1,7 +1,7 @@
 import {
-  faFlag,
-  faInfo,
-} from '@fortawesome/free-solid-svg-icons';
+  fasFlag,
+  fasInfo,
+} from '@cweili/fa-test-util';
 import Fa from '..';
 
 let fa;
@@ -17,7 +17,7 @@ function mountFa(props) {
   fa = new Fa({
     target: document.body,
     props: Object.assign({
-      icon: faFlag,
+      icon: fasFlag,
     }, props),
   });
 }
@@ -45,28 +45,40 @@ test('basic', async () => {
     id: 'a',
     class: 'a',
     style: 'color:red',
-    icon: faFlag,
+    icon: fasFlag,
   });
   expect(getFa().getAttribute('id')).toBe('a');
   expect(getFa().getAttribute('class')).toBe('a');
   expect(getFa().getAttribute('style')).toContain('color:red');
-  expect(getFa().querySelector('path').getAttribute('d')).toBe(faFlag.icon[4]);
+  expect(getFa().querySelector('path').getAttribute('d')).toBe(fasFlag.icon[4]);
 
   await setProps({
     id: 'b',
     class: 'b',
     style: 'color:blue',
-    icon: faInfo,
+    icon: fasInfo,
   });
   expect(getFa().getAttribute('id')).toBe('b');
   expect(getFa().getAttribute('class')).toBe('b');
   expect(getFa().getAttribute('style')).toContain('color:blue');
-  expect(getFa().querySelector('path').getAttribute('d')).toBe(faInfo.icon[4]);
+  expect(getFa().querySelector('path').getAttribute('d')).toBe(fasInfo.icon[4]);
 
   await setProps({
     icon: null,
   });
   expect(getFa()).toBeFalsy();
+});
+
+test('color', async () => {
+  mountFa({
+    color: 'red',
+  });
+  expect(getFa().querySelector('path').getAttribute('fill')).toBe('red');
+
+  await setProps({
+    color: null,
+  });
+  expect(getFa().querySelector('path').getAttribute('fill')).toBe('currentColor');
 });
 
 test('fw', async () => {
