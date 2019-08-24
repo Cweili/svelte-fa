@@ -12,6 +12,11 @@
 
 Tiny [FontAwesome 5][fontawesome] component for [Svelte][svelte].
 
+* FontAwesome svg icons
+* Tree-shakable, only import used icons
+* No CSS file required
+* FontAwesome duotone icons
+
 [Documents and examples][doc].
 
 ## Installation
@@ -40,7 +45,8 @@ import { faFlag } from '@fortawesome/free-solid-svg-icons'
   flip="horizontal"
   pull="left"
   rotate={90}
-  size="2x"/>
+  size="2x"
+  color="#ff0000"/>
 ```
 
 * `fw`: fixed width
@@ -48,6 +54,44 @@ import { faFlag } from '@fortawesome/free-solid-svg-icons'
 * `pull`: `string` values `left`, `right`
 * `rotate`: `number or string` values `90`, `180`, `270`, `30`, `-30` ...
 * `size`: `string` values `xs`, `sm`, `lg` or `2x`, `3x`, `4x` ...
+* `color`: icon color, default `currentColor`
+
+## Duotone Icons
+
+```html
+<script>
+import Fa from 'svelte-fa'
+import { faFlag } from '@fortawesome/pro-duotone-svg-icons'
+</script>
+
+<Fa
+  icon={faFlag}
+  primaryColor="red"
+  secondaryColor="#000000"
+  primaryOpacity={0.8}
+  secondaryOpacity={0.6}
+  swapOpacity/>
+```
+
+### Duotone Icons Theme
+
+```html
+<script>
+import Fa from 'svelte-fa'
+import { faFlag } from '@fortawesome/pro-duotone-svg-icons'
+
+const theme = {
+  primaryColor: 'red',
+  secondaryColor: '#000000',
+  primaryOpacity: 0.8,
+  secondaryOpacity: 0.6,
+}
+</script>
+
+<Fa
+  icon={faFlag}
+  {...theme}/>
+```
 
 [fontawesome]: https://fontawesome.com/
 [svelte]: https://svelte.dev/
