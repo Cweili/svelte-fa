@@ -1,6 +1,6 @@
 {
   "name": "svelte-fa",
-  "version": "1.0.1",
+  "version": "2.0.2",
   "description": "Tiny FontAwesome 5 component for Svelte",
   "keywords": [
     "fontawesome",
@@ -9,7 +9,8 @@
     "svelte.js",
     "component",
     "icon",
-    "svg"
+    "svg",
+    "duotone"
   ],
   "repository": {
     "type": "git",
@@ -38,22 +39,23 @@
   "devDependencies": {
     "@babel/core": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
-    "@fortawesome/free-solid-svg-icons": "^5.7.2",
+    "@cweili/fa-test-util": "^0.1.0",
+    "@fortawesome/free-solid-svg-icons": "^5.10.1",
     "babel-eslint": "^10.0.1",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint": "^6.0.0",
+    "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.17.2",
-    "eslint-plugin-jest": "^22.5.1",
+    "eslint-plugin-jest": "^22.15.2",
     "eslint-plugin-svelte3": "^2.7.3",
     "jest": "^24.8.0",
     "npm-run-all": "^4.1.5",
-    "rollup": "^1.11.3",
+    "rollup": "^1.19.3",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-commonjs": "^10.0.0",
     "rollup-plugin-node-resolve": "^5.0.1",
     "rollup-plugin-replace": "^2.2.0",
     "rollup-plugin-svelte": "^5.0.3",
     "sirv-cli": "^0.4.2",
-    "svelte": "^3.4.4"
+    "svelte": "^3.9.0"
   }
 }
