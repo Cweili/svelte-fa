@@ -41,6 +41,7 @@ export default [{
   plugins: [
     svelte({
       legacy: true,
+      generate: 'ssr',
     }),
   ],
 }];
