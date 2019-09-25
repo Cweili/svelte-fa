@@ -2,7 +2,7 @@ import {
   fasFlag,
   fasInfo,
 } from '@cweili/fa-test-util';
-import Fa from '..';
+import Fa from '../dist/svelte-fa.cjs';
 
 let fa;
 function unmountFa() {
@@ -16,9 +16,7 @@ function mountFa(props) {
   unmountFa();
   fa = new Fa({
     target: document.body,
-    props: Object.assign({
-      icon: fasFlag,
-    }, props),
+    props: { icon: fasFlag, ...props },
   });
 }
 

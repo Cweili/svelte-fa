@@ -34,14 +34,13 @@ export default [{
       format: 'es',
     },
     {
-      file: pkg.main,
+      file: pkg.browser.replace(/\.js$/, '.cjs.js'),
       format: 'cjs',
     },
   ],
   plugins: [
     svelte({
       legacy: true,
-      generate: 'ssr',
     }),
   ],
 }];
