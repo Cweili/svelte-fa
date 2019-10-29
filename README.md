@@ -22,7 +22,13 @@ Tiny [FontAwesome 5][fontawesome] component for [Svelte][svelte].
 ## Installation
 
 ```shell
-npm install svelte-fa --save
+npm install svelte-fa
+```
+
+**Notice:** For [Sapper][sapper] user, you have to install the component as a devDependencie.
+
+```shell
+npm install svelte-fa -D
 ```
 
 ## Usage
@@ -95,6 +101,7 @@ const theme = {
 
 [fontawesome]: https://fontawesome.com/
 [svelte]: https://svelte.dev/
+[sapper]: https://sapper.svelte.dev/
 
 [doc]: https://cweili.github.io/svelte-fa/
 

@@ -220,6 +220,12 @@
     if (text.data !== data) text.data = data;
   }
 
+  function set_input_value(input, value) {
+    if (value != null || input.value) {
+      input.value = value;
+    }
+  }
+
   function set_input_type(input, type) {
     try {
       input.type = type;
@@ -227,8 +233,8 @@
     }
   }
 
-  function set_style(node, key, value) {
-    node.style.setProperty(key, value);
+  function set_style(node, key, value, important) {
+    node.style.setProperty(key, value, important ? 'important' : '');
   }
 
   var current_component;
@@ -1074,7 +1080,7 @@
         append(div4, div3);
         append(div3, div0);
         append(div0, input0);
-        input0.value = ctx.model.size;
+        set_input_value(input0, ctx.model.size);
         append(div3, t15);
         append(div3, div2);
         append(div2, div1);
@@ -1109,7 +1115,7 @@
         append(div15, div14);
         append(div14, div11);
         append(div11, input1);
-        input1.value = ctx.model.rotate;
+        set_input_value(input1, ctx.model.rotate);
         append(div14, t27);
         append(div14, div13);
         append(div13, div12);
@@ -1125,7 +1131,7 @@
         current = true;
       },
       p: function p(changed, ctx) {
-        if (changed.model) input0.value = ctx.model.size;
+        if (changed.model) set_input_value(input0, ctx.model.size);
 
         if ((!current || changed.model) && t16_value !== (t16_value = ctx.model.size + "")) {
           set_data(t16, t16_value);
@@ -1135,7 +1141,7 @@
         each_blocks_2 = update_keyed_each(each_blocks_2, changed, get_key, 1, ctx, each_value_2, each0_lookup, div5, destroy_block, create_each_block_2, null, get_each_context_2);
         var each_value_1 = ctx.flip;
         each_blocks_1 = update_keyed_each(each_blocks_1, changed, get_key_1, 1, ctx, each_value_1, each1_lookup, div8, destroy_block, create_each_block_1, null, get_each_context_1);
-        if (changed.model) input1.value = ctx.model.rotate;
+        if (changed.model) set_input_value(input1, ctx.model.rotate);
 
         if ((!current || changed.model) && t28_value !== (t28_value = ctx.model.rotate + "")) {
           set_data(t28, t28_value);
@@ -1580,7 +1586,7 @@
   }(SvelteComponent);
 
   function create_fragment$4(ctx) {
-    var div12, t0, t1, t2, t3, div0, t4, t5, t6, div2, div1, t7, t8, t9, t10, div3, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, div9, div4, t21, t22, div5, t23, t24, div6, t25, t26, div7, t27, t28, div8, t29, t30, t31, t32, div10, t33, t34, t35, t36, t37, t38, div11, t39, t40, t41, t42, t43, t44, t45, t46, t47, t48, t49, t50, t51, t52, t53, t54, t55, t56, t57, t58, t59, t60, t61, t62, t63, t64, t65, t66, t67, t68, t69, t70, t71, current;
+    var div12, t0, t1, t2, t3, t4, div0, t5, t6, t7, div2, div1, t8, t9, t10, t11, div3, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, div9, div4, t22, t23, div5, t24, t25, div6, t26, t27, div7, t28, t29, div8, t30, t31, t32, t33, div10, t34, t35, t36, t37, t38, t39, div11, t40, t41, t42, t43, t44, t45, t46, t47, t48, t49, t50, t51, t52, t53, t54, t55, t56, t57, t58, t59, t60, t61, t62, t63, t64, t65, t66, t67, t68, t69, t70, t71, t72, current;
     var docstitle0 = new Docs_title({
       props: {
         title: "Installation"
@@ -1593,7 +1599,12 @@
     });
     var docscode1 = new Docs_code({
       props: {
-        code: ctx.codes.installation[1],
+        code: ctx.codes.installation[1]
+      }
+    });
+    var docscode2 = new Docs_code({
+      props: {
+        code: ctx.codes.installation[2],
         lang: "js"
       }
     });
@@ -1607,7 +1618,7 @@
         icon: faFlag
       }
     });
-    var docscode2 = new Docs_code({
+    var docscode3 = new Docs_code({
       props: {
         code: ctx.codes.basicUse[0]
       }
@@ -1617,7 +1628,7 @@
         icon: faFlag
       }
     });
-    var docscode3 = new Docs_code({
+    var docscode4 = new Docs_code({
       props: {
         code: ctx.codes.basicUse[1]
       }
@@ -1681,7 +1692,7 @@
         size: "10x"
       }
     });
-    var docscode4 = new Docs_code({
+    var docscode5 = new Docs_code({
       props: {
         code: ctx.codes.additionalStyling[0]
       }
@@ -1727,7 +1738,7 @@
         style: "background: mistyrose"
       }
     });
-    var docscode5 = new Docs_code({
+    var docscode6 = new Docs_code({
       props: {
         code: ctx.codes.additionalStyling[1]
       }
@@ -1752,7 +1763,7 @@
         size: "2x"
       }
     });
-    var docscode6 = new Docs_code({
+    var docscode7 = new Docs_code({
       props: {
         code: ctx.codes.additionalStyling[2]
       }
@@ -1841,7 +1852,7 @@
         style: "background: mistyrose"
       }
     });
-    var docscode7 = new Docs_code({
+    var docscode8 = new Docs_code({
       props: {
         code: ctx.codes.powerTransforms[0]
       }
@@ -1863,13 +1874,13 @@
         alt: "duotone icons basic use"
       }
     });
-    var docscode8 = new Docs_code({
+    var docscode9 = new Docs_code({
       props: {
         code: ctx.codes.duotoneIcons[0],
         lang: "js"
       }
     });
-    var docscode9 = new Docs_code({
+    var docscode10 = new Docs_code({
       props: {
         code: ctx.codes.duotoneIcons[1]
       }
@@ -1886,7 +1897,7 @@
         alt: "swapping duotone icons layer opacity"
       }
     });
-    var docscode10 = new Docs_code({
+    var docscode11 = new Docs_code({
       props: {
         code: ctx.codes.duotoneIcons[2]
       }
@@ -1903,7 +1914,7 @@
         alt: "changing duotone icons opacity"
       }
     });
-    var docscode11 = new Docs_code({
+    var docscode12 = new Docs_code({
       props: {
         code: ctx.codes.duotoneIcons[3]
       }
@@ -1914,7 +1925,7 @@
         alt: "changing duotone icons opacity"
       }
     });
-    var docscode12 = new Docs_code({
+    var docscode13 = new Docs_code({
       props: {
         code: ctx.codes.duotoneIcons[4]
       }
@@ -1931,7 +1942,7 @@
         alt: "coloring duotone icons"
       }
     });
-    var docscode13 = new Docs_code({
+    var docscode14 = new Docs_code({
       props: {
         code: ctx.codes.duotoneIcons[5]
       }
@@ -1948,7 +1959,7 @@
         alt: "duotone icons advanced use"
       }
     });
-    var docscode14 = new Docs_code({
+    var docscode15 = new Docs_code({
       props: {
         code: ctx.codes.duotoneIcons[6]
       }
@@ -1959,7 +1970,7 @@
         alt: "duotone icons advanced use"
       }
     });
-    var docscode15 = new Docs_code({
+    var docscode16 = new Docs_code({
       props: {
         code: ctx.codes.duotoneIcons[7]
       }
@@ -1970,13 +1981,13 @@
         alt: "duotone icons advanced use"
       }
     });
-    var docscode16 = new Docs_code({
+    var docscode17 = new Docs_code({
       props: {
         code: ctx.codes.duotoneIcons[8],
         lang: "js"
       }
     });
-    var docscode17 = new Docs_code({
+    var docscode18 = new Docs_code({
       props: {
         code: ctx.codes.duotoneIcons[9]
       }
@@ -1990,150 +2001,152 @@
         t1 = space();
         docscode1.$$.fragment.c();
         t2 = space();
-        docstitle1.$$.fragment.c();
+        docscode2.$$.fragment.c();
         t3 = space();
+        docstitle1.$$.fragment.c();
+        t4 = space();
         div0 = element("div");
         fa0.$$.fragment.c();
-        t4 = text(" Flag");
-        t5 = space();
-        docscode2.$$.fragment.c();
+        t5 = text(" Flag");
         t6 = space();
+        docscode3.$$.fragment.c();
+        t7 = space();
         div2 = element("div");
         div1 = element("div");
         fa1.$$.fragment.c();
-        t7 = space();
-        docscode3.$$.fragment.c();
         t8 = space();
-        docstitle2.$$.fragment.c();
+        docscode4.$$.fragment.c();
         t9 = space();
-        docstitle3.$$.fragment.c();
+        docstitle2.$$.fragment.c();
         t10 = space();
+        docstitle3.$$.fragment.c();
+        t11 = space();
         div3 = element("div");
         fa2.$$.fragment.c();
-        t11 = space();
-        fa3.$$.fragment.c();
         t12 = space();
-        fa4.$$.fragment.c();
+        fa3.$$.fragment.c();
         t13 = space();
-        fa5.$$.fragment.c();
+        fa4.$$.fragment.c();
         t14 = space();
-        fa6.$$.fragment.c();
+        fa5.$$.fragment.c();
         t15 = space();
-        fa7.$$.fragment.c();
+        fa6.$$.fragment.c();
         t16 = space();
-        fa8.$$.fragment.c();
+        fa7.$$.fragment.c();
         t17 = space();
-        fa9.$$.fragment.c();
+        fa8.$$.fragment.c();
         t18 = space();
-        docscode4.$$.fragment.c();
+        fa9.$$.fragment.c();
         t19 = space();
-        docstitle4.$$.fragment.c();
+        docscode5.$$.fragment.c();
         t20 = space();
+        docstitle4.$$.fragment.c();
+        t21 = space();
         div9 = element("div");
         div4 = element("div");
         fa10.$$.fragment.c();
-        t21 = text(" Home");
-        t22 = space();
+        t22 = text(" Home");
+        t23 = space();
         div5 = element("div");
         fa11.$$.fragment.c();
-        t23 = text(" Info");
-        t24 = space();
+        t24 = text(" Info");
+        t25 = space();
         div6 = element("div");
         fa12.$$.fragment.c();
-        t25 = text(" Library");
-        t26 = space();
+        t26 = text(" Library");
+        t27 = space();
         div7 = element("div");
         fa13.$$.fragment.c();
-        t27 = text(" Applications");
-        t28 = space();
+        t28 = text(" Applications");
+        t29 = space();
         div8 = element("div");
         fa14.$$.fragment.c();
-        t29 = text(" Settins");
-        t30 = space();
-        docscode5.$$.fragment.c();
+        t30 = text(" Settins");
         t31 = space();
-        docstitle5.$$.fragment.c();
+        docscode6.$$.fragment.c();
         t32 = space();
+        docstitle5.$$.fragment.c();
+        t33 = space();
         div10 = element("div");
         fa15.$$.fragment.c();
-        t33 = space();
+        t34 = space();
         fa16.$$.fragment.c();
-        t34 = text("\n    Gatsby believed in the green light, the orgastic future that year by year recedes before us. It eluded us then, but that’s no matter — tomorrow we will run faster, stretch our arms further... And one fine morning — So we beat on, boats against the current, borne back ceaselessly into the past.");
-        t35 = space();
-        docscode6.$$.fragment.c();
+        t35 = text("\n    Gatsby believed in the green light, the orgastic future that year by year recedes before us. It eluded us then, but that’s no matter — tomorrow we will run faster, stretch our arms further... And one fine morning — So we beat on, boats against the current, borne back ceaselessly into the past.");
         t36 = space();
-        docstitle6.$$.fragment.c();
+        docscode7.$$.fragment.c();
         t37 = space();
-        docstitle7.$$.fragment.c();
+        docstitle6.$$.fragment.c();
         t38 = space();
+        docstitle7.$$.fragment.c();
+        t39 = space();
         div11 = element("div");
         fa17.$$.fragment.c();
-        t39 = space();
-        fa18.$$.fragment.c();
         t40 = space();
-        fa19.$$.fragment.c();
+        fa18.$$.fragment.c();
         t41 = space();
-        fa20.$$.fragment.c();
+        fa19.$$.fragment.c();
         t42 = space();
-        fa21.$$.fragment.c();
+        fa20.$$.fragment.c();
         t43 = space();
-        fa22.$$.fragment.c();
+        fa21.$$.fragment.c();
         t44 = space();
-        fa23.$$.fragment.c();
+        fa22.$$.fragment.c();
         t45 = space();
-        fa24.$$.fragment.c();
+        fa23.$$.fragment.c();
         t46 = space();
-        fa25.$$.fragment.c();
+        fa24.$$.fragment.c();
         t47 = space();
-        docscode7.$$.fragment.c();
+        fa25.$$.fragment.c();
         t48 = space();
-        docstitle8.$$.fragment.c();
-        t49 = space();
-        docstitle9.$$.fragment.c();
-        t50 = space();
-        docsimg0.$$.fragment.c();
-        t51 = space();
         docscode8.$$.fragment.c();
+        t49 = space();
+        docstitle8.$$.fragment.c();
+        t50 = space();
+        docstitle9.$$.fragment.c();
+        t51 = space();
+        docsimg0.$$.fragment.c();
         t52 = space();
         docscode9.$$.fragment.c();
         t53 = space();
-        docstitle10.$$.fragment.c();
-        t54 = space();
-        docsimg1.$$.fragment.c();
-        t55 = space();
         docscode10.$$.fragment.c();
+        t54 = space();
+        docstitle10.$$.fragment.c();
+        t55 = space();
+        docsimg1.$$.fragment.c();
         t56 = space();
-        docstitle11.$$.fragment.c();
-        t57 = space();
-        docsimg2.$$.fragment.c();
-        t58 = space();
         docscode11.$$.fragment.c();
+        t57 = space();
+        docstitle11.$$.fragment.c();
+        t58 = space();
+        docsimg2.$$.fragment.c();
         t59 = space();
-        docsimg3.$$.fragment.c();
-        t60 = space();
         docscode12.$$.fragment.c();
+        t60 = space();
+        docsimg3.$$.fragment.c();
         t61 = space();
-        docstitle12.$$.fragment.c();
-        t62 = space();
-        docsimg4.$$.fragment.c();
-        t63 = space();
         docscode13.$$.fragment.c();
+        t62 = space();
+        docstitle12.$$.fragment.c();
+        t63 = space();
+        docsimg4.$$.fragment.c();
         t64 = space();
-        docstitle13.$$.fragment.c();
-        t65 = space();
-        docsimg5.$$.fragment.c();
-        t66 = space();
         docscode14.$$.fragment.c();
+        t65 = space();
+        docstitle13.$$.fragment.c();
+        t66 = space();
+        docsimg5.$$.fragment.c();
         t67 = space();
-        docsimg6.$$.fragment.c();
-        t68 = space();
         docscode15.$$.fragment.c();
+        t68 = space();
+        docsimg6.$$.fragment.c();
         t69 = space();
-        docsimg7.$$.fragment.c();
-        t70 = space();
         docscode16.$$.fragment.c();
+        t70 = space();
+        docsimg7.$$.fragment.c();
         t71 = space();
         docscode17.$$.fragment.c();
+        t72 = space();
+        docscode18.$$.fragment.c();
         attr(div0, "class", "shadow-sm p-3 mb-3 rounded");
         set_style(div1, "font-size", "3em");
         set_style(div1, "color", "tomato");
@@ -2151,150 +2164,152 @@
         append(div12, t1);
         mount_component(docscode1, div12, null);
         append(div12, t2);
-        mount_component(docstitle1, div12, null);
+        mount_component(docscode2, div12, null);
         append(div12, t3);
+        mount_component(docstitle1, div12, null);
+        append(div12, t4);
         append(div12, div0);
         mount_component(fa0, div0, null);
-        append(div0, t4);
-        append(div12, t5);
-        mount_component(docscode2, div12, null);
+        append(div0, t5);
         append(div12, t6);
+        mount_component(docscode3, div12, null);
+        append(div12, t7);
         append(div12, div2);
         append(div2, div1);
         mount_component(fa1, div1, null);
-        append(div12, t7);
-        mount_component(docscode3, div12, null);
         append(div12, t8);
-        mount_component(docstitle2, div12, null);
+        mount_component(docscode4, div12, null);
         append(div12, t9);
-        mount_component(docstitle3, div12, null);
+        mount_component(docstitle2, div12, null);
         append(div12, t10);
+        mount_component(docstitle3, div12, null);
+        append(div12, t11);
         append(div12, div3);
         mount_component(fa2, div3, null);
-        append(div3, t11);
-        mount_component(fa3, div3, null);
         append(div3, t12);
-        mount_component(fa4, div3, null);
+        mount_component(fa3, div3, null);
         append(div3, t13);
-        mount_component(fa5, div3, null);
+        mount_component(fa4, div3, null);
         append(div3, t14);
-        mount_component(fa6, div3, null);
+        mount_component(fa5, div3, null);
         append(div3, t15);
-        mount_component(fa7, div3, null);
+        mount_component(fa6, div3, null);
         append(div3, t16);
-        mount_component(fa8, div3, null);
+        mount_component(fa7, div3, null);
         append(div3, t17);
+        mount_component(fa8, div3, null);
+        append(div3, t18);
         mount_component(fa9, div3, null);
-        append(div12, t18);
-        mount_component(docscode4, div12, null);
         append(div12, t19);
-        mount_component(docstitle4, div12, null);
+        mount_component(docscode5, div12, null);
         append(div12, t20);
+        mount_component(docstitle4, div12, null);
+        append(div12, t21);
         append(div12, div9);
         append(div9, div4);
         mount_component(fa10, div4, null);
-        append(div4, t21);
-        append(div9, t22);
+        append(div4, t22);
+        append(div9, t23);
         append(div9, div5);
         mount_component(fa11, div5, null);
-        append(div5, t23);
-        append(div9, t24);
+        append(div5, t24);
+        append(div9, t25);
         append(div9, div6);
         mount_component(fa12, div6, null);
-        append(div6, t25);
-        append(div9, t26);
+        append(div6, t26);
+        append(div9, t27);
         append(div9, div7);
         mount_component(fa13, div7, null);
-        append(div7, t27);
-        append(div9, t28);
+        append(div7, t28);
+        append(div9, t29);
         append(div9, div8);
         mount_component(fa14, div8, null);
-        append(div8, t29);
-        append(div12, t30);
-        mount_component(docscode5, div12, null);
+        append(div8, t30);
         append(div12, t31);
-        mount_component(docstitle5, div12, null);
+        mount_component(docscode6, div12, null);
         append(div12, t32);
+        mount_component(docstitle5, div12, null);
+        append(div12, t33);
         append(div12, div10);
         mount_component(fa15, div10, null);
-        append(div10, t33);
-        mount_component(fa16, div10, null);
         append(div10, t34);
-        append(div12, t35);
-        mount_component(docscode6, div12, null);
+        mount_component(fa16, div10, null);
+        append(div10, t35);
         append(div12, t36);
-        mount_component(docstitle6, div12, null);
+        mount_component(docscode7, div12, null);
         append(div12, t37);
-        mount_component(docstitle7, div12, null);
+        mount_component(docstitle6, div12, null);
         append(div12, t38);
+        mount_component(docstitle7, div12, null);
+        append(div12, t39);
         append(div12, div11);
         mount_component(fa17, div11, null);
-        append(div11, t39);
-        mount_component(fa18, div11, null);
         append(div11, t40);
-        mount_component(fa19, div11, null);
+        mount_component(fa18, div11, null);
         append(div11, t41);
-        mount_component(fa20, div11, null);
+        mount_component(fa19, div11, null);
         append(div11, t42);
-        mount_component(fa21, div11, null);
+        mount_component(fa20, div11, null);
         append(div11, t43);
-        mount_component(fa22, div11, null);
+        mount_component(fa21, div11, null);
         append(div11, t44);
-        mount_component(fa23, div11, null);
+        mount_component(fa22, div11, null);
         append(div11, t45);
-        mount_component(fa24, div11, null);
+        mount_component(fa23, div11, null);
         append(div11, t46);
+        mount_component(fa24, div11, null);
+        append(div11, t47);
         mount_component(fa25, div11, null);
-        append(div12, t47);
-        mount_component(docscode7, div12, null);
         append(div12, t48);
-        mount_component(docstitle8, div12, null);
-        append(div12, t49);
-        mount_component(docstitle9, div12, null);
-        append(div12, t50);
-        mount_component(docsimg0, div12, null);
-        append(div12, t51);
         mount_component(docscode8, div12, null);
+        append(div12, t49);
+        mount_component(docstitle8, div12, null);
+        append(div12, t50);
+        mount_component(docstitle9, div12, null);
+        append(div12, t51);
+        mount_component(docsimg0, div12, null);
         append(div12, t52);
         mount_component(docscode9, div12, null);
         append(div12, t53);
-        mount_component(docstitle10, div12, null);
-        append(div12, t54);
-        mount_component(docsimg1, div12, null);
-        append(div12, t55);
         mount_component(docscode10, div12, null);
+        append(div12, t54);
+        mount_component(docstitle10, div12, null);
+        append(div12, t55);
+        mount_component(docsimg1, div12, null);
         append(div12, t56);
-        mount_component(docstitle11, div12, null);
-        append(div12, t57);
-        mount_component(docsimg2, div12, null);
-        append(div12, t58);
         mount_component(docscode11, div12, null);
+        append(div12, t57);
+        mount_component(docstitle11, div12, null);
+        append(div12, t58);
+        mount_component(docsimg2, div12, null);
         append(div12, t59);
-        mount_component(docsimg3, div12, null);
-        append(div12, t60);
         mount_component(docscode12, div12, null);
+        append(div12, t60);
+        mount_component(docsimg3, div12, null);
         append(div12, t61);
-        mount_component(docstitle12, div12, null);
-        append(div12, t62);
-        mount_component(docsimg4, div12, null);
-        append(div12, t63);
         mount_component(docscode13, div12, null);
+        append(div12, t62);
+        mount_component(docstitle12, div12, null);
+        append(div12, t63);
+        mount_component(docsimg4, div12, null);
         append(div12, t64);
-        mount_component(docstitle13, div12, null);
-        append(div12, t65);
-        mount_component(docsimg5, div12, null);
-        append(div12, t66);
         mount_component(docscode14, div12, null);
+        append(div12, t65);
+        mount_component(docstitle13, div12, null);
+        append(div12, t66);
+        mount_component(docsimg5, div12, null);
         append(div12, t67);
-        mount_component(docsimg6, div12, null);
-        append(div12, t68);
         mount_component(docscode15, div12, null);
+        append(div12, t68);
+        mount_component(docsimg6, div12, null);
         append(div12, t69);
-        mount_component(docsimg7, div12, null);
-        append(div12, t70);
         mount_component(docscode16, div12, null);
+        append(div12, t70);
+        mount_component(docsimg7, div12, null);
         append(div12, t71);
         mount_component(docscode17, div12, null);
+        append(div12, t72);
+        mount_component(docscode18, div12, null);
         current = true;
       },
       p: function p(changed, ctx) {
@@ -2304,18 +2319,21 @@
         var docscode1_changes = {};
         if (changed.codes) docscode1_changes.code = ctx.codes.installation[1];
         docscode1.$set(docscode1_changes);
+        var docscode2_changes = {};
+        if (changed.codes) docscode2_changes.code = ctx.codes.installation[2];
+        docscode2.$set(docscode2_changes);
         var fa0_changes = {};
         if (changed.faFlag) fa0_changes.icon = faFlag;
         fa0.$set(fa0_changes);
-        var docscode2_changes = {};
-        if (changed.codes) docscode2_changes.code = ctx.codes.basicUse[0];
-        docscode2.$set(docscode2_changes);
+        var docscode3_changes = {};
+        if (changed.codes) docscode3_changes.code = ctx.codes.basicUse[0];
+        docscode3.$set(docscode3_changes);
         var fa1_changes = {};
         if (changed.faFlag) fa1_changes.icon = faFlag;
         fa1.$set(fa1_changes);
-        var docscode3_changes = {};
-        if (changed.codes) docscode3_changes.code = ctx.codes.basicUse[1];
-        docscode3.$set(docscode3_changes);
+        var docscode4_changes = {};
+        if (changed.codes) docscode4_changes.code = ctx.codes.basicUse[1];
+        docscode4.$set(docscode4_changes);
         var fa2_changes = {};
         if (changed.faFlag) fa2_changes.icon = faFlag;
         fa2.$set(fa2_changes);
@@ -2340,9 +2358,9 @@
         var fa9_changes = {};
         if (changed.faFlag) fa9_changes.icon = faFlag;
         fa9.$set(fa9_changes);
-        var docscode4_changes = {};
-        if (changed.codes) docscode4_changes.code = ctx.codes.additionalStyling[0];
-        docscode4.$set(docscode4_changes);
+        var docscode5_changes = {};
+        if (changed.codes) docscode5_changes.code = ctx.codes.additionalStyling[0];
+        docscode5.$set(docscode5_changes);
         var fa10_changes = {};
         if (changed.faHome) fa10_changes.icon = faHome;
         fa10.$set(fa10_changes);
@@ -2358,18 +2376,18 @@
         var fa14_changes = {};
         if (changed.faCog) fa14_changes.icon = faCog;
         fa14.$set(fa14_changes);
-        var docscode5_changes = {};
-        if (changed.codes) docscode5_changes.code = ctx.codes.additionalStyling[1];
-        docscode5.$set(docscode5_changes);
+        var docscode6_changes = {};
+        if (changed.codes) docscode6_changes.code = ctx.codes.additionalStyling[1];
+        docscode6.$set(docscode6_changes);
         var fa15_changes = {};
         if (changed.faQuoteLeft) fa15_changes.icon = faQuoteLeft;
         fa15.$set(fa15_changes);
         var fa16_changes = {};
         if (changed.faQuoteRight) fa16_changes.icon = faQuoteRight;
         fa16.$set(fa16_changes);
-        var docscode6_changes = {};
-        if (changed.codes) docscode6_changes.code = ctx.codes.additionalStyling[2];
-        docscode6.$set(docscode6_changes);
+        var docscode7_changes = {};
+        if (changed.codes) docscode7_changes.code = ctx.codes.additionalStyling[2];
+        docscode7.$set(docscode7_changes);
         var fa17_changes = {};
         if (changed.faMagic) fa17_changes.icon = faMagic;
         fa17.$set(fa17_changes);
@@ -2397,50 +2415,51 @@
         var fa25_changes = {};
         if (changed.faMagic) fa25_changes.icon = faMagic;
         fa25.$set(fa25_changes);
-        var docscode7_changes = {};
-        if (changed.codes) docscode7_changes.code = ctx.codes.powerTransforms[0];
-        docscode7.$set(docscode7_changes);
         var docscode8_changes = {};
-        if (changed.codes) docscode8_changes.code = ctx.codes.duotoneIcons[0];
+        if (changed.codes) docscode8_changes.code = ctx.codes.powerTransforms[0];
         docscode8.$set(docscode8_changes);
         var docscode9_changes = {};
-        if (changed.codes) docscode9_changes.code = ctx.codes.duotoneIcons[1];
+        if (changed.codes) docscode9_changes.code = ctx.codes.duotoneIcons[0];
         docscode9.$set(docscode9_changes);
         var docscode10_changes = {};
-        if (changed.codes) docscode10_changes.code = ctx.codes.duotoneIcons[2];
+        if (changed.codes) docscode10_changes.code = ctx.codes.duotoneIcons[1];
         docscode10.$set(docscode10_changes);
         var docscode11_changes = {};
-        if (changed.codes) docscode11_changes.code = ctx.codes.duotoneIcons[3];
+        if (changed.codes) docscode11_changes.code = ctx.codes.duotoneIcons[2];
         docscode11.$set(docscode11_changes);
         var docscode12_changes = {};
-        if (changed.codes) docscode12_changes.code = ctx.codes.duotoneIcons[4];
+        if (changed.codes) docscode12_changes.code = ctx.codes.duotoneIcons[3];
         docscode12.$set(docscode12_changes);
         var docscode13_changes = {};
-        if (changed.codes) docscode13_changes.code = ctx.codes.duotoneIcons[5];
+        if (changed.codes) docscode13_changes.code = ctx.codes.duotoneIcons[4];
         docscode13.$set(docscode13_changes);
         var docscode14_changes = {};
-        if (changed.codes) docscode14_changes.code = ctx.codes.duotoneIcons[6];
+        if (changed.codes) docscode14_changes.code = ctx.codes.duotoneIcons[5];
         docscode14.$set(docscode14_changes);
         var docscode15_changes = {};
-        if (changed.codes) docscode15_changes.code = ctx.codes.duotoneIcons[7];
+        if (changed.codes) docscode15_changes.code = ctx.codes.duotoneIcons[6];
         docscode15.$set(docscode15_changes);
         var docscode16_changes = {};
-        if (changed.codes) docscode16_changes.code = ctx.codes.duotoneIcons[8];
+        if (changed.codes) docscode16_changes.code = ctx.codes.duotoneIcons[7];
         docscode16.$set(docscode16_changes);
         var docscode17_changes = {};
-        if (changed.codes) docscode17_changes.code = ctx.codes.duotoneIcons[9];
+        if (changed.codes) docscode17_changes.code = ctx.codes.duotoneIcons[8];
         docscode17.$set(docscode17_changes);
+        var docscode18_changes = {};
+        if (changed.codes) docscode18_changes.code = ctx.codes.duotoneIcons[9];
+        docscode18.$set(docscode18_changes);
       },
       i: function i(local) {
         if (current) return;
         transition_in(docstitle0.$$.fragment, local);
         transition_in(docscode0.$$.fragment, local);
         transition_in(docscode1.$$.fragment, local);
+        transition_in(docscode2.$$.fragment, local);
         transition_in(docstitle1.$$.fragment, local);
         transition_in(fa0.$$.fragment, local);
-        transition_in(docscode2.$$.fragment, local);
-        transition_in(fa1.$$.fragment, local);
         transition_in(docscode3.$$.fragment, local);
+        transition_in(fa1.$$.fragment, local);
+        transition_in(docscode4.$$.fragment, local);
         transition_in(docstitle2.$$.fragment, local);
         transition_in(docstitle3.$$.fragment, local);
         transition_in(fa2.$$.fragment, local);
@@ -2451,18 +2470,18 @@
         transition_in(fa7.$$.fragment, local);
         transition_in(fa8.$$.fragment, local);
         transition_in(fa9.$$.fragment, local);
-        transition_in(docscode4.$$.fragment, local);
+        transition_in(docscode5.$$.fragment, local);
         transition_in(docstitle4.$$.fragment, local);
         transition_in(fa10.$$.fragment, local);
         transition_in(fa11.$$.fragment, local);
         transition_in(fa12.$$.fragment, local);
         transition_in(fa13.$$.fragment, local);
         transition_in(fa14.$$.fragment, local);
-        transition_in(docscode5.$$.fragment, local);
+        transition_in(docscode6.$$.fragment, local);
         transition_in(docstitle5.$$.fragment, local);
         transition_in(fa15.$$.fragment, local);
         transition_in(fa16.$$.fragment, local);
-        transition_in(docscode6.$$.fragment, local);
+        transition_in(docscode7.$$.fragment, local);
         transition_in(docstitle6.$$.fragment, local);
         transition_in(docstitle7.$$.fragment, local);
         transition_in(fa17.$$.fragment, local);
@@ -2474,42 +2493,43 @@
         transition_in(fa23.$$.fragment, local);
         transition_in(fa24.$$.fragment, local);
         transition_in(fa25.$$.fragment, local);
-        transition_in(docscode7.$$.fragment, local);
+        transition_in(docscode8.$$.fragment, local);
         transition_in(docstitle8.$$.fragment, local);
         transition_in(docstitle9.$$.fragment, local);
         transition_in(docsimg0.$$.fragment, local);
-        transition_in(docscode8.$$.fragment, local);
         transition_in(docscode9.$$.fragment, local);
+        transition_in(docscode10.$$.fragment, local);
         transition_in(docstitle10.$$.fragment, local);
         transition_in(docsimg1.$$.fragment, local);
-        transition_in(docscode10.$$.fragment, local);
+        transition_in(docscode11.$$.fragment, local);
         transition_in(docstitle11.$$.fragment, local);
         transition_in(docsimg2.$$.fragment, local);
-        transition_in(docscode11.$$.fragment, local);
-        transition_in(docsimg3.$$.fragment, local);
         transition_in(docscode12.$$.fragment, local);
+        transition_in(docsimg3.$$.fragment, local);
+        transition_in(docscode13.$$.fragment, local);
         transition_in(docstitle12.$$.fragment, local);
         transition_in(docsimg4.$$.fragment, local);
-        transition_in(docscode13.$$.fragment, local);
+        transition_in(docscode14.$$.fragment, local);
         transition_in(docstitle13.$$.fragment, local);
         transition_in(docsimg5.$$.fragment, local);
-        transition_in(docscode14.$$.fragment, local);
-        transition_in(docsimg6.$$.fragment, local);
         transition_in(docscode15.$$.fragment, local);
-        transition_in(docsimg7.$$.fragment, local);
+        transition_in(docsimg6.$$.fragment, local);
         transition_in(docscode16.$$.fragment, local);
+        transition_in(docsimg7.$$.fragment, local);
         transition_in(docscode17.$$.fragment, local);
+        transition_in(docscode18.$$.fragment, local);
         current = true;
       },
       o: function o(local) {
         transition_out(docstitle0.$$.fragment, local);
         transition_out(docscode0.$$.fragment, local);
         transition_out(docscode1.$$.fragment, local);
+        transition_out(docscode2.$$.fragment, local);
         transition_out(docstitle1.$$.fragment, local);
         transition_out(fa0.$$.fragment, local);
-        transition_out(docscode2.$$.fragment, local);
-        transition_out(fa1.$$.fragment, local);
         transition_out(docscode3.$$.fragment, local);
+        transition_out(fa1.$$.fragment, local);
+        transition_out(docscode4.$$.fragment, local);
         transition_out(docstitle2.$$.fragment, local);
         transition_out(docstitle3.$$.fragment, local);
         transition_out(fa2.$$.fragment, local);
@@ -2520,18 +2540,18 @@
         transition_out(fa7.$$.fragment, local);
         transition_out(fa8.$$.fragment, local);
         transition_out(fa9.$$.fragment, local);
-        transition_out(docscode4.$$.fragment, local);
+        transition_out(docscode5.$$.fragment, local);
         transition_out(docstitle4.$$.fragment, local);
         transition_out(fa10.$$.fragment, local);
         transition_out(fa11.$$.fragment, local);
         transition_out(fa12.$$.fragment, local);
         transition_out(fa13.$$.fragment, local);
         transition_out(fa14.$$.fragment, local);
-        transition_out(docscode5.$$.fragment, local);
+        transition_out(docscode6.$$.fragment, local);
         transition_out(docstitle5.$$.fragment, local);
         transition_out(fa15.$$.fragment, local);
         transition_out(fa16.$$.fragment, local);
-        transition_out(docscode6.$$.fragment, local);
+        transition_out(docscode7.$$.fragment, local);
         transition_out(docstitle6.$$.fragment, local);
         transition_out(docstitle7.$$.fragment, local);
         transition_out(fa17.$$.fragment, local);
@@ -2543,31 +2563,31 @@
         transition_out(fa23.$$.fragment, local);
         transition_out(fa24.$$.fragment, local);
         transition_out(fa25.$$.fragment, local);
-        transition_out(docscode7.$$.fragment, local);
+        transition_out(docscode8.$$.fragment, local);
         transition_out(docstitle8.$$.fragment, local);
         transition_out(docstitle9.$$.fragment, local);
         transition_out(docsimg0.$$.fragment, local);
-        transition_out(docscode8.$$.fragment, local);
         transition_out(docscode9.$$.fragment, local);
+        transition_out(docscode10.$$.fragment, local);
         transition_out(docstitle10.$$.fragment, local);
         transition_out(docsimg1.$$.fragment, local);
-        transition_out(docscode10.$$.fragment, local);
+        transition_out(docscode11.$$.fragment, local);
         transition_out(docstitle11.$$.fragment, local);
         transition_out(docsimg2.$$.fragment, local);
-        transition_out(docscode11.$$.fragment, local);
-        transition_out(docsimg3.$$.fragment, local);
         transition_out(docscode12.$$.fragment, local);
+        transition_out(docsimg3.$$.fragment, local);
+        transition_out(docscode13.$$.fragment, local);
         transition_out(docstitle12.$$.fragment, local);
         transition_out(docsimg4.$$.fragment, local);
-        transition_out(docscode13.$$.fragment, local);
+        transition_out(docscode14.$$.fragment, local);
         transition_out(docstitle13.$$.fragment, local);
         transition_out(docsimg5.$$.fragment, local);
-        transition_out(docscode14.$$.fragment, local);
-        transition_out(docsimg6.$$.fragment, local);
         transition_out(docscode15.$$.fragment, local);
-        transition_out(docsimg7.$$.fragment, local);
+        transition_out(docsimg6.$$.fragment, local);
         transition_out(docscode16.$$.fragment, local);
+        transition_out(docsimg7.$$.fragment, local);
         transition_out(docscode17.$$.fragment, local);
+        transition_out(docscode18.$$.fragment, local);
         current = false;
       },
       d: function d(detaching) {
@@ -2578,11 +2598,12 @@
         destroy_component(docstitle0);
         destroy_component(docscode0);
         destroy_component(docscode1);
+        destroy_component(docscode2);
         destroy_component(docstitle1);
         destroy_component(fa0);
-        destroy_component(docscode2);
-        destroy_component(fa1);
         destroy_component(docscode3);
+        destroy_component(fa1);
+        destroy_component(docscode4);
         destroy_component(docstitle2);
         destroy_component(docstitle3);
         destroy_component(fa2);
@@ -2593,18 +2614,18 @@
         destroy_component(fa7);
         destroy_component(fa8);
         destroy_component(fa9);
-        destroy_component(docscode4);
+        destroy_component(docscode5);
         destroy_component(docstitle4);
         destroy_component(fa10);
         destroy_component(fa11);
         destroy_component(fa12);
         destroy_component(fa13);
         destroy_component(fa14);
-        destroy_component(docscode5);
+        destroy_component(docscode6);
         destroy_component(docstitle5);
         destroy_component(fa15);
         destroy_component(fa16);
-        destroy_component(docscode6);
+        destroy_component(docscode7);
         destroy_component(docstitle6);
         destroy_component(docstitle7);
         destroy_component(fa17);
@@ -2616,38 +2637,38 @@
         destroy_component(fa23);
         destroy_component(fa24);
         destroy_component(fa25);
-        destroy_component(docscode7);
+        destroy_component(docscode8);
         destroy_component(docstitle8);
         destroy_component(docstitle9);
         destroy_component(docsimg0);
-        destroy_component(docscode8);
         destroy_component(docscode9);
+        destroy_component(docscode10);
         destroy_component(docstitle10);
         destroy_component(docsimg1);
-        destroy_component(docscode10);
+        destroy_component(docscode11);
         destroy_component(docstitle11);
         destroy_component(docsimg2);
-        destroy_component(docscode11);
-        destroy_component(docsimg3);
         destroy_component(docscode12);
+        destroy_component(docsimg3);
+        destroy_component(docscode13);
         destroy_component(docstitle12);
         destroy_component(docsimg4);
-        destroy_component(docscode13);
+        destroy_component(docscode14);
         destroy_component(docstitle13);
         destroy_component(docsimg5);
-        destroy_component(docscode14);
-        destroy_component(docsimg6);
         destroy_component(docscode15);
-        destroy_component(docsimg7);
+        destroy_component(docsimg6);
         destroy_component(docscode16);
+        destroy_component(docsimg7);
         destroy_component(docscode17);
+        destroy_component(docscode18);
       }
     };
   }
 
   function instance$4($$self) {
     var codes = {
-      installation: ['npm install svelte-fa --save', "import Fa from 'svelte-fa'\nimport { faFlag } from '@fortawesome/free-solid-svg-icons'"],
+      installation: ['npm install svelte-fa', "# Notice: For Sapper user, you have to install the component as a devDependencie.\nnpm install svelte-fa -D", "import Fa from 'svelte-fa'\nimport { faFlag } from '@fortawesome/free-solid-svg-icons'"],
       basicUse: ['<Fa icon={faFlag} /> Flag', "<div style=\"font-size: 3em; color: tomato\">\n  <Fa icon={faFlag} />\n</div>"],
       additionalStyling: ["<Fa icon={faFlag} size=\"xs\" />\n<Fa icon={faFlag} size=\"sm\" />\n<Fa icon={faFlag} size=\"lg\" />\n<Fa icon={faFlag} size=\"2x\" />\n<Fa icon={faFlag} size=\"2.5x\" />\n<Fa icon={faFlag} size=\"5x\" />\n<Fa icon={faFlag} size=\"7x\" />\n<Fa icon={faFlag} size=\"10x\" />", "<div>\n  <Fa icon={faHome} fw style=\"background: mistyrose\" /> Home\n</div>\n<div>\n  <Fa icon={faInfo} fw style=\"background: mistyrose\" /> Info\n</div>\n<div>\n  <Fa icon={faBook} fw style=\"background: mistyrose\" /> Library\n</div>\n<div>\n  <Fa icon={faPencilAlt} fw style=\"background: mistyrose\" /> Applications\n</div>\n<div>\n  <Fa icon={faCog} fw style=\"background: mistyrose\" /> Settins\n</div>", "<Fa icon={faQuoteLeft} pull=\"left\" size=\"2x\" />\n<Fa icon={faQuoteRight} pull=\"right\" size=\"2x\" />\nGatsby believed in the green light, the orgastic future that year by year recedes before us. It eluded us then, but that\u2019s no matter \u2014 tomorrow we will run faster, stretch our arms further... And one fine morning \u2014 So we beat on, boats against the current, borne back ceaselessly into the past."],
       powerTransforms: ["<Fa icon={faMagic} size=\"4x\" rotate={90} style=\"background: mistyrose\"/>\n<Fa icon={faMagic} size=\"4x\" rotate={180} style=\"background: mistyrose\"/>\n<Fa icon={faMagic} size=\"4x\" rotate=\"270\" style=\"background: mistyrose\"/>\n<Fa icon={faMagic} size=\"4x\" rotate=\"30\" style=\"background: mistyrose\"/>\n<Fa icon={faMagic} size=\"4x\" rotate=\"-30\" style=\"background: mistyrose\"/>\n<Fa icon={faMagic} size=\"4x\" flip=\"vertical\" style=\"background: mistyrose\"/>\n<Fa icon={faMagic} size=\"4x\" flip=\"horizontal\" style=\"background: mistyrose\"/>\n<Fa icon={faMagic} size=\"4x\" flip=\"both\" style=\"background: mistyrose\"/>\n<Fa icon={faMagic} size=\"4x\" flip=\"both\" style=\"background: mistyrose\"/>"],

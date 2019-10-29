@@ -18,7 +18,9 @@ import DocsTitle from './docs-title.svelte';
 
 const codes = {
   installation: [
-    'npm install svelte-fa --save',
+    'npm install svelte-fa',
+    `# Notice: For Sapper user, you have to install the component as a devDependencie.
+npm install svelte-fa -D`,
     `import Fa from 'svelte-fa'
 import { faFlag } from '@fortawesome/free-solid-svg-icons'`,
   ],
@@ -134,8 +136,9 @@ Gatsby believed in the green light, the orgastic future that year by year recede
 <div>
   <DocsTitle title="Installation" />
   <DocsCode code={codes.installation[0]} />
+  <DocsCode code={codes.installation[1]} />
   <DocsCode
-    code={codes.installation[1]}
+    code={codes.installation[2]}
     lang="js"
   />
   <DocsTitle title="Basic Use" />
