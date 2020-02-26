@@ -10,11 +10,11 @@ export let flip = false;
 export let pull = false;
 export let rotate = false;
 export let size = false;
-export let color;
+export let color = '';
 
 // Duotone Icons
-export let primaryColor;
-export let secondaryColor;
+export let primaryColor = '';
+export let secondaryColor = '';
 export let primaryOpacity = 1;
 export let secondaryOpacity = 0.4;
 export let swapOpacity = false;
