@@ -25,7 +25,7 @@ Tiny [FontAwesome 5][fontawesome] component for [Svelte][svelte].
 npm install svelte-fa
 ```
 
-**Notice:** For [Sapper][sapper] user, you have to install the component as a devDependencie.
+**Notice:** For [Sapper][sapper] user, you have to install the component as a devDependency.
 
 ```shell
 npm install svelte-fa -D
