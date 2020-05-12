@@ -42,7 +42,7 @@
     "@cweili/fa-test-util": "^0.1.0",
     "@fortawesome/free-solid-svg-icons": "^5.10.1",
     "babel-eslint": "^10.0.2",
-    "eslint": "^5.16.0",
+    "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-jest": "^23.0.0",
