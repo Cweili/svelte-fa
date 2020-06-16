@@ -55,7 +55,7 @@
     "rollup-plugin-node-resolve": "^5.0.1",
     "rollup-plugin-replace": "^2.2.0",
     "rollup-plugin-svelte": "^5.0.3",
-    "sirv-cli": "^0.4.2",
+    "sirv-cli": "^1.0.0",
     "svelte": "^3.16.5"
   }
 }
