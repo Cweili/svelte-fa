@@ -26,6 +26,7 @@
   "browser": "dist/svelte-fa.js",
   "module": "dist/svelte-fa.mjs",
   "main": "src/fa.svelte",
+  "types": "src/index.d.ts",
   "sideEffects": false,
   "scripts": {
     "build": "rollup -c",
