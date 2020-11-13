@@ -9,12 +9,12 @@ module.exports = {
   extends: ['airbnb-base'],
   plugins: ['svelte3'],
   env: {
-    browser: true
+    browser: true,
   },
   parser: 'babel-eslint',
   parserOptions: {
     ecmaVersion: 2017,
-    sourceType: 'module'
+    sourceType: 'module',
   },
   rules: {
     eqeqeq: 0,
@@ -24,6 +24,6 @@ module.exports = {
     'max-len': 1,
     'import/no-extraneous-dependencies': 1,
     'import/no-mutable-exports': 0,
-    'import/no-unresolved': [2, { ignore: ['svelte-fa'] }]
-  }
+    'import/no-unresolved': [2, { ignore: ['svelte-fa'] }],
+  },
 };
