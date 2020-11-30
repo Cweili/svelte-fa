@@ -44,7 +44,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.10.1",
     "@rollup/plugin-babel": "^5.2.1",
     "@rollup/plugin-commonjs": "^16.0.0",
-    "@rollup/plugin-node-resolve": "^10.0.0",
+    "@rollup/plugin-node-resolve": "^11.0.0",
     "@rollup/plugin-replace": "^2.3.4",
     "babel-eslint": "^10.0.2",
     "eslint": "^5.16.0",
