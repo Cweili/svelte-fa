@@ -35,7 +35,7 @@
     "dev:build": "cd docs && rollup -c -w",
     "dev:serve": "sirv docs --dev",
     "dev": "run-p dev:build dev:serve",
-    "test": "jest test --coverage"
+    "test": "tsd && jest test --coverage"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
@@ -57,6 +57,15 @@
     "rollup": "^2.2.0",
     "rollup-plugin-svelte": "^6.1.1",
     "sirv-cli": "^1.0.0",
-    "svelte": "^3.16.5"
+    "svelte": "^3.16.5",
+    "tsd": "^0.13.1"
+  },
+  "tsd": {
+    "directory": "test",
+    "compilerOptions": {
+      "lib": [
+        "dom"
+      ]
+    }
   }
 }

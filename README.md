@@ -59,7 +59,7 @@ import { faFlag } from '@fortawesome/free-solid-svg-icons'
 * `flip`: `string` values `horizontal`, `vertical`, `both`
 * `pull`: `string` values `left`, `right`
 * `rotate`: `number or string` values `90`, `180`, `270`, `30`, `-30` ...
-* `size`: `string` values `xs`, `sm`, `lg` or `2x`, `3x`, `4x` ...
+* `size`: `string` values `xs`, `sm`, `lg` or `2x`, `3x`, `4x`, ..., `10x`
 * `color`: icon color, default `currentColor`
 
 ## Duotone Icons

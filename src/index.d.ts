@@ -1,4 +1,5 @@
-import { SvelteComponent } from "svelte"
+import { IconDefinition } from '@fortawesome/fontawesome-common-types'
+import { SvelteComponent } from 'svelte'
 
 declare class Fa extends SvelteComponent {
   constructor(options: any)
@@ -8,12 +9,25 @@ declare class Fa extends SvelteComponent {
     id?: string
     style?: string
 
-    icon: { icon: any }
+    icon: IconDefinition
     fw?: boolean
-    flip?: string
-    pull?: string
+    flip?: 'horizontal' | 'vertical' | 'both'
+    pull?: 'left' | 'right'
     rotate?: number | string
-    size?: string
+    size?:
+      | 'xs'
+      | 'sm'
+      | 'lg'
+      | '1x'
+      | '2x'
+      | '3x'
+      | '4x'
+      | '5x'
+      | '6x'
+      | '7x'
+      | '8x'
+      | '9x'
+      | '10x'
     color?: string
 
     // Duotone Icons
