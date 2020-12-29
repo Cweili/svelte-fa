@@ -60,7 +60,7 @@
     "rollup-plugin-svelte": "^6.1.1",
     "sirv-cli": "^1.0.0",
     "svelte": "^3.16.5",
-    "tsd": "^0.13.1"
+    "tsd": "^0.14.0"
   },
   "tsd": {
     "directory": "test",
