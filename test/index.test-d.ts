@@ -1,7 +1,7 @@
 import { IconDefinition } from '@fortawesome/fontawesome-common-types'
 import { SvelteComponent } from 'svelte'
 import { expectAssignable, expectNotType, expectType } from 'tsd'
-import Fa from '../src/index'
+import Fa from '../src'
 
 const fa = new Fa({})
 

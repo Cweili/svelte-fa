@@ -35,6 +35,8 @@
     "dev:build": "cd docs && rollup -c -w",
     "dev:serve": "sirv docs --dev",
     "dev": "run-p dev:build dev:serve",
+    "prepare": "npm run build",
+    "pretest": "npm run build",
     "test": "tsd && jest test --coverage"
   },
   "devDependencies": {
