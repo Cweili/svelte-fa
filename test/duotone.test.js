@@ -3,7 +3,7 @@ import {
   fadFlag,
   fadInfo,
 } from '@cweili/fa-test-util';
-import Fa from '../dist/svelte-fa.cjs';
+import Fa from '../src/fa.svelte';
 
 let fa;
 function unmountFa() {
