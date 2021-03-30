@@ -37,7 +37,7 @@ npm install @fortawesome/free-solid-svg-icons
 npm install svelte-fa -D
 ```
 
-**Notice For [Svelte Kit][sveltekit] user:** You may need to import the component explicitly as below:
+**Notice for [Svelte Kit][sveltekit] user:** You may need to import the component explicitly as below:
 
 ```js
 import Fa from 'svelte-fa/src/fa.svelte'
