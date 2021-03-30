@@ -25,10 +25,22 @@ Tiny [FontAwesome 5][fontawesome] component for [Svelte][svelte].
 npm install svelte-fa
 ```
 
-**Notice:** For [Sapper][sapper] user, you have to install the component as a devDependency.
+Install FontAwesome icons via [official packages][fontawesome-npm], for example:
+
+```shell
+npm install @fortawesome/free-solid-svg-icons
+```
+
+**Notice for [Sapper][sapper] user:** You may need to install the component as a devDependency:
 
 ```shell
 npm install svelte-fa -D
+```
+
+**Notice For [Svelte Kit][sveltekit] user:** You may need to import the component explicitly as below:
+
+```js
+import Fa from 'svelte-fa/src/fa.svelte'
 ```
 
 ## Usage
@@ -100,8 +112,10 @@ const theme = {
 ```
 
 [fontawesome]: https://fontawesome.com/
+[fontawesome-npm]: https://www.npmjs.com/search?q=%40fortawesome%20svg%20icons
 [svelte]: https://svelte.dev/
 [sapper]: https://sapper.svelte.dev/
+[sveltekit]: https://kit.svelte.dev/
 
 [doc]: https://cweili.github.io/svelte-fa/
 

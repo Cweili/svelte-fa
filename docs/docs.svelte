@@ -19,13 +19,19 @@ import DocsTitle from './docs-title.svelte';
 const codes = {
   installation: [
     'npm install svelte-fa',
-    `# Notice: For Sapper user, you have to install the component as a devDependencie.
-npm install svelte-fa -D`,
-    `import Fa from 'svelte-fa'
-import { faFlag } from '@fortawesome/free-solid-svg-icons'`,
+    'npm install @fortawesome/free-solid-svg-icons',
+    'npm install svelte-fa -D',
+    "import Fa from 'svelte-fa/src/fa.svelte'",
   ],
   basicUse: [
-    '<Fa icon={faFlag} /> Flag',
+    `<\
+script>
+  import Fa from 'svelte-fa'
+  import { faFlag } from '@fortawesome/free-solid-svg-icons'
+<\
+/script>
+
+<Fa icon={faFlag} /> Flag`,
     `<div style="font-size: 3em; color: tomato">
   <Fa icon={faFlag} />
 </div>`,
@@ -136,9 +142,19 @@ Gatsby believed in the green light, the orgastic future that year by year recede
 <div>
   <DocsTitle title="Installation" />
   <DocsCode code={codes.installation[0]} />
+  <div class="shadow-sm p-3 mb-3 rounded clearfix">
+    Install FontAwesome icons via <a href="https://www.npmjs.com/search?q=%40fortawesome%20svg%20icons" target="_blank">official packages</a>, for example:
+  </div>
   <DocsCode code={codes.installation[1]} />
+  <div class="shadow-sm p-3 mb-3 rounded clearfix">
+    <strong>Notice for <a href="https://sapper.svelte.dev/" target="_blank">Sapper</a> user:</strong> You may need to install the component as a devDependency:
+  </div>
+  <DocsCode code={codes.installation[2]} />
+  <div class="shadow-sm p-3 mb-3 rounded clearfix">
+    <strong>Notice for <a href="https://kit.svelte.dev/" target="_blank">Svelte Kit</a> user:</strong> You may need to import the component explicitly as below:
+  </div>
   <DocsCode
-    code={codes.installation[2]}
+    code={codes.installation[3]}
     lang="js"
   />
   <DocsTitle title="Basic Use" />
