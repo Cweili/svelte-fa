@@ -9,7 +9,7 @@ export let fw = false;
 export let flip = false;
 export let pull = false;
 export let rotate = false;
-export let size = false;
+export let size = '';
 export let color = '';
 
 // Duotone Icons
@@ -103,7 +103,7 @@ $: {
 
 {#if i[4]}
   <svg
-    id={id}
+    {id}
     class={clazz}
     style={s}
     viewBox={`0 0 ${i[0]} ${i[1]}`}
