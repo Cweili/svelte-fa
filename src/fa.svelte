@@ -7,8 +7,8 @@ export let style = '';
 export let icon;
 export let fw = false;
 export let flip = false;
-export let pull = false;
-export let rotate = false;
+export let pull = '';
+export let rotate = '';
 export let size = '';
 export let color = '';
 
