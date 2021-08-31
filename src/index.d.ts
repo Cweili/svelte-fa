@@ -10,12 +10,7 @@ declare class Fa extends SvelteComponent {
     style?: string
 
     icon: IconDefinition
-    fw?: boolean
-    flip?: 'horizontal' | 'vertical' | 'both'
-    spin?: boolean
-    pulse?: boolean
-    pull?: 'left' | 'right'
-    rotate?: number | string
+
     size?:
       | 'xs'
       | 'sm'
@@ -31,6 +26,18 @@ declare class Fa extends SvelteComponent {
       | '9x'
       | '10x'
     color?: string
+
+    fw?: boolean
+    pull?: 'left' | 'right'
+
+    scale?: number | string
+    translateX?: number | string
+    translateY?: number | string
+    rotate?: number | string
+    flip?: 'horizontal' | 'vertical' | 'both'
+
+    spin?: boolean
+    pulse?: boolean
 
     // Duotone Icons
     primaryColor?: string

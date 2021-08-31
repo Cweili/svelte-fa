@@ -5,14 +5,21 @@ export let id = '';
 export let style = '';
 
 export let icon;
-export let fw = false;
-export let flip = false;
-export let spin = false;
-export let pulse = false;
-export let pull = '';
-export let rotate = '';
+
 export let size = '';
 export let color = '';
+
+export let fw = false;
+export let pull = '';
+
+export let scale = 1;
+export let translateX = 0;
+export let translateY = 0;
+export let rotate = '';
+export let flip = false;
+
+export let spin = false;
+export let pulse = false;
 
 // Duotone Icons
 export let primaryColor = '';
@@ -89,11 +96,12 @@ $: {
 }
 
 $: {
-  let t = '';
+  const float = parseFloat;
+  let t = `translate(${float(translateX) * 512} ${float(translateY) * 512})`;
+  let flipX = 1;
+  let flipY = 1;
 
   if (flip) {
-    let flipX = 1;
-    let flipY = 1;
     if (flip == 'horizontal') {
       flipX = -1;
     } else if (flip == 'vertical') {
@@ -101,8 +109,9 @@ $: {
     } else {
       flipX = flipY = -1;
     }
-    t += ` scale(${flipX} ${flipY})`;
   }
+
+  t += ` scale(${flipX * float(scale)} ${flipY * float(scale)})`;
 
   if (rotate) {
     t += ` rotate(${rotate} 0 0)`;
@@ -123,10 +132,10 @@ $: {
 
 @keyframes spin {
   0% {
-    transform:rotate(0deg);
+    transform: rotate(0deg);
   }
   100% {
-    transform:rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 </style>

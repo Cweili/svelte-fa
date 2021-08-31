@@ -46,7 +46,7 @@ test('basic', async () => {
     icon: fasFlag,
   });
   expect(getFa().getAttribute('id')).toBe('a');
-  expect(getFa().getAttribute('class')).toMatch(/class-a/);
+  expect(getFa().getAttribute('class')).toContain('class-a');
   expect(getFa().getAttribute('style')).toContain('color:red');
   expect(getFa().querySelector('path').getAttribute('d')).toBe(fasFlag.icon[4]);
 
@@ -57,7 +57,7 @@ test('basic', async () => {
     icon: fasInfo,
   });
   expect(getFa().getAttribute('id')).toBe('b');
-  expect(getFa().getAttribute('class')).toMatch(/class-b/);
+  expect(getFa().getAttribute('class')).toContain('class-b');
   expect(getFa().getAttribute('style')).toContain('color:blue');
   expect(getFa().querySelector('path').getAttribute('d')).toBe(fasInfo.icon[4]);
 
@@ -135,6 +135,35 @@ test('size', async () => {
   });
   style = getFa().getAttribute('style');
   expect(style).toContain('font-size:.875em');
+});
+
+test('scale', async () => {
+  mountFa({
+    scale: 0.5,
+  });
+  let transform = getFa().querySelector('g > g').getAttribute('transform');
+  expect(transform).toContain('scale(0.5 0.5)');
+
+  await setProps({
+    scale: 2,
+  });
+  transform = getFa().querySelector('g > g').getAttribute('transform');
+  expect(transform).toContain('scale(2 2)');
+});
+
+test('translate', async () => {
+  mountFa({
+    translateX: 1,
+  });
+  let transform = getFa().querySelector('g > g').getAttribute('transform');
+  expect(transform).toContain('translate(512 0)');
+
+  await setProps({
+    translateX: 0,
+    translateY: 1,
+  });
+  transform = getFa().querySelector('g > g').getAttribute('transform');
+  expect(transform).toContain('translate(0 512)');
 });
 
 test('flip', async () => {
