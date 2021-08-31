@@ -15,6 +15,7 @@ Tiny [FontAwesome 5][fontawesome] component for [Svelte][svelte].
 * FontAwesome svg icons
 * Tree-shakable, only import used icons
 * No CSS file required
+* FontAwesome layering
 * FontAwesome duotone icons
 
 [Documents and examples][doc].
@@ -54,7 +55,7 @@ import { faFlag } from '@fortawesome/free-solid-svg-icons'
 <Fa icon={faFlag} />
 ```
 
-## Properties
+## `Fa` Properties
 
 ```html
 <Fa
@@ -73,17 +74,59 @@ import { faFlag } from '@fortawesome/free-solid-svg-icons'
 />
 ```
 
+* `icon`: icon from FontAwesome packages, for example: `@fortawesome/free-solid-svg-icons`
 * `size`: `string` values `xs`, `sm`, `lg` or `2x`, `3x`, `4x`, ..., `10x`
 * `color`: `string` icon color, default `currentColor`
 * `fw`: `boolean` fixed width
 * `pull`: `string` values `left`, `right`
-* `scale`: `number or string` transform scale, unit is `em`, default `1`
-* `translateX`: `number or string` transform position X, unit is `em`, default `0`
-* `translateY`: `number or string` transform position Y, unit is `em`, default `0`
+* `scale`: `number | string` transform scale, unit is `em`, default `1`
+* `translateX`: `number | string` transform position X, unit is `em`, default `0`
+* `translateY`: `number | string` transform position Y, unit is `em`, default `0`
 * `flip`: `string` values `horizontal`, `vertical`, `both`
-* `rotate`: `number or string` values `90`, `180`, `270`, `30`, `-30` ...
+* `rotate`: `number | string` values `90`, `180`, `270`, `30`, `-30` ...
 * `spin`: `boolean` spin icons
 * `pulse`: `boolean` pulse spin icons
+
+## Layering &amp; Text
+
+```js
+import Fa, {
+  FaLayers,
+  FaLayersText,
+} from 'svelte-fa';
+```
+
+```html
+<FaLayers
+  size="4x"
+  pull="left"
+>
+  <Fa icon={faCertificate} />
+  <FaLayersText
+    scale={0.25}
+    rotate={-30}
+    color="white"
+    style="font-weight: 900"
+  >
+    NEW
+  </FaLayersText>
+</FaLayers>
+```
+
+### `FaLayers` Properties
+
+* `size`: `string` values `xs`, `sm`, `lg` or `2x`, `3x`, `4x`, ..., `10x`
+* `pull`: `string` values `left`, `right`
+
+### `FaLayersText` Properties
+
+* `size`: `string` values `xs`, `sm`, `lg` or `2x`, `3x`, `4x`, ..., `10x`
+* `color`: `string` icon color, default `currentColor`
+* `scale`: `number | string` transform scale, unit is `em`, default `1`
+* `translateX`: `number | string` transform position X, unit is `em`, default `0`
+* `translateY`: `number | string` transform position Y, unit is `em`, default `0`
+* `flip`: `string` values `horizontal`, `vertical`, `both`
+* `rotate`: `number | string` values `90`, `180`, `270`, `30`, `-30` ...
 
 ## Duotone Icons
 

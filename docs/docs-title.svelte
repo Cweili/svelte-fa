@@ -2,7 +2,7 @@
 import Fa from 'svelte-fa';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
 
-export let level = 4;
+export let level = 2;
 export let title = '';
 
 let id;

@@ -1,19 +1,33 @@
 <script>
-import Fa from 'svelte-fa';
+import Fa, {
+  FaLayers,
+  FaLayersText,
+} from 'svelte-fa';
 import {
   faFlag,
   faHome,
   faInfo,
   faBook,
+  faBookmark,
   faPencilAlt,
   faCog,
+  faCircle,
+  faCircleNotch,
   faQuoteLeft,
   faQuoteRight,
-  faCircleNotch,
   faSpinner,
   faStroopwafel,
   faSync,
   faMagic,
+  faTimes,
+  faHeart,
+  faPlay,
+  faSun,
+  faMoon,
+  faStar,
+  faCalendar,
+  faCertificate,
+  faEnvelope,
 } from '@fortawesome/free-solid-svg-icons';
 
 import DocsCode from './docs-code.svelte';
@@ -94,6 +108,44 @@ Gatsby believed in the green light, the orgastic future that year by year recede
 <Fa icon={faMagic} size="4x" flip="horizontal" style="background: mistyrose" />
 <Fa icon={faMagic} size="4x" flip="both" style="background: mistyrose" />
 <Fa icon={faMagic} size="4x" flip="both" style="background: mistyrose" />`,
+  ],
+  layering: [
+    `import Fa, {
+  FaLayers,
+  FaLayersText,
+} from 'svelte-fa';`,
+    `<FaLayers size="4x" style="background: mistyrose">
+  <Fa icon={faCircle} color="tomato" />
+  <Fa icon={faTimes} scale={0.5} color="white" />
+</FaLayers>
+<FaLayers size="4x" style="background: mistyrose">
+  <Fa icon={faBookmark} />
+  <Fa icon={faHeart} scale={0.4} translateY={-0.1} color="tomato" />
+</FaLayers>
+<FaLayers size="4x" style="background: mistyrose">
+  <Fa icon={faPlay} scale={1.2} rotate={-90} />
+  <Fa icon={faSun} scale={0.35} translateY={-0.2} color="white" />
+  <Fa icon={faMoon} scale={0.3} translateX={-0.25} translateY={0.25} color="white" />
+  <Fa icon={faStar} scale={0.3} translateX={0.25} translateY={0.25} color="white" />
+</FaLayers>
+<FaLayers size="4x" style="background: mistyrose">
+  <Fa icon={faCalendar} />
+  <FaLayersText scale={0.45} translateY={0.06} color="white" style="font-weight: 900">
+    27
+  </FaLayersText>
+</FaLayers>
+<FaLayers size="4x" style="background: mistyrose">
+  <Fa icon={faCertificate} />
+  <FaLayersText scale={0.25} rotate={-30} color="white" style="font-weight: 900">
+    NEW
+  </FaLayersText>
+</FaLayers>
+<FaLayers size="4x" style="background: mistyrose">
+  <Fa icon={faEnvelope} />
+  <FaLayersText scale={0.2} translateX={0.4} translateY={-0.4} color="white" style="padding: 0 .2em; background: tomato; border-radius: 1em">
+    1,419
+  </FaLayersText>
+</FaLayers>`,
   ],
   duotoneIcons: [
     `import {
@@ -191,7 +243,7 @@ Gatsby believed in the green light, the orgastic future that year by year recede
   <DocsCode code={codes.basicUse[1]} />
 
   <DocsTitle title="Additional Styling" />
-  <DocsTitle title="Icon Sizes" level={5} />
+  <DocsTitle title="Icon Sizes" level={3} />
   <div class="shadow-sm p-3 mb-3 rounded">
     <Fa
       icon={faFlag}
@@ -228,7 +280,7 @@ Gatsby believed in the green light, the orgastic future that year by year recede
   </div>
   <DocsCode code={codes.additionalStyling[0]} />
 
-  <DocsTitle title="Fixed Width Icons" level={5} />
+  <DocsTitle title="Fixed Width Icons" level={3} />
   <div class="shadow-sm p-3 mb-3 rounded">
     <div>
       <Fa
@@ -268,7 +320,7 @@ Gatsby believed in the green light, the orgastic future that year by year recede
   </div>
   <DocsCode code={codes.additionalStyling[1]} />
 
-  <DocsTitle title="Pulled Icons" level={5} />
+  <DocsTitle title="Pulled Icons" level={3} />
   <div class="shadow-sm p-3 mb-3 rounded clearfix">
     <Fa
       icon={faQuoteLeft}
@@ -296,7 +348,7 @@ Gatsby believed in the green light, the orgastic future that year by year recede
   <DocsCode code={codes.animatingIcons[0]} />
 
   <DocsTitle title="Power Transforms" />
-  <DocsTitle title="Scaling" level={5} />
+  <DocsTitle title="Scaling" level={3} />
   <div class="shadow-sm p-3 mb-3 rounded">
     <Fa icon={faMagic} size="4x" style="background: mistyrose" />
     <Fa icon={faMagic} scale={0.5} size="4x" style="background: mistyrose" />
@@ -304,7 +356,7 @@ Gatsby believed in the green light, the orgastic future that year by year recede
   </div>
   <DocsCode code={codes.powerTransforms[0]} />
 
-  <DocsTitle title="Positioning" level={5} />
+  <DocsTitle title="Positioning" level={3} />
   <div class="shadow-sm p-3 mb-3 rounded">
     <Fa icon={faMagic} scale={0.5} size="4x" style="background: mistyrose" />
     <Fa icon={faMagic} scale={0.5} translateX={0.2} size="4x" style="background: mistyrose" />
@@ -314,7 +366,7 @@ Gatsby believed in the green light, the orgastic future that year by year recede
   </div>
   <DocsCode code={codes.powerTransforms[1]} />
 
-  <DocsTitle title="Rotating &amp; Flipping" level={5} />
+  <DocsTitle title="Rotating &amp; Flipping" level={3} />
   <div class="shadow-sm p-3 mb-3 rounded">
     <Fa
       icon={faMagic}
@@ -374,26 +426,64 @@ Gatsby believed in the green light, the orgastic future that year by year recede
   </div>
   <DocsCode code={codes.powerTransforms[2]} />
 
+  <DocsTitle title="Layering &amp; Text" />
+  <div class="shadow-sm p-3 mb-3 rounded">
+    <FaLayers size="4x" style="background: mistyrose">
+      <Fa icon={faCircle} color="tomato" />
+      <Fa icon={faTimes} scale={0.5} color="white" />
+    </FaLayers>
+    <FaLayers size="4x" style="background: mistyrose">
+      <Fa icon={faBookmark} />
+      <Fa icon={faHeart} scale={0.4} translateY={-0.1} color="tomato" />
+    </FaLayers>
+    <FaLayers size="4x" style="background: mistyrose">
+      <Fa icon={faPlay} scale={1.2} rotate={-90} />
+      <Fa icon={faSun} scale={0.35} translateY={-0.2} color="white" />
+      <Fa icon={faMoon} scale={0.3} translateX={-0.25} translateY={0.25} color="white" />
+      <Fa icon={faStar} scale={0.3} translateX={0.25} translateY={0.25} color="white" />
+    </FaLayers>
+    <FaLayers size="4x" style="background: mistyrose">
+      <Fa icon={faCalendar} />
+      <FaLayersText scale={0.45} translateY={0.1} color="white" style="font-weight: 900">
+        27
+      </FaLayersText>
+    </FaLayers>
+    <FaLayers size="4x" style="background: mistyrose">
+      <Fa icon={faCertificate} />
+      <FaLayersText scale={0.25} rotate={-30} color="white" style="font-weight: 900">
+        NEW
+      </FaLayersText>
+    </FaLayers>
+    <FaLayers size="4x" style="background: mistyrose">
+      <Fa icon={faEnvelope} />
+      <FaLayersText scale={0.2} translateX={0.4} translateY={-0.4} color="white" style="padding: 0 .2em; background: tomato; border-radius: 1em">
+        1,419
+      </FaLayersText>
+    </FaLayers>
+  </div>
+  <DocsCode code={codes.layering[0]} lang="js" />
+  <DocsCode code={codes.layering[1]} />
+
   <DocsTitle title="Duotone Icons" />
-  <DocsTitle title="Basic Use" level={5} />
+  <DocsTitle title="Basic Use" level={3} />
   <DocsImg src="assets/duotone-0.png" alt="duotone icons basic use" />
   <DocsCode code={codes.duotoneIcons[0]} lang="js" />
   <DocsCode code={codes.duotoneIcons[1]} />
 
-  <DocsTitle title="Swapping Layer Opacity" level={5} />
+  <DocsTitle title="Swapping Layer Opacity" level={3} />
   <DocsImg src="assets/duotone-1.png" alt="swapping duotone icons layer opacity" />
   <DocsCode code={codes.duotoneIcons[2]} />
 
-  <DocsTitle title="Changing Opacity" level={5} />
+  <DocsTitle title="Changing Opacity" level={3} />
   <DocsImg src="assets/duotone-2.png" alt="changing duotone icons opacity" />
   <DocsCode code={codes.duotoneIcons[3]} />
   <DocsImg src="assets/duotone-3.png" alt="changing duotone icons opacity" />
   <DocsCode code={codes.duotoneIcons[4]} />
 
-  <DocsTitle title="Coloring Duotone Icons" level={5} />
+  <DocsTitle title="Coloring Duotone Icons" level={3} />
   <DocsImg src="assets/duotone-4.png" alt="coloring duotone icons" />
   <DocsCode code={codes.duotoneIcons[5]} />
-  <DocsTitle title="Advanced Use" level={5} />
+  <DocsTitle title="Advanced Use" level={3} />
   <DocsImg src="assets/duotone-5.png" alt="duotone icons advanced use" />
   <DocsCode code={codes.duotoneIcons[6]} />
   <DocsImg src="assets/duotone-6.png" alt="duotone icons advanced use" />
