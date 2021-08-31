@@ -7,6 +7,8 @@ export let style = '';
 export let icon;
 export let fw = false;
 export let flip = false;
+export let spin = false;
+export let pulse = false;
 export let pull = '';
 export let rotate = '';
 export let size = '';
@@ -21,9 +23,18 @@ export let swapOpacity = false;
 
 let i;
 let s;
+let c;
 let transform;
 
 $: i = (icon && icon.icon) || [0, 0, '', [], ''];
+
+$: c = [
+  clazz,
+  spin && 'spin',
+  pulse && 'pulse',
+]
+  .filter((cls) => cls)
+  .join('');
 
 $: {
   let float;
@@ -101,10 +112,29 @@ $: {
 }
 </script>
 
+<style>
+.spin {
+  animation: spin 2s 0s infinite linear;
+}
+
+.pulse {
+  animation: spin 1s infinite steps(8);
+}
+
+@keyframes spin {
+  0% {
+    transform:rotate(0deg);
+  }
+  100% {
+    transform:rotate(360deg);
+  }
+}
+</style>
+
 {#if i[4]}
   <svg
     {id}
-    class={clazz}
+    class={c}
     style={s}
     viewBox={`0 0 ${i[0]} ${i[1]}`}
     aria-hidden="true"

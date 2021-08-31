@@ -9,6 +9,10 @@ import {
   faCog,
   faQuoteLeft,
   faQuoteRight,
+  faCircleNotch,
+  faSpinner,
+  faStroopwafel,
+  faSync,
   faMagic,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -64,16 +68,24 @@ script>
 <Fa icon={faQuoteRight} pull="right" size="2x" />
 Gatsby believed in the green light, the orgastic future that year by year recedes before us. It eluded us then, but that’s no matter — tomorrow we will run faster, stretch our arms further... And one fine morning — So we beat on, boats against the current, borne back ceaselessly into the past.`,
   ],
+  animatingIcons: [
+    `<Fa icon={faSpinner} size="3x" spin />
+<Fa icon={faCircleNotch} size="3x" spin />
+<Fa icon={faSync} size="3x" spin />
+<Fa icon={faCog} size="3x" spin />
+<Fa icon={faSpinner} size="3x" pulse />
+<Fa icon={faStroopwafel} size="3x" spin />`,
+  ],
   powerTransforms: [
-    `<Fa icon={faMagic} size="4x" rotate={90} style="background: mistyrose"/>
-<Fa icon={faMagic} size="4x" rotate={180} style="background: mistyrose"/>
-<Fa icon={faMagic} size="4x" rotate="270" style="background: mistyrose"/>
-<Fa icon={faMagic} size="4x" rotate="30" style="background: mistyrose"/>
-<Fa icon={faMagic} size="4x" rotate="-30" style="background: mistyrose"/>
-<Fa icon={faMagic} size="4x" flip="vertical" style="background: mistyrose"/>
-<Fa icon={faMagic} size="4x" flip="horizontal" style="background: mistyrose"/>
-<Fa icon={faMagic} size="4x" flip="both" style="background: mistyrose"/>
-<Fa icon={faMagic} size="4x" flip="both" style="background: mistyrose"/>`,
+    `<Fa icon={faMagic} size="4x" rotate={90} style="background: mistyrose" />
+<Fa icon={faMagic} size="4x" rotate={180} style="background: mistyrose" />
+<Fa icon={faMagic} size="4x" rotate="270" style="background: mistyrose" />
+<Fa icon={faMagic} size="4x" rotate="30" style="background: mistyrose" />
+<Fa icon={faMagic} size="4x" rotate="-30" style="background: mistyrose" />
+<Fa icon={faMagic} size="4x" flip="vertical" style="background: mistyrose" />
+<Fa icon={faMagic} size="4x" flip="horizontal" style="background: mistyrose" />
+<Fa icon={faMagic} size="4x" flip="both" style="background: mistyrose" />
+<Fa icon={faMagic} size="4x" flip="both" style="background: mistyrose" />`,
   ],
   duotoneIcons: [
     `import {
@@ -157,6 +169,7 @@ Gatsby believed in the green light, the orgastic future that year by year recede
     code={codes.installation[3]}
     lang="js"
   />
+
   <DocsTitle title="Basic Use" />
   <div class="shadow-sm p-3 mb-3 rounded">
     <Fa icon={faFlag} /> Flag
@@ -168,6 +181,7 @@ Gatsby believed in the green light, the orgastic future that year by year recede
     </div>
   </div>
   <DocsCode code={codes.basicUse[1]} />
+
   <DocsTitle title="Additional Styling" />
   <DocsTitle title="Icon Sizes" level={5} />
   <div class="shadow-sm p-3 mb-3 rounded">
@@ -205,6 +219,7 @@ Gatsby believed in the green light, the orgastic future that year by year recede
     />
   </div>
   <DocsCode code={codes.additionalStyling[0]} />
+
   <DocsTitle title="Fixed Width Icons" level={5} />
   <div class="shadow-sm p-3 mb-3 rounded">
     <div>
@@ -244,6 +259,7 @@ Gatsby believed in the green light, the orgastic future that year by year recede
     </div>
   </div>
   <DocsCode code={codes.additionalStyling[1]} />
+
   <DocsTitle title="Pulled Icons" level={5} />
   <div class="shadow-sm p-3 mb-3 rounded clearfix">
     <Fa
@@ -259,6 +275,18 @@ Gatsby believed in the green light, the orgastic future that year by year recede
     Gatsby believed in the green light, the orgastic future that year by year recedes before us. It eluded us then, but that’s no matter — tomorrow we will run faster, stretch our arms further... And one fine morning — So we beat on, boats against the current, borne back ceaselessly into the past.
   </div>
   <DocsCode code={codes.additionalStyling[2]} />
+
+  <DocsTitle title="Animating Icons" />
+  <div class="shadow-sm p-3 mb-3 rounded">
+    <Fa icon={faSpinner} size="3x" spin />
+    <Fa icon={faCircleNotch} size="3x" spin />
+    <Fa icon={faSync} size="3x" spin />
+    <Fa icon={faCog} size="3x" spin />
+    <Fa icon={faSpinner} size="3x" pulse />
+    <Fa icon={faStroopwafel} size="3x" spin />
+  </div>
+  <DocsCode code={codes.animatingIcons[0]} />
+
   <DocsTitle title="Power Transforms" />
   <DocsTitle title="Rotating &amp; Flipping" level={5} />
   <div class="shadow-sm p-3 mb-3 rounded">
@@ -319,19 +347,23 @@ Gatsby believed in the green light, the orgastic future that year by year recede
     />
   </div>
   <DocsCode code={codes.powerTransforms[0]} />
+
   <DocsTitle title="Duotone Icons" />
   <DocsTitle title="Basic Use" level={5} />
   <DocsImg src="assets/duotone-0.png" alt="duotone icons basic use" />
   <DocsCode code={codes.duotoneIcons[0]} lang="js" />
   <DocsCode code={codes.duotoneIcons[1]} />
+
   <DocsTitle title="Swapping Layer Opacity" level={5} />
   <DocsImg src="assets/duotone-1.png" alt="swapping duotone icons layer opacity" />
   <DocsCode code={codes.duotoneIcons[2]} />
+
   <DocsTitle title="Changing Opacity" level={5} />
   <DocsImg src="assets/duotone-2.png" alt="changing duotone icons opacity" />
   <DocsCode code={codes.duotoneIcons[3]} />
   <DocsImg src="assets/duotone-3.png" alt="changing duotone icons opacity" />
   <DocsCode code={codes.duotoneIcons[4]} />
+
   <DocsTitle title="Coloring Duotone Icons" level={5} />
   <DocsImg src="assets/duotone-4.png" alt="coloring duotone icons" />
   <DocsCode code={codes.duotoneIcons[5]} />

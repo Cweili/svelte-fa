@@ -41,23 +41,23 @@ test('basic', async () => {
 
   await setProps({
     id: 'a',
-    class: 'a',
+    class: 'class-a',
     style: 'color:red',
     icon: fasFlag,
   });
   expect(getFa().getAttribute('id')).toBe('a');
-  expect(getFa().getAttribute('class')).toBe('a');
+  expect(getFa().getAttribute('class')).toMatch(/class-a/);
   expect(getFa().getAttribute('style')).toContain('color:red');
   expect(getFa().querySelector('path').getAttribute('d')).toBe(fasFlag.icon[4]);
 
   await setProps({
     id: 'b',
-    class: 'b',
+    class: 'class-b',
     style: 'color:blue',
     icon: fasInfo,
   });
   expect(getFa().getAttribute('id')).toBe('b');
-  expect(getFa().getAttribute('class')).toBe('b');
+  expect(getFa().getAttribute('class')).toMatch(/class-b/);
   expect(getFa().getAttribute('style')).toContain('color:blue');
   expect(getFa().querySelector('path').getAttribute('d')).toBe(fasInfo.icon[4]);
 
@@ -169,4 +169,15 @@ test('rotate', async () => {
   });
   transform = getFa().querySelector('g > g').getAttribute('transform');
   expect(transform).not.toContain('rotate');
+});
+
+test('spin', async () => {
+  mountFa({
+    spin: true,
+    pulse: true,
+  });
+
+  const clazz = getFa().getAttribute('class');
+  expect(clazz).toMatch(/spin/);
+  expect(clazz).toMatch(/pulse/);
 });

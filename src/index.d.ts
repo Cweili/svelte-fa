@@ -12,6 +12,8 @@ declare class Fa extends SvelteComponent {
     icon: IconDefinition
     fw?: boolean
     flip?: 'horizontal' | 'vertical' | 'both'
+    spin?: boolean
+    pulse?: boolean
     pull?: 'left' | 'right'
     rotate?: number | string
     size?:

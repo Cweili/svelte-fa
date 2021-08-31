@@ -8,7 +8,17 @@
   function _inheritsLoose(subClass, superClass) {
     subClass.prototype = Object.create(superClass.prototype);
     subClass.prototype.constructor = subClass;
-    subClass.__proto__ = superClass;
+
+    _setPrototypeOf(subClass, superClass);
+  }
+
+  function _setPrototypeOf(o, p) {
+    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+      o.__proto__ = p;
+      return o;
+    };
+
+    return _setPrototypeOf(o, p);
   }
 
   function _assertThisInitialized(self) {
@@ -180,11 +190,14 @@
 
 
   function bubble(component, event) {
+    var _this2 = this;
+
     var callbacks = component.$$.callbacks[event.type];
 
     if (callbacks) {
+      // @ts-ignore
       callbacks.slice().forEach(function (fn) {
-        return fn(event);
+        return fn.call(_this2, event);
       });
     }
   }
@@ -233,8 +246,8 @@
       // subsequent updates...
 
 
-      for (var _i = 0; _i < render_callbacks.length; _i += 1) {
-        var callback = render_callbacks[_i];
+      for (var _i4 = 0; _i4 < render_callbacks.length; _i4 += 1) {
+        var callback = render_callbacks[_i4];
 
         if (!seen_callbacks.has(callback)) {
           // ...so guard against infinite loops
@@ -439,27 +452,31 @@
     block && block.c();
   }
 
-  function mount_component(component, target, anchor) {
+  function mount_component(component, target, anchor, customElement) {
     var _component$$$ = component.$$,
         fragment = _component$$$.fragment,
         on_mount = _component$$$.on_mount,
         on_destroy = _component$$$.on_destroy,
         after_update = _component$$$.after_update;
-    fragment && fragment.m(target, anchor); // onMount happens before the initial afterUpdate
+    fragment && fragment.m(target, anchor);
 
-    add_render_callback(function () {
-      var new_on_destroy = on_mount.map(run).filter(is_function);
+    if (!customElement) {
+      // onMount happens before the initial afterUpdate
+      add_render_callback(function () {
+        var new_on_destroy = on_mount.map(run).filter(is_function);
 
-      if (on_destroy) {
-        on_destroy.push.apply(on_destroy, new_on_destroy);
-      } else {
-        // Edge case - component was destroyed immediately,
-        // most likely as a result of a binding initialising
-        run_all(new_on_destroy);
-      }
+        if (on_destroy) {
+          on_destroy.push.apply(on_destroy, new_on_destroy);
+        } else {
+          // Edge case - component was destroyed immediately,
+          // most likely as a result of a binding initialising
+          run_all(new_on_destroy);
+        }
 
-      component.$$.on_mount = [];
-    });
+        component.$$.on_mount = [];
+      });
+    }
+
     after_update.forEach(add_render_callback);
   }
 
@@ -486,14 +503,13 @@
     component.$$.dirty[i / 31 | 0] |= 1 << i % 31;
   }
 
-  function init(component, options, instance, create_fragment, not_equal, props, dirty) {
+  function init(component, options, instance, create_fragment, not_equal, props, append_styles, dirty) {
     if (dirty === void 0) {
       dirty = [-1];
     }
 
     var parent_component = current_component;
     set_current_component(component);
-    var prop_values = options.props || {};
     var $$ = component.$$ = {
       fragment: null,
       ctx: null,
@@ -505,16 +521,19 @@
       // lifecycle
       on_mount: [],
       on_destroy: [],
+      on_disconnect: [],
       before_update: [],
       after_update: [],
-      context: new Map(parent_component ? parent_component.$$.context : []),
+      context: new Map(parent_component ? parent_component.$$.context : options.context || []),
       // everything else
       callbacks: blank_object(),
       dirty: dirty,
-      skip_bound: false
+      skip_bound: false,
+      root: options.target || parent_component.$$.root
     };
+    append_styles && append_styles($$.root);
     var ready = false;
-    $$.ctx = instance ? instance(component, prop_values, function (i, ret) {
+    $$.ctx = instance ? instance(component, options.props || {}, function (i, ret) {
       var value = (arguments.length <= 2 ? 0 : arguments.length - 2) ? arguments.length <= 2 ? undefined : arguments[2] : ret;
 
       if ($$.ctx && not_equal($$.ctx[i], $$.ctx[i] = value)) {
@@ -542,24 +561,28 @@
       }
 
       if (options.intro) transition_in(component.$$.fragment);
-      mount_component(component, options.target, options.anchor);
+      mount_component(component, options.target, options.anchor, options.customElement);
       flush();
     }
 
     set_current_component(parent_component);
   }
+  /**
+   * Base class for Svelte components. Used when dev=false.
+   */
+
 
   var SvelteComponent = /*#__PURE__*/function () {
     function SvelteComponent() {}
 
-    var _proto3 = SvelteComponent.prototype;
+    var _proto4 = SvelteComponent.prototype;
 
-    _proto3.$destroy = function $destroy() {
+    _proto4.$destroy = function $destroy() {
       destroy_component(this, 1);
       this.$destroy = noop;
     };
 
-    _proto3.$on = function $on(type, callback) {
+    _proto4.$on = function $on(type, callback) {
       var callbacks = this.$$.callbacks[type] || (this.$$.callbacks[type] = []);
       callbacks.push(callback);
       return function () {
@@ -568,7 +591,7 @@
       };
     };
 
-    _proto3.$set = function $set($$props) {
+    _proto4.$set = function $set($$props) {
       if (this.$$set && !is_empty($$props)) {
         this.$$.skip_bound = true;
         this.$$set($$props);
@@ -579,7 +602,7 @@
     return SvelteComponent;
   }();
 
-  var faBook={prefix:'fas',iconName:'book',icon:[448,512,[],"f02d","M448 360V24c0-13.3-10.7-24-24-24H96C43 0 0 43 0 96v320c0 53 43 96 96 96h328c13.3 0 24-10.7 24-24v-16c0-7.5-3.5-14.3-8.9-18.7-4.2-15.4-4.2-59.3 0-74.7 5.4-4.3 8.9-11.1 8.9-18.6zM128 134c0-3.3 2.7-6 6-6h212c3.3 0 6 2.7 6 6v20c0 3.3-2.7 6-6 6H134c-3.3 0-6-2.7-6-6v-20zm0 64c0-3.3 2.7-6 6-6h212c3.3 0 6 2.7 6 6v20c0 3.3-2.7 6-6 6H134c-3.3 0-6-2.7-6-6v-20zm253.4 250H96c-17.7 0-32-14.3-32-32 0-17.6 14.4-32 32-32h285.4c-1.9 17.1-1.9 46.9 0 64z"]};var faCog={prefix:'fas',iconName:'cog',icon:[512,512,[],"f013","M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"]};var faFlag={prefix:'fas',iconName:'flag',icon:[512,512,[],"f024","M349.565 98.783C295.978 98.783 251.721 64 184.348 64c-24.955 0-47.309 4.384-68.045 12.013a55.947 55.947 0 0 0 3.586-23.562C118.117 24.015 94.806 1.206 66.338.048 34.345-1.254 8 24.296 8 56c0 19.026 9.497 35.825 24 45.945V488c0 13.255 10.745 24 24 24h16c13.255 0 24-10.745 24-24v-94.4c28.311-12.064 63.582-22.122 114.435-22.122 53.588 0 97.844 34.783 165.217 34.783 48.169 0 86.667-16.294 122.505-40.858C506.84 359.452 512 349.571 512 339.045v-243.1c0-23.393-24.269-38.87-45.485-29.016-34.338 15.948-76.454 31.854-116.95 31.854z"]};var faHome={prefix:'fas',iconName:'home',icon:[576,512,[],"f015","M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z"]};var faInfo={prefix:'fas',iconName:'info',icon:[192,512,[],"f129","M20 424.229h20V279.771H20c-11.046 0-20-8.954-20-20V212c0-11.046 8.954-20 20-20h112c11.046 0 20 8.954 20 20v212.229h20c11.046 0 20 8.954 20 20V492c0 11.046-8.954 20-20 20H20c-11.046 0-20-8.954-20-20v-47.771c0-11.046 8.954-20 20-20zM96 0C56.235 0 24 32.235 24 72s32.235 72 72 72 72-32.235 72-72S135.764 0 96 0z"]};var faLink={prefix:'fas',iconName:'link',icon:[512,512,[],"f0c1","M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"]};var faMagic={prefix:'fas',iconName:'magic',icon:[512,512,[],"f0d0","M224 96l16-32 32-16-32-16-16-32-16 32-32 16 32 16 16 32zM80 160l26.66-53.33L160 80l-53.34-26.67L80 0 53.34 53.33 0 80l53.34 26.67L80 160zm352 128l-26.66 53.33L352 368l53.34 26.67L432 448l26.66-53.33L512 368l-53.34-26.67L432 288zm70.62-193.77L417.77 9.38C411.53 3.12 403.34 0 395.15 0c-8.19 0-16.38 3.12-22.63 9.38L9.38 372.52c-12.5 12.5-12.5 32.76 0 45.25l84.85 84.85c6.25 6.25 14.44 9.37 22.62 9.37 8.19 0 16.38-3.12 22.63-9.37l363.14-363.15c12.5-12.48 12.5-32.75 0-45.24zM359.45 203.46l-50.91-50.91 86.6-86.6 50.91 50.91-86.6 86.6z"]};var faPencilAlt={prefix:'fas',iconName:'pencil-alt',icon:[512,512,[],"f303","M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"]};var faQuoteLeft={prefix:'fas',iconName:'quote-left',icon:[512,512,[],"f10d","M464 256h-80v-64c0-35.3 28.7-64 64-64h8c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24h-8c-88.4 0-160 71.6-160 160v240c0 26.5 21.5 48 48 48h128c26.5 0 48-21.5 48-48V304c0-26.5-21.5-48-48-48zm-288 0H96v-64c0-35.3 28.7-64 64-64h8c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24h-8C71.6 32 0 103.6 0 192v240c0 26.5 21.5 48 48 48h128c26.5 0 48-21.5 48-48V304c0-26.5-21.5-48-48-48z"]};var faQuoteRight={prefix:'fas',iconName:'quote-right',icon:[512,512,[],"f10e","M464 32H336c-26.5 0-48 21.5-48 48v128c0 26.5 21.5 48 48 48h80v64c0 35.3-28.7 64-64 64h-8c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h8c88.4 0 160-71.6 160-160V80c0-26.5-21.5-48-48-48zm-288 0H48C21.5 32 0 53.5 0 80v128c0 26.5 21.5 48 48 48h80v64c0 35.3-28.7 64-64 64h-8c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h8c88.4 0 160-71.6 160-160V80c0-26.5-21.5-48-48-48z"]};
+  var faBook={prefix:'fas',iconName:'book',icon:[448,512,[],"f02d","M448 360V24c0-13.3-10.7-24-24-24H96C43 0 0 43 0 96v320c0 53 43 96 96 96h328c13.3 0 24-10.7 24-24v-16c0-7.5-3.5-14.3-8.9-18.7-4.2-15.4-4.2-59.3 0-74.7 5.4-4.3 8.9-11.1 8.9-18.6zM128 134c0-3.3 2.7-6 6-6h212c3.3 0 6 2.7 6 6v20c0 3.3-2.7 6-6 6H134c-3.3 0-6-2.7-6-6v-20zm0 64c0-3.3 2.7-6 6-6h212c3.3 0 6 2.7 6 6v20c0 3.3-2.7 6-6 6H134c-3.3 0-6-2.7-6-6v-20zm253.4 250H96c-17.7 0-32-14.3-32-32 0-17.6 14.4-32 32-32h285.4c-1.9 17.1-1.9 46.9 0 64z"]};var faCircleNotch={prefix:'fas',iconName:'circle-notch',icon:[512,512,[],"f1ce","M288 39.056v16.659c0 10.804 7.281 20.159 17.686 23.066C383.204 100.434 440 171.518 440 256c0 101.689-82.295 184-184 184-101.689 0-184-82.295-184-184 0-84.47 56.786-155.564 134.312-177.219C216.719 75.874 224 66.517 224 55.712V39.064c0-15.709-14.834-27.153-30.046-23.234C86.603 43.482 7.394 141.206 8.003 257.332c.72 137.052 111.477 246.956 248.531 246.667C393.255 503.711 504 392.788 504 256c0-115.633-79.14-212.779-186.211-240.236C302.678 11.889 288 23.456 288 39.056z"]};var faCog={prefix:'fas',iconName:'cog',icon:[512,512,[],"f013","M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"]};var faFlag={prefix:'fas',iconName:'flag',icon:[512,512,[],"f024","M349.565 98.783C295.978 98.783 251.721 64 184.348 64c-24.955 0-47.309 4.384-68.045 12.013a55.947 55.947 0 0 0 3.586-23.562C118.117 24.015 94.806 1.206 66.338.048 34.345-1.254 8 24.296 8 56c0 19.026 9.497 35.825 24 45.945V488c0 13.255 10.745 24 24 24h16c13.255 0 24-10.745 24-24v-94.4c28.311-12.064 63.582-22.122 114.435-22.122 53.588 0 97.844 34.783 165.217 34.783 48.169 0 86.667-16.294 122.505-40.858C506.84 359.452 512 349.571 512 339.045v-243.1c0-23.393-24.269-38.87-45.485-29.016-34.338 15.948-76.454 31.854-116.95 31.854z"]};var faHome={prefix:'fas',iconName:'home',icon:[576,512,[],"f015","M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z"]};var faInfo={prefix:'fas',iconName:'info',icon:[192,512,[],"f129","M20 424.229h20V279.771H20c-11.046 0-20-8.954-20-20V212c0-11.046 8.954-20 20-20h112c11.046 0 20 8.954 20 20v212.229h20c11.046 0 20 8.954 20 20V492c0 11.046-8.954 20-20 20H20c-11.046 0-20-8.954-20-20v-47.771c0-11.046 8.954-20 20-20zM96 0C56.235 0 24 32.235 24 72s32.235 72 72 72 72-32.235 72-72S135.764 0 96 0z"]};var faLink={prefix:'fas',iconName:'link',icon:[512,512,[],"f0c1","M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"]};var faMagic={prefix:'fas',iconName:'magic',icon:[512,512,[],"f0d0","M224 96l16-32 32-16-32-16-16-32-16 32-32 16 32 16 16 32zM80 160l26.66-53.33L160 80l-53.34-26.67L80 0 53.34 53.33 0 80l53.34 26.67L80 160zm352 128l-26.66 53.33L352 368l53.34 26.67L432 448l26.66-53.33L512 368l-53.34-26.67L432 288zm70.62-193.77L417.77 9.38C411.53 3.12 403.34 0 395.15 0c-8.19 0-16.38 3.12-22.63 9.38L9.38 372.52c-12.5 12.5-12.5 32.76 0 45.25l84.85 84.85c6.25 6.25 14.44 9.37 22.62 9.37 8.19 0 16.38-3.12 22.63-9.37l363.14-363.15c12.5-12.48 12.5-32.75 0-45.24zM359.45 203.46l-50.91-50.91 86.6-86.6 50.91 50.91-86.6 86.6z"]};var faPencilAlt={prefix:'fas',iconName:'pencil-alt',icon:[512,512,[],"f303","M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"]};var faQuoteLeft={prefix:'fas',iconName:'quote-left',icon:[512,512,[],"f10d","M464 256h-80v-64c0-35.3 28.7-64 64-64h8c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24h-8c-88.4 0-160 71.6-160 160v240c0 26.5 21.5 48 48 48h128c26.5 0 48-21.5 48-48V304c0-26.5-21.5-48-48-48zm-288 0H96v-64c0-35.3 28.7-64 64-64h8c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24h-8C71.6 32 0 103.6 0 192v240c0 26.5 21.5 48 48 48h128c26.5 0 48-21.5 48-48V304c0-26.5-21.5-48-48-48z"]};var faQuoteRight={prefix:'fas',iconName:'quote-right',icon:[512,512,[],"f10e","M464 32H336c-26.5 0-48 21.5-48 48v128c0 26.5 21.5 48 48 48h80v64c0 35.3-28.7 64-64 64h-8c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h8c88.4 0 160-71.6 160-160V80c0-26.5-21.5-48-48-48zm-288 0H48C21.5 32 0 53.5 0 80v128c0 26.5 21.5 48 48 48h80v64c0 35.3-28.7 64-64 64h-8c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h8c88.4 0 160-71.6 160-160V80c0-26.5-21.5-48-48-48z"]};var faSpinner={prefix:'fas',iconName:'spinner',icon:[512,512,[],"f110","M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z"]};var faStroopwafel={prefix:'fas',iconName:'stroopwafel',icon:[512,512,[],"f551","M188.12 210.74L142.86 256l45.25 45.25L233.37 256l-45.25-45.26zm113.13-22.62L256 142.86l-45.25 45.25L256 233.37l45.25-45.25zm-90.5 135.76L256 369.14l45.26-45.26L256 278.63l-45.25 45.25zM256 0C114.62 0 0 114.62 0 256s114.62 256 256 256 256-114.62 256-256S397.38 0 256 0zm186.68 295.6l-11.31 11.31c-3.12 3.12-8.19 3.12-11.31 0l-28.29-28.29-45.25 45.25 33.94 33.94 16.97-16.97c3.12-3.12 8.19-3.12 11.31 0l11.31 11.31c3.12 3.12 3.12 8.19 0 11.31l-16.97 16.97 16.97 16.97c3.12 3.12 3.12 8.19 0 11.31l-11.31 11.31c-3.12 3.12-8.19 3.12-11.31 0l-16.97-16.97-16.97 16.97c-3.12 3.12-8.19 3.12-11.31 0l-11.31-11.31c-3.12-3.12-3.12-8.19 0-11.31l16.97-16.97-33.94-33.94-45.26 45.26 28.29 28.29c3.12 3.12 3.12 8.19 0 11.31l-11.31 11.31c-3.12 3.12-8.19 3.12-11.31 0L256 414.39l-28.29 28.29c-3.12 3.12-8.19 3.12-11.31 0l-11.31-11.31c-3.12-3.12-3.12-8.19 0-11.31l28.29-28.29-45.25-45.26-33.94 33.94 16.97 16.97c3.12 3.12 3.12 8.19 0 11.31l-11.31 11.31c-3.12 3.12-8.19 3.12-11.31 0l-16.97-16.97-16.97 16.97c-3.12 3.12-8.19 3.12-11.31 0l-11.31-11.31c-3.12-3.12-3.12-8.19 0-11.31l16.97-16.97-16.97-16.97c-3.12-3.12-3.12-8.19 0-11.31l11.31-11.31c3.12-3.12 8.19-3.12 11.31 0l16.97 16.97 33.94-33.94-45.25-45.25-28.29 28.29c-3.12 3.12-8.19 3.12-11.31 0L69.32 295.6c-3.12-3.12-3.12-8.19 0-11.31L97.61 256l-28.29-28.29c-3.12-3.12-3.12-8.19 0-11.31l11.31-11.31c3.12-3.12 8.19-3.12 11.31 0l28.29 28.29 45.25-45.26-33.94-33.94-16.97 16.97c-3.12 3.12-8.19 3.12-11.31 0l-11.31-11.31c-3.12-3.12-3.12-8.19 0-11.31l16.97-16.97-16.97-16.97c-3.12-3.12-3.12-8.19 0-11.31l11.31-11.31c3.12-3.12 8.19-3.12 11.31 0l16.97 16.97 16.97-16.97c3.12-3.12 8.19-3.12 11.31 0l11.31 11.31c3.12 3.12 3.12 8.19 0 11.31l-16.97 16.97 33.94 33.94 45.26-45.25-28.29-28.29c-3.12-3.12-3.12-8.19 0-11.31l11.31-11.31c3.12-3.12 8.19-3.12 11.31 0L256 97.61l28.29-28.29c3.12-3.12 8.19-3.12 11.31 0l11.31 11.31c3.12 3.12 3.12 8.19 0 11.31l-28.29 28.29 45.26 45.25 33.94-33.94-16.97-16.97c-3.12-3.12-3.12-8.19 0-11.31l11.31-11.31c3.12-3.12 8.19-3.12 11.31 0l16.97 16.97 16.97-16.97c3.12-3.12 8.19-3.12 11.31 0l11.31 11.31c3.12 3.12 3.12 8.19 0 11.31l-16.97 16.97 16.97 16.97c3.12 3.12 3.12 8.19 0 11.31l-11.31 11.31c-3.12 3.12-8.19 3.12-11.31 0l-16.97-16.97-33.94 33.94 45.25 45.26 28.29-28.29c3.12-3.12 8.19-3.12 11.31 0l11.31 11.31c3.12 3.12 3.12 8.19 0 11.31L414.39 256l28.29 28.28a8.015 8.015 0 0 1 0 11.32zM278.63 256l45.26 45.25L369.14 256l-45.25-45.26L278.63 256z"]};var faSync={prefix:'fas',iconName:'sync',icon:[512,512,[],"f021","M440.65 12.57l4 82.77A247.16 247.16 0 0 0 255.83 8C134.73 8 33.91 94.92 12.29 209.82A12 12 0 0 0 24.09 224h49.05a12 12 0 0 0 11.67-9.26 175.91 175.91 0 0 1 317-56.94l-101.46-4.86a12 12 0 0 0-12.57 12v47.41a12 12 0 0 0 12 12H500a12 12 0 0 0 12-12V12a12 12 0 0 0-12-12h-47.37a12 12 0 0 0-11.98 12.57zM255.83 432a175.61 175.61 0 0 1-146-77.8l101.8 4.87a12 12 0 0 0 12.57-12v-47.4a12 12 0 0 0-12-12H12a12 12 0 0 0-12 12V500a12 12 0 0 0 12 12h47.35a12 12 0 0 0 12-12.6l-4.15-82.57A247.17 247.17 0 0 0 255.83 504c121.11 0 221.93-86.92 243.55-201.82a12 12 0 0 0-11.8-14.18h-49.05a12 12 0 0 0-11.67 9.26A175.86 175.86 0 0 1 255.83 432z"]};
 
   function styleInject(css, ref) {
     if (ref === void 0) ref = {};
@@ -610,8 +633,8 @@
     }
   }
 
-  var css_248z = ".hue.svelte-1a2mimh{color:#238ae6;animation:svelte-1a2mimh-hue 30s infinite linear}@keyframes svelte-1a2mimh-hue{from{filter:hue-rotate(0deg)}to{filter:hue-rotate(-360deg)}}";
-  styleInject(css_248z);
+  var css_248z$2 = ".hue.svelte-1a2mimh{color:#238ae6;animation:svelte-1a2mimh-hue 30s infinite linear}@keyframes svelte-1a2mimh-hue{from{filter:hue-rotate(0deg)}to{filter:hue-rotate(-360deg)}}";
+  styleInject(css_248z$2);
 
   function get_each_context(ctx, list, i) {
     var child_ctx = ctx.slice();
@@ -664,9 +687,9 @@
         /*model*/
         ctx[0].pull == (
         /*p*/
-        ctx[16] == "None" ? undefined :
+        ctx[16] == 'None' ? undefined :
         /*p*/
-        ctx[16].toLowerCase()) ? "primary" : "secondary")) + " svelte-1a2mimh"));
+        ctx[16].toLowerCase()) ? 'primary' : 'secondary')) + " svelte-1a2mimh"));
         attr(button, "type", "button");
         this.first = button;
       },
@@ -689,9 +712,9 @@
         /*model*/
         ctx[0].pull == (
         /*p*/
-        ctx[16] == "None" ? undefined :
+        ctx[16] == 'None' ? undefined :
         /*p*/
-        ctx[16].toLowerCase()) ? "primary" : "secondary")) + " svelte-1a2mimh"))) {
+        ctx[16].toLowerCase()) ? 'primary' : 'secondary')) + " svelte-1a2mimh"))) {
           attr(button, "class", button_class_value);
         }
       },
@@ -735,9 +758,9 @@
         /*model*/
         ctx[0].flip == (
         /*f*/
-        ctx[13] == "None" ? undefined :
+        ctx[13] == 'None' ? undefined :
         /*f*/
-        ctx[13].toLowerCase()) ? "primary" : "secondary")) + " svelte-1a2mimh"));
+        ctx[13].toLowerCase()) ? 'primary' : 'secondary')) + " svelte-1a2mimh"));
         attr(button, "type", "button");
         this.first = button;
       },
@@ -760,9 +783,9 @@
         /*model*/
         ctx[0].flip == (
         /*f*/
-        ctx[13] == "None" ? undefined :
+        ctx[13] == 'None' ? undefined :
         /*f*/
-        ctx[13].toLowerCase()) ? "primary" : "secondary")) + " svelte-1a2mimh"))) {
+        ctx[13].toLowerCase()) ? 'primary' : 'secondary')) + " svelte-1a2mimh"))) {
           attr(button, "class", button_class_value);
         }
       },
@@ -852,7 +875,7 @@
     };
   }
 
-  function create_fragment(ctx) {
+  function create_fragment$5(ctx) {
     var div19;
     var div18;
     var div16;
@@ -1182,19 +1205,19 @@
         if (dirty &
         /*model, pull, undefined, setValue*/
         19) {
-          var _each_value_ =
+          each_value_2 =
           /*pull*/
           ctx[1];
-          each_blocks_2 = update_keyed_each(each_blocks_2, dirty, get_key, 1, ctx, _each_value_, each0_lookup, div5, destroy_block, create_each_block_2, null, get_each_context_2);
+          each_blocks_2 = update_keyed_each(each_blocks_2, dirty, get_key, 1, ctx, each_value_2, each0_lookup, div5, destroy_block, create_each_block_2, null, get_each_context_2);
         }
 
         if (dirty &
         /*model, flip, undefined, setValue*/
         21) {
-          var _each_value_2 =
+          each_value_1 =
           /*flip*/
           ctx[2];
-          each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key_1, 1, ctx, _each_value_2, each1_lookup, div8, destroy_block, create_each_block_1, null, get_each_context_1);
+          each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key_1, 1, ctx, each_value_1, each1_lookup, div8, destroy_block, create_each_block_1, null, get_each_context_1);
         }
 
         if (dirty &
@@ -1283,23 +1306,23 @@
     };
   }
 
-  function instance($$self, $$props, $$invalidate) {
+  function instance$4($$self, $$props, $$invalidate) {
     var model = {
       size: 5,
       pull: undefined,
       flip: undefined,
       rotate: 0
     };
-    var pull = ["None", "Left", "Right"];
-    var flip = ["None", "Horizontal", "Vertical", "Both"];
+    var pull = ['None', 'Left', 'Right'];
+    var flip = ['None', 'Horizontal', 'Vertical', 'Both'];
     var icons = [faFlag, faHome, faCog, faMagic];
 
     function setValue(prop, value) {
-      $$invalidate(0, model[prop] = value == "None" ? undefined : value.toLowerCase(), model);
+      $$invalidate(0, model[prop] = value == 'None' ? undefined : value.toLowerCase(), model);
     }
 
     function submit_handler(event) {
-      bubble($$self, event);
+      bubble.call(this, $$self, event);
     }
 
     function input0_change_input_handler() {
@@ -1308,11 +1331,11 @@
     }
 
     var click_handler = function click_handler(p) {
-      return setValue("pull", p);
+      return setValue('pull', p);
     };
 
     var click_handler_1 = function click_handler_1(f) {
-      return setValue("flip", f);
+      return setValue('flip', f);
     };
 
     function input1_change_input_handler() {
@@ -1330,14 +1353,14 @@
       var _this;
 
       _this = _SvelteComponent.call(this) || this;
-      init(_assertThisInitialized(_this), options, instance, create_fragment, safe_not_equal, {});
+      init(_assertThisInitialized(_this), options, instance$4, create_fragment$5, safe_not_equal, {});
       return _this;
     }
 
     return Showcase;
   }(SvelteComponent);
 
-  function create_fragment$1(ctx) {
+  function create_fragment$4(ctx) {
     var div;
     var pre;
     var code_1;
@@ -1392,10 +1415,10 @@
     };
   }
 
-  function instance$1($$self, $$props, $$invalidate) {
+  function instance$3($$self, $$props, $$invalidate) {
     var code = $$props.code;
     var _$$props$lang = $$props.lang,
-        lang = _$$props$lang === void 0 ? "html" : _$$props$lang;
+        lang = _$$props$lang === void 0 ? 'html' : _$$props$lang;
     var el;
 
     function highlight() {
@@ -1405,22 +1428,22 @@
     afterUpdate(highlight);
 
     function code_1_binding($$value) {
-      binding_callbacks[$$value ? "unshift" : "push"](function () {
+      binding_callbacks[$$value ? 'unshift' : 'push'](function () {
         el = $$value;
         $$invalidate(2, el);
       });
     }
 
     $$self.$$set = function ($$props) {
-      if ("code" in $$props) $$invalidate(0, code = $$props.code);
-      if ("lang" in $$props) $$invalidate(1, lang = $$props.lang);
+      if ('code' in $$props) $$invalidate(0, code = $$props.code);
+      if ('lang' in $$props) $$invalidate(1, lang = $$props.lang);
     };
 
     $$self.$$.update = function () {
       if ($$self.$$.dirty &
       /*el, code*/
       5) {
-         el && code && highlight();
+        el && code && highlight();
       }
     };
 
@@ -1434,7 +1457,7 @@
       var _this;
 
       _this = _SvelteComponent.call(this) || this;
-      init(_assertThisInitialized(_this), options, instance$1, create_fragment$1, safe_not_equal, {
+      init(_assertThisInitialized(_this), options, instance$3, create_fragment$4, safe_not_equal, {
         code: 0,
         lang: 1
       });
@@ -1447,7 +1470,7 @@
   var css_248z$1 = "img.svelte-tdv3q3{max-width:100%;max-height:48px}small.svelte-tdv3q3{position:absolute;right:1rem;bottom:.1rem;color:#ddd;z-index:-1}";
   styleInject(css_248z$1);
 
-  function create_fragment$2(ctx) {
+  function create_fragment$3(ctx) {
     var div;
     var img;
     var t0;
@@ -1512,17 +1535,17 @@
       var _this;
 
       _this = _SvelteComponent.call(this) || this;
-      init(_assertThisInitialized(_this), options, instance$2, create_fragment$2, safe_not_equal, {});
+      init(_assertThisInitialized(_this), options, instance$2, create_fragment$3, safe_not_equal, {});
       return _this;
     }
 
     return Docs_img;
   }(SvelteComponent);
 
-  var css_248z$2 = "a.svelte-1yrtkpv.svelte-1yrtkpv,a.svelte-1yrtkpv.svelte-1yrtkpv:visited{color:currentColor}small.svelte-1yrtkpv.svelte-1yrtkpv{visibility:hidden}a.svelte-1yrtkpv:hover+small.svelte-1yrtkpv{visibility:visible}";
-  styleInject(css_248z$2);
+  var css_248z = "a.svelte-1yrtkpv.svelte-1yrtkpv,a.svelte-1yrtkpv.svelte-1yrtkpv:visited{color:currentColor}small.svelte-1yrtkpv.svelte-1yrtkpv{visibility:hidden}a.svelte-1yrtkpv:hover+small.svelte-1yrtkpv{visibility:visible}";
+  styleInject(css_248z);
 
-  function create_fragment$3(ctx) {
+  function create_fragment$2(ctx) {
     var h4;
     var a;
     var t0;
@@ -1616,23 +1639,23 @@
     };
   }
 
-  function instance$3($$self, $$props, $$invalidate) {
+  function instance$1($$self, $$props, $$invalidate) {
     var _$$props$level = $$props.level,
         level = _$$props$level === void 0 ? 4 : _$$props$level;
     var _$$props$title = $$props.title,
-        title = _$$props$title === void 0 ? "" : _$$props$title;
+        title = _$$props$title === void 0 ? '' : _$$props$title;
     var id;
 
     $$self.$$set = function ($$props) {
-      if ("level" in $$props) $$invalidate(0, level = $$props.level);
-      if ("title" in $$props) $$invalidate(1, title = $$props.title);
+      if ('level' in $$props) $$invalidate(0, level = $$props.level);
+      if ('title' in $$props) $$invalidate(1, title = $$props.title);
     };
 
     $$self.$$.update = function () {
       if ($$self.$$.dirty &
       /*title*/
       2) {
-         $$invalidate(2, id = title.toLowerCase().replace(/[^\w]/g, "-"));
+        $$invalidate(2, id = title.toLowerCase().replace(/[^\w]/g, '-'));
       }
     };
 
@@ -1646,7 +1669,7 @@
       var _this;
 
       _this = _SvelteComponent.call(this) || this;
-      init(_assertThisInitialized(_this), options, instance$3, create_fragment$3, safe_not_equal, {
+      init(_assertThisInitialized(_this), options, instance$1, create_fragment$2, safe_not_equal, {
         level: 0,
         title: 1
       });
@@ -1656,8 +1679,8 @@
     return Docs_title;
   }(SvelteComponent);
 
-  function create_fragment$4(ctx) {
-    var div15;
+  function create_fragment$1(ctx) {
+    var div16;
     var docstitle0;
     var t0;
     var docscode0;
@@ -1748,76 +1771,93 @@
     var t52;
     var docstitle6;
     var t53;
-    var docstitle7;
-    var t54;
     var div14;
     var fa17;
-    var t55;
+    var t54;
     var fa18;
-    var t56;
+    var t55;
     var fa19;
-    var t57;
+    var t56;
     var fa20;
-    var t58;
+    var t57;
     var fa21;
-    var t59;
+    var t58;
     var fa22;
-    var t60;
-    var fa23;
-    var t61;
-    var fa24;
-    var t62;
-    var fa25;
-    var t63;
+    var t59;
     var docscode9;
-    var t64;
+    var t60;
+    var docstitle7;
+    var t61;
     var docstitle8;
+    var t62;
+    var div15;
+    var fa23;
+    var t63;
+    var fa24;
+    var t64;
+    var fa25;
     var t65;
-    var docstitle9;
+    var fa26;
     var t66;
-    var docsimg0;
+    var fa27;
     var t67;
-    var docscode10;
+    var fa28;
     var t68;
-    var docscode11;
+    var fa29;
     var t69;
-    var docstitle10;
+    var fa30;
     var t70;
-    var docsimg1;
+    var fa31;
     var t71;
-    var docscode12;
+    var docscode10;
     var t72;
-    var docstitle11;
+    var docstitle9;
     var t73;
-    var docsimg2;
+    var docstitle10;
     var t74;
-    var docscode13;
+    var docsimg0;
     var t75;
-    var docsimg3;
+    var docscode11;
     var t76;
-    var docscode14;
+    var docscode12;
     var t77;
-    var docstitle12;
+    var docstitle11;
     var t78;
-    var docsimg4;
+    var docsimg1;
     var t79;
-    var docscode15;
+    var docscode13;
     var t80;
-    var docstitle13;
+    var docstitle12;
     var t81;
-    var docsimg5;
+    var docsimg2;
     var t82;
-    var docscode16;
+    var docscode14;
     var t83;
-    var docsimg6;
+    var docsimg3;
     var t84;
-    var docscode17;
+    var docscode15;
     var t85;
-    var docsimg7;
+    var docstitle13;
     var t86;
-    var docscode18;
+    var docsimg4;
     var t87;
+    var docscode16;
+    var t88;
+    var docstitle14;
+    var t89;
+    var docsimg5;
+    var t90;
+    var docscode17;
+    var t91;
+    var docsimg6;
+    var t92;
+    var docscode18;
+    var t93;
+    var docsimg7;
+    var t94;
     var docscode19;
+    var t95;
+    var docscode20;
     var current;
     docstitle0 = new Docs_title({
       props: {
@@ -2025,16 +2065,70 @@
     });
     docstitle6 = new Docs_title({
       props: {
-        title: "Power Transforms"
+        title: "Animating Icons"
+      }
+    });
+    fa17 = new Fa__default['default']({
+      props: {
+        icon: faSpinner,
+        size: "3x",
+        spin: true
+      }
+    });
+    fa18 = new Fa__default['default']({
+      props: {
+        icon: faCircleNotch,
+        size: "3x",
+        spin: true
+      }
+    });
+    fa19 = new Fa__default['default']({
+      props: {
+        icon: faSync,
+        size: "3x",
+        spin: true
+      }
+    });
+    fa20 = new Fa__default['default']({
+      props: {
+        icon: faCog,
+        size: "3x",
+        spin: true
+      }
+    });
+    fa21 = new Fa__default['default']({
+      props: {
+        icon: faSpinner,
+        size: "3x",
+        pulse: true
+      }
+    });
+    fa22 = new Fa__default['default']({
+      props: {
+        icon: faStroopwafel,
+        size: "3x",
+        spin: true
+      }
+    });
+    docscode9 = new Docs_code({
+      props: {
+        code:
+        /*codes*/
+        ctx[0].animatingIcons[0]
       }
     });
     docstitle7 = new Docs_title({
+      props: {
+        title: "Power Transforms"
+      }
+    });
+    docstitle8 = new Docs_title({
       props: {
         title: "Rotating & Flipping",
         level: 5
       }
     });
-    fa17 = new Fa__default['default']({
+    fa23 = new Fa__default['default']({
       props: {
         icon: faMagic,
         rotate: 90,
@@ -2042,7 +2136,7 @@
         style: "background: mistyrose"
       }
     });
-    fa18 = new Fa__default['default']({
+    fa24 = new Fa__default['default']({
       props: {
         icon: faMagic,
         rotate: 180,
@@ -2050,7 +2144,7 @@
         style: "background: mistyrose"
       }
     });
-    fa19 = new Fa__default['default']({
+    fa25 = new Fa__default['default']({
       props: {
         icon: faMagic,
         size: "4x",
@@ -2058,7 +2152,7 @@
         style: "background: mistyrose"
       }
     });
-    fa20 = new Fa__default['default']({
+    fa26 = new Fa__default['default']({
       props: {
         icon: faMagic,
         size: "4x",
@@ -2066,7 +2160,7 @@
         style: "background: mistyrose"
       }
     });
-    fa21 = new Fa__default['default']({
+    fa27 = new Fa__default['default']({
       props: {
         icon: faMagic,
         size: "4x",
@@ -2074,7 +2168,7 @@
         style: "background: mistyrose"
       }
     });
-    fa22 = new Fa__default['default']({
+    fa28 = new Fa__default['default']({
       props: {
         icon: faMagic,
         size: "4x",
@@ -2082,7 +2176,7 @@
         style: "background: mistyrose"
       }
     });
-    fa23 = new Fa__default['default']({
+    fa29 = new Fa__default['default']({
       props: {
         icon: faMagic,
         size: "4x",
@@ -2090,7 +2184,7 @@
         style: "background: mistyrose"
       }
     });
-    fa24 = new Fa__default['default']({
+    fa30 = new Fa__default['default']({
       props: {
         icon: faMagic,
         size: "4x",
@@ -2098,7 +2192,7 @@
         style: "background: mistyrose"
       }
     });
-    fa25 = new Fa__default['default']({
+    fa31 = new Fa__default['default']({
       props: {
         icon: faMagic,
         size: "4x",
@@ -2107,19 +2201,19 @@
         style: "background: mistyrose"
       }
     });
-    docscode9 = new Docs_code({
+    docscode10 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].powerTransforms[0]
       }
     });
-    docstitle8 = new Docs_title({
+    docstitle9 = new Docs_title({
       props: {
         title: "Duotone Icons"
       }
     });
-    docstitle9 = new Docs_title({
+    docstitle10 = new Docs_title({
       props: {
         title: "Basic Use",
         level: 5
@@ -2131,7 +2225,7 @@
         alt: "duotone icons basic use"
       }
     });
-    docscode10 = new Docs_code({
+    docscode11 = new Docs_code({
       props: {
         code:
         /*codes*/
@@ -2139,14 +2233,14 @@
         lang: "js"
       }
     });
-    docscode11 = new Docs_code({
+    docscode12 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].duotoneIcons[1]
       }
     });
-    docstitle10 = new Docs_title({
+    docstitle11 = new Docs_title({
       props: {
         title: "Swapping Layer Opacity",
         level: 5
@@ -2158,14 +2252,14 @@
         alt: "swapping duotone icons layer opacity"
       }
     });
-    docscode12 = new Docs_code({
+    docscode13 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].duotoneIcons[2]
       }
     });
-    docstitle11 = new Docs_title({
+    docstitle12 = new Docs_title({
       props: {
         title: "Changing Opacity",
         level: 5
@@ -2177,7 +2271,7 @@
         alt: "changing duotone icons opacity"
       }
     });
-    docscode13 = new Docs_code({
+    docscode14 = new Docs_code({
       props: {
         code:
         /*codes*/
@@ -2190,14 +2284,14 @@
         alt: "changing duotone icons opacity"
       }
     });
-    docscode14 = new Docs_code({
+    docscode15 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].duotoneIcons[4]
       }
     });
-    docstitle12 = new Docs_title({
+    docstitle13 = new Docs_title({
       props: {
         title: "Coloring Duotone Icons",
         level: 5
@@ -2209,14 +2303,14 @@
         alt: "coloring duotone icons"
       }
     });
-    docscode15 = new Docs_code({
+    docscode16 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].duotoneIcons[5]
       }
     });
-    docstitle13 = new Docs_title({
+    docstitle14 = new Docs_title({
       props: {
         title: "Advanced Use",
         level: 5
@@ -2228,7 +2322,7 @@
         alt: "duotone icons advanced use"
       }
     });
-    docscode16 = new Docs_code({
+    docscode17 = new Docs_code({
       props: {
         code:
         /*codes*/
@@ -2241,7 +2335,7 @@
         alt: "duotone icons advanced use"
       }
     });
-    docscode17 = new Docs_code({
+    docscode18 = new Docs_code({
       props: {
         code:
         /*codes*/
@@ -2254,7 +2348,7 @@
         alt: "duotone icons advanced use"
       }
     });
-    docscode18 = new Docs_code({
+    docscode19 = new Docs_code({
       props: {
         code:
         /*codes*/
@@ -2262,7 +2356,7 @@
         lang: "js"
       }
     });
-    docscode19 = new Docs_code({
+    docscode20 = new Docs_code({
       props: {
         code:
         /*codes*/
@@ -2271,7 +2365,7 @@
     });
     return {
       c: function c() {
-        div15 = element("div");
+        div16 = element("div");
         create_component(docstitle0.$$.fragment);
         t0 = space();
         create_component(docscode0.$$.fragment);
@@ -2365,76 +2459,93 @@
         t52 = space();
         create_component(docstitle6.$$.fragment);
         t53 = space();
-        create_component(docstitle7.$$.fragment);
-        t54 = space();
         div14 = element("div");
         create_component(fa17.$$.fragment);
-        t55 = space();
+        t54 = space();
         create_component(fa18.$$.fragment);
-        t56 = space();
+        t55 = space();
         create_component(fa19.$$.fragment);
-        t57 = space();
+        t56 = space();
         create_component(fa20.$$.fragment);
-        t58 = space();
+        t57 = space();
         create_component(fa21.$$.fragment);
-        t59 = space();
+        t58 = space();
         create_component(fa22.$$.fragment);
-        t60 = space();
-        create_component(fa23.$$.fragment);
-        t61 = space();
-        create_component(fa24.$$.fragment);
-        t62 = space();
-        create_component(fa25.$$.fragment);
-        t63 = space();
+        t59 = space();
         create_component(docscode9.$$.fragment);
-        t64 = space();
+        t60 = space();
+        create_component(docstitle7.$$.fragment);
+        t61 = space();
         create_component(docstitle8.$$.fragment);
+        t62 = space();
+        div15 = element("div");
+        create_component(fa23.$$.fragment);
+        t63 = space();
+        create_component(fa24.$$.fragment);
+        t64 = space();
+        create_component(fa25.$$.fragment);
         t65 = space();
-        create_component(docstitle9.$$.fragment);
+        create_component(fa26.$$.fragment);
         t66 = space();
-        create_component(docsimg0.$$.fragment);
+        create_component(fa27.$$.fragment);
         t67 = space();
-        create_component(docscode10.$$.fragment);
+        create_component(fa28.$$.fragment);
         t68 = space();
-        create_component(docscode11.$$.fragment);
+        create_component(fa29.$$.fragment);
         t69 = space();
-        create_component(docstitle10.$$.fragment);
+        create_component(fa30.$$.fragment);
         t70 = space();
-        create_component(docsimg1.$$.fragment);
+        create_component(fa31.$$.fragment);
         t71 = space();
-        create_component(docscode12.$$.fragment);
+        create_component(docscode10.$$.fragment);
         t72 = space();
-        create_component(docstitle11.$$.fragment);
+        create_component(docstitle9.$$.fragment);
         t73 = space();
-        create_component(docsimg2.$$.fragment);
+        create_component(docstitle10.$$.fragment);
         t74 = space();
-        create_component(docscode13.$$.fragment);
+        create_component(docsimg0.$$.fragment);
         t75 = space();
-        create_component(docsimg3.$$.fragment);
+        create_component(docscode11.$$.fragment);
         t76 = space();
-        create_component(docscode14.$$.fragment);
+        create_component(docscode12.$$.fragment);
         t77 = space();
-        create_component(docstitle12.$$.fragment);
+        create_component(docstitle11.$$.fragment);
         t78 = space();
-        create_component(docsimg4.$$.fragment);
+        create_component(docsimg1.$$.fragment);
         t79 = space();
-        create_component(docscode15.$$.fragment);
+        create_component(docscode13.$$.fragment);
         t80 = space();
-        create_component(docstitle13.$$.fragment);
+        create_component(docstitle12.$$.fragment);
         t81 = space();
-        create_component(docsimg5.$$.fragment);
+        create_component(docsimg2.$$.fragment);
         t82 = space();
-        create_component(docscode16.$$.fragment);
+        create_component(docscode14.$$.fragment);
         t83 = space();
-        create_component(docsimg6.$$.fragment);
+        create_component(docsimg3.$$.fragment);
         t84 = space();
-        create_component(docscode17.$$.fragment);
+        create_component(docscode15.$$.fragment);
         t85 = space();
-        create_component(docsimg7.$$.fragment);
+        create_component(docstitle13.$$.fragment);
         t86 = space();
-        create_component(docscode18.$$.fragment);
+        create_component(docsimg4.$$.fragment);
         t87 = space();
+        create_component(docscode16.$$.fragment);
+        t88 = space();
+        create_component(docstitle14.$$.fragment);
+        t89 = space();
+        create_component(docsimg5.$$.fragment);
+        t90 = space();
+        create_component(docscode17.$$.fragment);
+        t91 = space();
+        create_component(docsimg6.$$.fragment);
+        t92 = space();
+        create_component(docscode18.$$.fragment);
+        t93 = space();
+        create_component(docsimg7.$$.fragment);
+        t94 = space();
         create_component(docscode19.$$.fragment);
+        t95 = space();
+        create_component(docscode20.$$.fragment);
         attr(div0, "class", "shadow-sm p-3 mb-3 rounded clearfix");
         attr(div1, "class", "shadow-sm p-3 mb-3 rounded clearfix");
         attr(div2, "class", "shadow-sm p-3 mb-3 rounded clearfix");
@@ -2446,44 +2557,45 @@
         attr(div12, "class", "shadow-sm p-3 mb-3 rounded");
         attr(div13, "class", "shadow-sm p-3 mb-3 rounded clearfix");
         attr(div14, "class", "shadow-sm p-3 mb-3 rounded");
+        attr(div15, "class", "shadow-sm p-3 mb-3 rounded");
       },
       m: function m(target, anchor) {
-        insert(target, div15, anchor);
-        mount_component(docstitle0, div15, null);
-        append(div15, t0);
-        mount_component(docscode0, div15, null);
-        append(div15, t1);
-        append(div15, div0);
-        append(div15, t5);
-        mount_component(docscode1, div15, null);
-        append(div15, t6);
-        append(div15, div1);
-        append(div15, t11);
-        mount_component(docscode2, div15, null);
-        append(div15, t12);
-        append(div15, div2);
-        append(div15, t17);
-        mount_component(docscode3, div15, null);
-        append(div15, t18);
-        mount_component(docstitle1, div15, null);
-        append(div15, t19);
-        append(div15, div3);
+        insert(target, div16, anchor);
+        mount_component(docstitle0, div16, null);
+        append(div16, t0);
+        mount_component(docscode0, div16, null);
+        append(div16, t1);
+        append(div16, div0);
+        append(div16, t5);
+        mount_component(docscode1, div16, null);
+        append(div16, t6);
+        append(div16, div1);
+        append(div16, t11);
+        mount_component(docscode2, div16, null);
+        append(div16, t12);
+        append(div16, div2);
+        append(div16, t17);
+        mount_component(docscode3, div16, null);
+        append(div16, t18);
+        mount_component(docstitle1, div16, null);
+        append(div16, t19);
+        append(div16, div3);
         mount_component(fa0, div3, null);
         append(div3, t20);
-        append(div15, t21);
-        mount_component(docscode4, div15, null);
-        append(div15, t22);
-        append(div15, div5);
+        append(div16, t21);
+        mount_component(docscode4, div16, null);
+        append(div16, t22);
+        append(div16, div5);
         append(div5, div4);
         mount_component(fa1, div4, null);
-        append(div15, t23);
-        mount_component(docscode5, div15, null);
-        append(div15, t24);
-        mount_component(docstitle2, div15, null);
-        append(div15, t25);
-        mount_component(docstitle3, div15, null);
-        append(div15, t26);
-        append(div15, div6);
+        append(div16, t23);
+        mount_component(docscode5, div16, null);
+        append(div16, t24);
+        mount_component(docstitle2, div16, null);
+        append(div16, t25);
+        mount_component(docstitle3, div16, null);
+        append(div16, t26);
+        append(div16, div6);
         mount_component(fa2, div6, null);
         append(div6, t27);
         mount_component(fa3, div6, null);
@@ -2499,12 +2611,12 @@
         mount_component(fa8, div6, null);
         append(div6, t33);
         mount_component(fa9, div6, null);
-        append(div15, t34);
-        mount_component(docscode6, div15, null);
-        append(div15, t35);
-        mount_component(docstitle4, div15, null);
-        append(div15, t36);
-        append(div15, div12);
+        append(div16, t34);
+        mount_component(docscode6, div16, null);
+        append(div16, t35);
+        mount_component(docstitle4, div16, null);
+        append(div16, t36);
+        append(div16, div12);
         append(div12, div7);
         mount_component(fa10, div7, null);
         append(div7, t37);
@@ -2524,91 +2636,108 @@
         append(div12, div11);
         mount_component(fa14, div11, null);
         append(div11, t45);
-        append(div15, t46);
-        mount_component(docscode7, div15, null);
-        append(div15, t47);
-        mount_component(docstitle5, div15, null);
-        append(div15, t48);
-        append(div15, div13);
+        append(div16, t46);
+        mount_component(docscode7, div16, null);
+        append(div16, t47);
+        mount_component(docstitle5, div16, null);
+        append(div16, t48);
+        append(div16, div13);
         mount_component(fa15, div13, null);
         append(div13, t49);
         mount_component(fa16, div13, null);
         append(div13, t50);
-        append(div15, t51);
-        mount_component(docscode8, div15, null);
-        append(div15, t52);
-        mount_component(docstitle6, div15, null);
-        append(div15, t53);
-        mount_component(docstitle7, div15, null);
-        append(div15, t54);
-        append(div15, div14);
+        append(div16, t51);
+        mount_component(docscode8, div16, null);
+        append(div16, t52);
+        mount_component(docstitle6, div16, null);
+        append(div16, t53);
+        append(div16, div14);
         mount_component(fa17, div14, null);
-        append(div14, t55);
+        append(div14, t54);
         mount_component(fa18, div14, null);
-        append(div14, t56);
+        append(div14, t55);
         mount_component(fa19, div14, null);
-        append(div14, t57);
+        append(div14, t56);
         mount_component(fa20, div14, null);
-        append(div14, t58);
+        append(div14, t57);
         mount_component(fa21, div14, null);
-        append(div14, t59);
+        append(div14, t58);
         mount_component(fa22, div14, null);
-        append(div14, t60);
-        mount_component(fa23, div14, null);
-        append(div14, t61);
-        mount_component(fa24, div14, null);
-        append(div14, t62);
-        mount_component(fa25, div14, null);
+        append(div16, t59);
+        mount_component(docscode9, div16, null);
+        append(div16, t60);
+        mount_component(docstitle7, div16, null);
+        append(div16, t61);
+        mount_component(docstitle8, div16, null);
+        append(div16, t62);
+        append(div16, div15);
+        mount_component(fa23, div15, null);
         append(div15, t63);
-        mount_component(docscode9, div15, null);
+        mount_component(fa24, div15, null);
         append(div15, t64);
-        mount_component(docstitle8, div15, null);
+        mount_component(fa25, div15, null);
         append(div15, t65);
-        mount_component(docstitle9, div15, null);
+        mount_component(fa26, div15, null);
         append(div15, t66);
-        mount_component(docsimg0, div15, null);
+        mount_component(fa27, div15, null);
         append(div15, t67);
-        mount_component(docscode10, div15, null);
+        mount_component(fa28, div15, null);
         append(div15, t68);
-        mount_component(docscode11, div15, null);
+        mount_component(fa29, div15, null);
         append(div15, t69);
-        mount_component(docstitle10, div15, null);
+        mount_component(fa30, div15, null);
         append(div15, t70);
-        mount_component(docsimg1, div15, null);
-        append(div15, t71);
-        mount_component(docscode12, div15, null);
-        append(div15, t72);
-        mount_component(docstitle11, div15, null);
-        append(div15, t73);
-        mount_component(docsimg2, div15, null);
-        append(div15, t74);
-        mount_component(docscode13, div15, null);
-        append(div15, t75);
-        mount_component(docsimg3, div15, null);
-        append(div15, t76);
-        mount_component(docscode14, div15, null);
-        append(div15, t77);
-        mount_component(docstitle12, div15, null);
-        append(div15, t78);
-        mount_component(docsimg4, div15, null);
-        append(div15, t79);
-        mount_component(docscode15, div15, null);
-        append(div15, t80);
-        mount_component(docstitle13, div15, null);
-        append(div15, t81);
-        mount_component(docsimg5, div15, null);
-        append(div15, t82);
-        mount_component(docscode16, div15, null);
-        append(div15, t83);
-        mount_component(docsimg6, div15, null);
-        append(div15, t84);
-        mount_component(docscode17, div15, null);
-        append(div15, t85);
-        mount_component(docsimg7, div15, null);
-        append(div15, t86);
-        mount_component(docscode18, div15, null);
-        append(div15, t87);
-        mount_component(docscode19, div15, null);
+        mount_component(fa31, div15, null);
+        append(div16, t71);
+        mount_component(docscode10, div16, null);
+        append(div16, t72);
+        mount_component(docstitle9, div16, null);
+        append(div16, t73);
+        mount_component(docstitle10, div16, null);
+        append(div16, t74);
+        mount_component(docsimg0, div16, null);
+        append(div16, t75);
+        mount_component(docscode11, div16, null);
+        append(div16, t76);
+        mount_component(docscode12, div16, null);
+        append(div16, t77);
+        mount_component(docstitle11, div16, null);
+        append(div16, t78);
+        mount_component(docsimg1, div16, null);
+        append(div16, t79);
+        mount_component(docscode13, div16, null);
+        append(div16, t80);
+        mount_component(docstitle12, div16, null);
+        append(div16, t81);
+        mount_component(docsimg2, div16, null);
+        append(div16, t82);
+        mount_component(docscode14, div16, null);
+        append(div16, t83);
+        mount_component(docsimg3, div16, null);
+        append(div16, t84);
+        mount_component(docscode15, div16, null);
+        append(div16, t85);
+        mount_component(docstitle13, div16, null);
+        append(div16, t86);
+        mount_component(docsimg4, div16, null);
+        append(div16, t87);
+        mount_component(docscode16, div16, null);
+        append(div16, t88);
+        mount_component(docstitle14, div16, null);
+        append(div16, t89);
+        mount_component(docsimg5, div16, null);
+        append(div16, t90);
+        mount_component(docscode17, div16, null);
+        append(div16, t91);
+        mount_component(docsimg6, div16, null);
+        append(div16, t92);
+        mount_component(docscode18, div16, null);
+        append(div16, t93);
+        mount_component(docsimg7, div16, null);
+        append(div16, t94);
+        mount_component(docscode19, div16, null);
+        append(div16, t95);
+        mount_component(docscode20, div16, null);
         current = true;
       },
       p: noop,
@@ -2647,41 +2776,49 @@
         transition_in(fa16.$$.fragment, local);
         transition_in(docscode8.$$.fragment, local);
         transition_in(docstitle6.$$.fragment, local);
-        transition_in(docstitle7.$$.fragment, local);
         transition_in(fa17.$$.fragment, local);
         transition_in(fa18.$$.fragment, local);
         transition_in(fa19.$$.fragment, local);
         transition_in(fa20.$$.fragment, local);
         transition_in(fa21.$$.fragment, local);
         transition_in(fa22.$$.fragment, local);
+        transition_in(docscode9.$$.fragment, local);
+        transition_in(docstitle7.$$.fragment, local);
+        transition_in(docstitle8.$$.fragment, local);
         transition_in(fa23.$$.fragment, local);
         transition_in(fa24.$$.fragment, local);
         transition_in(fa25.$$.fragment, local);
-        transition_in(docscode9.$$.fragment, local);
-        transition_in(docstitle8.$$.fragment, local);
-        transition_in(docstitle9.$$.fragment, local);
-        transition_in(docsimg0.$$.fragment, local);
+        transition_in(fa26.$$.fragment, local);
+        transition_in(fa27.$$.fragment, local);
+        transition_in(fa28.$$.fragment, local);
+        transition_in(fa29.$$.fragment, local);
+        transition_in(fa30.$$.fragment, local);
+        transition_in(fa31.$$.fragment, local);
         transition_in(docscode10.$$.fragment, local);
-        transition_in(docscode11.$$.fragment, local);
+        transition_in(docstitle9.$$.fragment, local);
         transition_in(docstitle10.$$.fragment, local);
-        transition_in(docsimg1.$$.fragment, local);
+        transition_in(docsimg0.$$.fragment, local);
+        transition_in(docscode11.$$.fragment, local);
         transition_in(docscode12.$$.fragment, local);
         transition_in(docstitle11.$$.fragment, local);
-        transition_in(docsimg2.$$.fragment, local);
+        transition_in(docsimg1.$$.fragment, local);
         transition_in(docscode13.$$.fragment, local);
-        transition_in(docsimg3.$$.fragment, local);
-        transition_in(docscode14.$$.fragment, local);
         transition_in(docstitle12.$$.fragment, local);
-        transition_in(docsimg4.$$.fragment, local);
+        transition_in(docsimg2.$$.fragment, local);
+        transition_in(docscode14.$$.fragment, local);
+        transition_in(docsimg3.$$.fragment, local);
         transition_in(docscode15.$$.fragment, local);
         transition_in(docstitle13.$$.fragment, local);
-        transition_in(docsimg5.$$.fragment, local);
+        transition_in(docsimg4.$$.fragment, local);
         transition_in(docscode16.$$.fragment, local);
-        transition_in(docsimg6.$$.fragment, local);
+        transition_in(docstitle14.$$.fragment, local);
+        transition_in(docsimg5.$$.fragment, local);
         transition_in(docscode17.$$.fragment, local);
-        transition_in(docsimg7.$$.fragment, local);
+        transition_in(docsimg6.$$.fragment, local);
         transition_in(docscode18.$$.fragment, local);
+        transition_in(docsimg7.$$.fragment, local);
         transition_in(docscode19.$$.fragment, local);
+        transition_in(docscode20.$$.fragment, local);
         current = true;
       },
       o: function o(local) {
@@ -2718,45 +2855,53 @@
         transition_out(fa16.$$.fragment, local);
         transition_out(docscode8.$$.fragment, local);
         transition_out(docstitle6.$$.fragment, local);
-        transition_out(docstitle7.$$.fragment, local);
         transition_out(fa17.$$.fragment, local);
         transition_out(fa18.$$.fragment, local);
         transition_out(fa19.$$.fragment, local);
         transition_out(fa20.$$.fragment, local);
         transition_out(fa21.$$.fragment, local);
         transition_out(fa22.$$.fragment, local);
+        transition_out(docscode9.$$.fragment, local);
+        transition_out(docstitle7.$$.fragment, local);
+        transition_out(docstitle8.$$.fragment, local);
         transition_out(fa23.$$.fragment, local);
         transition_out(fa24.$$.fragment, local);
         transition_out(fa25.$$.fragment, local);
-        transition_out(docscode9.$$.fragment, local);
-        transition_out(docstitle8.$$.fragment, local);
-        transition_out(docstitle9.$$.fragment, local);
-        transition_out(docsimg0.$$.fragment, local);
+        transition_out(fa26.$$.fragment, local);
+        transition_out(fa27.$$.fragment, local);
+        transition_out(fa28.$$.fragment, local);
+        transition_out(fa29.$$.fragment, local);
+        transition_out(fa30.$$.fragment, local);
+        transition_out(fa31.$$.fragment, local);
         transition_out(docscode10.$$.fragment, local);
-        transition_out(docscode11.$$.fragment, local);
+        transition_out(docstitle9.$$.fragment, local);
         transition_out(docstitle10.$$.fragment, local);
-        transition_out(docsimg1.$$.fragment, local);
+        transition_out(docsimg0.$$.fragment, local);
+        transition_out(docscode11.$$.fragment, local);
         transition_out(docscode12.$$.fragment, local);
         transition_out(docstitle11.$$.fragment, local);
-        transition_out(docsimg2.$$.fragment, local);
+        transition_out(docsimg1.$$.fragment, local);
         transition_out(docscode13.$$.fragment, local);
-        transition_out(docsimg3.$$.fragment, local);
-        transition_out(docscode14.$$.fragment, local);
         transition_out(docstitle12.$$.fragment, local);
-        transition_out(docsimg4.$$.fragment, local);
+        transition_out(docsimg2.$$.fragment, local);
+        transition_out(docscode14.$$.fragment, local);
+        transition_out(docsimg3.$$.fragment, local);
         transition_out(docscode15.$$.fragment, local);
         transition_out(docstitle13.$$.fragment, local);
-        transition_out(docsimg5.$$.fragment, local);
+        transition_out(docsimg4.$$.fragment, local);
         transition_out(docscode16.$$.fragment, local);
-        transition_out(docsimg6.$$.fragment, local);
+        transition_out(docstitle14.$$.fragment, local);
+        transition_out(docsimg5.$$.fragment, local);
         transition_out(docscode17.$$.fragment, local);
-        transition_out(docsimg7.$$.fragment, local);
+        transition_out(docsimg6.$$.fragment, local);
         transition_out(docscode18.$$.fragment, local);
+        transition_out(docsimg7.$$.fragment, local);
         transition_out(docscode19.$$.fragment, local);
+        transition_out(docscode20.$$.fragment, local);
         current = false;
       },
       d: function d(detaching) {
-        if (detaching) detach(div15);
+        if (detaching) detach(div16);
         destroy_component(docstitle0);
         destroy_component(docscode0);
         destroy_component(docscode1);
@@ -2790,51 +2935,60 @@
         destroy_component(fa16);
         destroy_component(docscode8);
         destroy_component(docstitle6);
-        destroy_component(docstitle7);
         destroy_component(fa17);
         destroy_component(fa18);
         destroy_component(fa19);
         destroy_component(fa20);
         destroy_component(fa21);
         destroy_component(fa22);
+        destroy_component(docscode9);
+        destroy_component(docstitle7);
+        destroy_component(docstitle8);
         destroy_component(fa23);
         destroy_component(fa24);
         destroy_component(fa25);
-        destroy_component(docscode9);
-        destroy_component(docstitle8);
-        destroy_component(docstitle9);
-        destroy_component(docsimg0);
+        destroy_component(fa26);
+        destroy_component(fa27);
+        destroy_component(fa28);
+        destroy_component(fa29);
+        destroy_component(fa30);
+        destroy_component(fa31);
         destroy_component(docscode10);
-        destroy_component(docscode11);
+        destroy_component(docstitle9);
         destroy_component(docstitle10);
-        destroy_component(docsimg1);
+        destroy_component(docsimg0);
+        destroy_component(docscode11);
         destroy_component(docscode12);
         destroy_component(docstitle11);
-        destroy_component(docsimg2);
+        destroy_component(docsimg1);
         destroy_component(docscode13);
-        destroy_component(docsimg3);
-        destroy_component(docscode14);
         destroy_component(docstitle12);
-        destroy_component(docsimg4);
+        destroy_component(docsimg2);
+        destroy_component(docscode14);
+        destroy_component(docsimg3);
         destroy_component(docscode15);
         destroy_component(docstitle13);
-        destroy_component(docsimg5);
+        destroy_component(docsimg4);
         destroy_component(docscode16);
-        destroy_component(docsimg6);
+        destroy_component(docstitle14);
+        destroy_component(docsimg5);
         destroy_component(docscode17);
-        destroy_component(docsimg7);
+        destroy_component(docsimg6);
         destroy_component(docscode18);
+        destroy_component(docsimg7);
         destroy_component(docscode19);
+        destroy_component(docscode20);
       }
     };
   }
 
-  function instance$4($$self) {
+  function instance($$self) {
     var codes = {
-      installation: ["npm install svelte-fa", "npm install @fortawesome/free-solid-svg-icons", "npm install svelte-fa -D", "import Fa from 'svelte-fa/src/fa.svelte'"],
+      installation: ['npm install svelte-fa', 'npm install @fortawesome/free-solid-svg-icons', 'npm install svelte-fa -D', "import Fa from 'svelte-fa/src/fa.svelte'"],
       basicUse: ["<script>\n  import Fa from 'svelte-fa'\n  import { faFlag } from '@fortawesome/free-solid-svg-icons'\n</script>\n\n<Fa icon={faFlag} /> Flag", "<div style=\"font-size: 3em; color: tomato\">\n  <Fa icon={faFlag} />\n</div>"],
       additionalStyling: ["<Fa icon={faFlag} size=\"xs\" />\n<Fa icon={faFlag} size=\"sm\" />\n<Fa icon={faFlag} size=\"lg\" />\n<Fa icon={faFlag} size=\"2x\" />\n<Fa icon={faFlag} size=\"2.5x\" />\n<Fa icon={faFlag} size=\"5x\" />\n<Fa icon={faFlag} size=\"7x\" />\n<Fa icon={faFlag} size=\"10x\" />", "<div>\n  <Fa icon={faHome} fw style=\"background: mistyrose\" /> Home\n</div>\n<div>\n  <Fa icon={faInfo} fw style=\"background: mistyrose\" /> Info\n</div>\n<div>\n  <Fa icon={faBook} fw style=\"background: mistyrose\" /> Library\n</div>\n<div>\n  <Fa icon={faPencilAlt} fw style=\"background: mistyrose\" /> Applications\n</div>\n<div>\n  <Fa icon={faCog} fw style=\"background: mistyrose\" /> Settins\n</div>", "<Fa icon={faQuoteLeft} pull=\"left\" size=\"2x\" />\n<Fa icon={faQuoteRight} pull=\"right\" size=\"2x\" />\nGatsby believed in the green light, the orgastic future that year by year recedes before us. It eluded us then, but that\u2019s no matter \u2014 tomorrow we will run faster, stretch our arms further... And one fine morning \u2014 So we beat on, boats against the current, borne back ceaselessly into the past."],
-      powerTransforms: ["<Fa icon={faMagic} size=\"4x\" rotate={90} style=\"background: mistyrose\"/>\n<Fa icon={faMagic} size=\"4x\" rotate={180} style=\"background: mistyrose\"/>\n<Fa icon={faMagic} size=\"4x\" rotate=\"270\" style=\"background: mistyrose\"/>\n<Fa icon={faMagic} size=\"4x\" rotate=\"30\" style=\"background: mistyrose\"/>\n<Fa icon={faMagic} size=\"4x\" rotate=\"-30\" style=\"background: mistyrose\"/>\n<Fa icon={faMagic} size=\"4x\" flip=\"vertical\" style=\"background: mistyrose\"/>\n<Fa icon={faMagic} size=\"4x\" flip=\"horizontal\" style=\"background: mistyrose\"/>\n<Fa icon={faMagic} size=\"4x\" flip=\"both\" style=\"background: mistyrose\"/>\n<Fa icon={faMagic} size=\"4x\" flip=\"both\" style=\"background: mistyrose\"/>"],
+      animatingIcons: ["<Fa icon={faSpinner} size=\"3x\" spin />\n<Fa icon={faCircleNotch} size=\"3x\" spin />\n<Fa icon={faSync} size=\"3x\" spin />\n<Fa icon={faCog} size=\"3x\" spin />\n<Fa icon={faSpinner} size=\"3x\" pulse />\n<Fa icon={faStroopwafel} size=\"3x\" spin />"],
+      powerTransforms: ["<Fa icon={faMagic} size=\"4x\" rotate={90} style=\"background: mistyrose\" />\n<Fa icon={faMagic} size=\"4x\" rotate={180} style=\"background: mistyrose\" />\n<Fa icon={faMagic} size=\"4x\" rotate=\"270\" style=\"background: mistyrose\" />\n<Fa icon={faMagic} size=\"4x\" rotate=\"30\" style=\"background: mistyrose\" />\n<Fa icon={faMagic} size=\"4x\" rotate=\"-30\" style=\"background: mistyrose\" />\n<Fa icon={faMagic} size=\"4x\" flip=\"vertical\" style=\"background: mistyrose\" />\n<Fa icon={faMagic} size=\"4x\" flip=\"horizontal\" style=\"background: mistyrose\" />\n<Fa icon={faMagic} size=\"4x\" flip=\"both\" style=\"background: mistyrose\" />\n<Fa icon={faMagic} size=\"4x\" flip=\"both\" style=\"background: mistyrose\" />"],
       duotoneIcons: ["import {\n  faCamera,\n  faFireAlt,\n  faBusAlt,\n  faFillDrip,\n} from '@fortawesome/pro-duotone-svg-icons'", "<Fa icon={faCamera} size=\"3x\" />\n<Fa icon={faFireAlt} size=\"3x\" />\n<Fa icon={faBusAlt} size=\"3x\" />\n<Fa icon={faFillDrip} size=\"3x\" />", "<Fa icon={faCamera} size=\"3x\" />\n<Fa icon={faCamera} size=\"3x\" swapOpacity />\n<Fa icon={faFireAlt} size=\"3x\" />\n<Fa icon={faFireAlt} size=\"3x\" swapOpacity />\n<Fa icon={faBusAlt} size=\"3x\" />\n<Fa icon={faBusAlt} size=\"3x\" swapOpacity />\n<Fa icon={faFillDrip} size=\"3x\" />\n<Fa icon={faFillDrip} size=\"3x\" swapOpacity />", "<Fa icon={faBusAlt} size=\"3x\" secondaryOpacity={.2} />\n<Fa icon={faBusAlt} size=\"3x\" secondaryOpacity={.4} />\n<Fa icon={faBusAlt} size=\"3x\" secondaryOpacity={.6} />\n<Fa icon={faBusAlt} size=\"3x\" secondaryOpacity={.8} />\n<Fa icon={faBusAlt} size=\"3x\" secondaryOpacity={1} />", "<Fa icon={faBusAlt} size=\"3x\" primaryOpacity={.2} />\n<Fa icon={faBusAlt} size=\"3x\" primaryOpacity={.4} />\n<Fa icon={faBusAlt} size=\"3x\" primaryOpacity={.6} />\n<Fa icon={faBusAlt} size=\"3x\" primaryOpacity={.8} />\n<Fa icon={faBusAlt} size=\"3x\" primaryOpacity={1} />", "<Fa icon={faBusAlt} size=\"3x\" primaryColor=\"gold\" />\n<Fa icon={faBusAlt} size=\"3x\" primaryColor=\"orangered\" />\n<Fa icon={faFillDrip} size=\"3x\" secondaryColor=\"limegreen\" />\n<Fa icon={faFillDrip} size=\"3x\" secondaryColor=\"rebeccapurple\" />\n<Fa icon={faBatteryFull} size=\"3x\" primaryColor=\"limegreen\" secondaryColor=\"dimgray\" />\n<Fa icon={faBatteryQuarter} size=\"3x\" primaryColor=\"orange\" secondaryColor=\"dimgray\" />", "<Fa icon={faBook} size=\"3x\" secondaryOpacity={1} primaryColor=\"lightseagreen\" secondaryColor=\"linen\" />\n<Fa icon={faBookSpells} size=\"3x\" secondaryOpacity={1} primaryColor=\"mediumpurple\" secondaryColor=\"linen\" />\n<Fa icon={faBookMedical} size=\"3x\" secondaryOpacity={1} primaryColor=\"crimson\" secondaryColor=\"linen\" />\n<Fa icon={faBookUser} size=\"3x\" secondaryOpacity={1} primaryColor=\"peru\" secondaryColor=\"linen\" />\n<Fa icon={faToggleOff} size=\"3x\" secondaryOpacity={1} primaryColor=\"white\" secondaryColor=\"gray\" />\n<Fa icon={faToggleOn} size=\"3x\" secondaryOpacity={1} primaryColor=\"dodgerblue\" secondaryColor=\"white\" />\n<Fa icon={faFilePlus} size=\"3x\" secondaryOpacity={1} primaryColor=\"white\" secondaryColor=\"limegreen\" />\n<Fa icon={faFileExclamation} size=\"3x\" secondaryOpacity={1} primaryColor=\"white\" secondaryColor=\"gold\" />\n<Fa icon={faFileTimes} size=\"3x\" secondaryOpacity={1} primaryColor=\"white\" secondaryColor=\"tomato\" />", "<Fa icon={faCrow} size=\"3x\" secondaryOpacity={1} primaryColor=\"dodgerblue\" secondaryColor=\"gold\" />\n<Fa icon={faCampfire} size=\"3x\" secondaryOpacity={1} primaryColor=\"sienna\" secondaryColor=\"red\" />\n<Fa icon={faBirthdayCake} size=\"3x\" secondaryOpacity={1} primaryColor=\"pink\" secondaryColor=\"palevioletred\" />\n<Fa icon={faEar} size=\"3x\" secondaryOpacity={1} primaryColor=\"sandybrown\" secondaryColor=\"bisque\" />\n<Fa icon={faCorn} size=\"3x\" secondaryOpacity={1} primaryColor=\"mediumseagreen\" secondaryColor=\"gold\" />\n<Fa icon={faCookieBite} size=\"3x\" secondaryOpacity={1} primaryColor=\"saddlebrown\" secondaryColor=\"burlywood\" />", "const themeRavenclaw = {\n  secondaryOpacity: 1,\n  primaryColor: '#0438a1',\n  secondaryColor: '#6c6c6c',\n}", "<Fa icon={faHatWizard} size=\"3x\" {...themeRavenclaw} />\n<Fa icon={faFlaskPotion} size=\"3x\" {...themeRavenclaw} />\n<Fa icon={faWandMagic} size=\"3x\" {...themeRavenclaw} />\n<Fa icon={faScarf} size=\"3x\" {...themeRavenclaw} />\n<Fa icon={faBookSpells} size=\"3x\" {...themeRavenclaw} />"]
     };
     return [codes];
@@ -2847,14 +3001,14 @@
       var _this;
 
       _this = _SvelteComponent.call(this) || this;
-      init(_assertThisInitialized(_this), options, instance$4, create_fragment$4, safe_not_equal, {});
+      init(_assertThisInitialized(_this), options, instance, create_fragment$1, safe_not_equal, {});
       return _this;
     }
 
     return Docs;
   }(SvelteComponent);
 
-  function create_fragment$5(ctx) {
+  function create_fragment(ctx) {
     var div;
     var showcase;
     var t;
@@ -2904,7 +3058,7 @@
       var _this;
 
       _this = _SvelteComponent.call(this) || this;
-      init(_assertThisInitialized(_this), options, null, create_fragment$5, safe_not_equal, {});
+      init(_assertThisInitialized(_this), options, null, create_fragment, safe_not_equal, {});
       return _this;
     }
 

@@ -16,7 +16,11 @@ export default [
     ],
     plugins: [
       svelte({
-        legacy: true,
+        emitCss: false,
+        compilerOptions: {
+          legacy: true,
+          css: true,
+        },
       }),
       resolve({
         browser: true,
@@ -42,7 +46,11 @@ export default [
     ],
     plugins: [
       svelte({
-        legacy: true,
+        emitCss: false,
+        compilerOptions: {
+          legacy: true,
+          css: true,
+        },
       }),
     ],
   },
