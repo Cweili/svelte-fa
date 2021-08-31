@@ -60,10 +60,6 @@
     return a != a ? b == b : a !== b || a && typeof a === 'object' || typeof a === 'function';
   }
 
-  function is_empty(obj) {
-    return Object.keys(obj).length === 0;
-  }
-
   function exclude_internal_props(props) {
     var result = {};
 
@@ -136,8 +132,6 @@
         node.removeAttribute(key);
       } else if (key === 'style') {
         node.style.cssText = attributes[key];
-      } else if (key === '__value') {
-        node.value = node[key] = attributes[key];
       } else if (descriptors[key] && descriptors[key].set) {
         node[key] = attributes[key];
       } else {
@@ -147,7 +141,7 @@
   }
 
   function to_number(value) {
-    return value === '' ? null : +value;
+    return value === '' ? undefined : +value;
   }
 
   function children(element) {
@@ -156,11 +150,20 @@
 
   function set_data(text, data) {
     data = '' + data;
-    if (text.wholeText !== data) text.data = data;
+    if (text.data !== data) text.data = data;
   }
 
   function set_input_value(input, value) {
-    input.value = value == null ? '' : value;
+    if (value != null || input.value) {
+      input.value = value;
+    }
+  }
+
+  function set_input_type(input, type) {
+    try {
+      input.type = type;
+    } catch (e) {// do nothing
+    }
   }
 
   function set_style(node, key, value, important) {
@@ -178,7 +181,7 @@
   }
 
   function get_current_component() {
-    if (!current_component) throw new Error('Function called outside component initialization');
+    if (!current_component) throw new Error("Function called outside component initialization");
     return current_component;
   }
 
@@ -190,14 +193,11 @@
 
 
   function bubble(component, event) {
-    var _this2 = this;
-
     var callbacks = component.$$.callbacks[event.type];
 
     if (callbacks) {
-      // @ts-ignore
       callbacks.slice().forEach(function (fn) {
-        return fn.call(_this2, event);
+        return fn(event);
       });
     }
   }
@@ -220,24 +220,17 @@
     render_callbacks.push(fn);
   }
 
-  var flushing = false;
-  var seen_callbacks = new Set();
-
   function flush() {
-    if (flushing) return;
-    flushing = true;
+    var seen_callbacks = new Set();
 
     do {
       // first, call beforeUpdate functions
       // and update components
-      for (var i = 0; i < dirty_components.length; i += 1) {
-        var component = dirty_components[i];
+      while (dirty_components.length) {
+        var component = dirty_components.shift();
         set_current_component(component);
         update(component.$$);
       }
-
-      set_current_component(null);
-      dirty_components.length = 0;
 
       while (binding_callbacks.length) {
         binding_callbacks.pop()();
@@ -246,13 +239,13 @@
       // subsequent updates...
 
 
-      for (var _i4 = 0; _i4 < render_callbacks.length; _i4 += 1) {
-        var callback = render_callbacks[_i4];
+      for (var i = 0; i < render_callbacks.length; i += 1) {
+        var callback = render_callbacks[i];
 
         if (!seen_callbacks.has(callback)) {
-          // ...so guard against infinite loops
+          callback(); // ...so guard against infinite loops
+
           seen_callbacks.add(callback);
-          callback();
         }
       }
 
@@ -264,8 +257,6 @@
     }
 
     update_scheduled = false;
-    flushing = false;
-    seen_callbacks.clear();
   }
 
   function update($$) {
@@ -426,23 +417,23 @@
           if (!(key in n)) to_null_out[key] = 1;
         }
 
-        for (var _key3 in n) {
-          if (!accounted_for[_key3]) {
-            update[_key3] = n[_key3];
-            accounted_for[_key3] = 1;
+        for (var _key2 in n) {
+          if (!accounted_for[_key2]) {
+            update[_key2] = n[_key2];
+            accounted_for[_key2] = 1;
           }
         }
 
         levels[i] = n;
       } else {
-        for (var _key4 in o) {
-          accounted_for[_key4] = 1;
+        for (var _key3 in o) {
+          accounted_for[_key3] = 1;
         }
       }
     }
 
-    for (var _key5 in to_null_out) {
-      if (!(_key5 in update)) update[_key5] = undefined;
+    for (var _key4 in to_null_out) {
+      if (!(_key4 in update)) update[_key4] = undefined;
     }
 
     return update;
@@ -452,31 +443,27 @@
     block && block.c();
   }
 
-  function mount_component(component, target, anchor, customElement) {
+  function mount_component(component, target, anchor) {
     var _component$$$ = component.$$,
         fragment = _component$$$.fragment,
         on_mount = _component$$$.on_mount,
         on_destroy = _component$$$.on_destroy,
         after_update = _component$$$.after_update;
-    fragment && fragment.m(target, anchor);
+    fragment && fragment.m(target, anchor); // onMount happens before the initial afterUpdate
 
-    if (!customElement) {
-      // onMount happens before the initial afterUpdate
-      add_render_callback(function () {
-        var new_on_destroy = on_mount.map(run).filter(is_function);
+    add_render_callback(function () {
+      var new_on_destroy = on_mount.map(run).filter(is_function);
 
-        if (on_destroy) {
-          on_destroy.push.apply(on_destroy, new_on_destroy);
-        } else {
-          // Edge case - component was destroyed immediately,
-          // most likely as a result of a binding initialising
-          run_all(new_on_destroy);
-        }
+      if (on_destroy) {
+        on_destroy.push.apply(on_destroy, new_on_destroy);
+      } else {
+        // Edge case - component was destroyed immediately,
+        // most likely as a result of a binding initialising
+        run_all(new_on_destroy);
+      }
 
-        component.$$.on_mount = [];
-      });
-    }
-
+      component.$$.on_mount = [];
+    });
     after_update.forEach(add_render_callback);
   }
 
@@ -503,13 +490,14 @@
     component.$$.dirty[i / 31 | 0] |= 1 << i % 31;
   }
 
-  function init(component, options, instance, create_fragment, not_equal, props, append_styles, dirty) {
+  function init(component, options, instance, create_fragment, not_equal, props, dirty) {
     if (dirty === void 0) {
       dirty = [-1];
     }
 
     var parent_component = current_component;
     set_current_component(component);
+    var prop_values = options.props || {};
     var $$ = component.$$ = {
       fragment: null,
       ctx: null,
@@ -521,23 +509,21 @@
       // lifecycle
       on_mount: [],
       on_destroy: [],
-      on_disconnect: [],
       before_update: [],
       after_update: [],
-      context: new Map(parent_component ? parent_component.$$.context : options.context || []),
+      context: new Map(parent_component ? parent_component.$$.context : []),
       // everything else
       callbacks: blank_object(),
-      dirty: dirty,
-      skip_bound: false,
-      root: options.target || parent_component.$$.root
+      dirty: dirty
     };
-    append_styles && append_styles($$.root);
     var ready = false;
-    $$.ctx = instance ? instance(component, options.props || {}, function (i, ret) {
-      var value = (arguments.length <= 2 ? 0 : arguments.length - 2) ? arguments.length <= 2 ? undefined : arguments[2] : ret;
+    $$.ctx = instance ? instance(component, prop_values, function (i, ret, value) {
+      if (value === void 0) {
+        value = ret;
+      }
 
       if ($$.ctx && not_equal($$.ctx[i], $$.ctx[i] = value)) {
-        if (!$$.skip_bound && $$.bound[i]) $$.bound[i](value);
+        if ($$.bound[i]) $$.bound[i](value);
         if (ready) make_dirty(component, i);
       }
 
@@ -551,38 +537,32 @@
 
     if (options.target) {
       if (options.hydrate) {
-        var nodes = children(options.target); // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-
-        $$.fragment && $$.fragment.l(nodes);
-        nodes.forEach(detach);
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        $$.fragment && $$.fragment.l(children(options.target));
       } else {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         $$.fragment && $$.fragment.c();
       }
 
       if (options.intro) transition_in(component.$$.fragment);
-      mount_component(component, options.target, options.anchor, options.customElement);
+      mount_component(component, options.target, options.anchor);
       flush();
     }
 
     set_current_component(parent_component);
   }
-  /**
-   * Base class for Svelte components. Used when dev=false.
-   */
-
 
   var SvelteComponent = /*#__PURE__*/function () {
     function SvelteComponent() {}
 
-    var _proto4 = SvelteComponent.prototype;
+    var _proto3 = SvelteComponent.prototype;
 
-    _proto4.$destroy = function $destroy() {
+    _proto3.$destroy = function $destroy() {
       destroy_component(this, 1);
       this.$destroy = noop;
     };
 
-    _proto4.$on = function $on(type, callback) {
+    _proto3.$on = function $on(type, callback) {
       var callbacks = this.$$.callbacks[type] || (this.$$.callbacks[type] = []);
       callbacks.push(callback);
       return function () {
@@ -591,12 +571,7 @@
       };
     };
 
-    _proto4.$set = function $set($$props) {
-      if (this.$$set && !is_empty($$props)) {
-        this.$$.skip_bound = true;
-        this.$$set($$props);
-        this.$$.skip_bound = false;
-      }
+    _proto3.$set = function $set() {// overridden by instance, if it has props
     };
 
     return SvelteComponent;
@@ -604,37 +579,12 @@
 
   var faBook={prefix:'fas',iconName:'book',icon:[448,512,[],"f02d","M448 360V24c0-13.3-10.7-24-24-24H96C43 0 0 43 0 96v320c0 53 43 96 96 96h328c13.3 0 24-10.7 24-24v-16c0-7.5-3.5-14.3-8.9-18.7-4.2-15.4-4.2-59.3 0-74.7 5.4-4.3 8.9-11.1 8.9-18.6zM128 134c0-3.3 2.7-6 6-6h212c3.3 0 6 2.7 6 6v20c0 3.3-2.7 6-6 6H134c-3.3 0-6-2.7-6-6v-20zm0 64c0-3.3 2.7-6 6-6h212c3.3 0 6 2.7 6 6v20c0 3.3-2.7 6-6 6H134c-3.3 0-6-2.7-6-6v-20zm253.4 250H96c-17.7 0-32-14.3-32-32 0-17.6 14.4-32 32-32h285.4c-1.9 17.1-1.9 46.9 0 64z"]};var faBookmark={prefix:'fas',iconName:'bookmark',icon:[384,512,[],"f02e","M0 512V48C0 21.49 21.49 0 48 0h288c26.51 0 48 21.49 48 48v464L192 400 0 512z"]};var faCalendar={prefix:'fas',iconName:'calendar',icon:[448,512,[],"f133","M12 192h424c6.6 0 12 5.4 12 12v260c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V204c0-6.6 5.4-12 12-12zm436-44v-36c0-26.5-21.5-48-48-48h-48V12c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v52H160V12c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v52H48C21.5 64 0 85.5 0 112v36c0 6.6 5.4 12 12 12h424c6.6 0 12-5.4 12-12z"]};var faCertificate={prefix:'fas',iconName:'certificate',icon:[512,512,[],"f0a3","M458.622 255.92l45.985-45.005c13.708-12.977 7.316-36.039-10.664-40.339l-62.65-15.99 17.661-62.015c4.991-17.838-11.829-34.663-29.661-29.671l-61.994 17.667-15.984-62.671C337.085.197 313.765-6.276 300.99 7.228L256 53.57 211.011 7.229c-12.63-13.351-36.047-7.234-40.325 10.668l-15.984 62.671-61.995-17.667C74.87 57.907 58.056 74.738 63.046 92.572l17.661 62.015-62.65 15.99C.069 174.878-6.31 197.944 7.392 210.915l45.985 45.005-45.985 45.004c-13.708 12.977-7.316 36.039 10.664 40.339l62.65 15.99-17.661 62.015c-4.991 17.838 11.829 34.663 29.661 29.671l61.994-17.667 15.984 62.671c4.439 18.575 27.696 24.018 40.325 10.668L256 458.61l44.989 46.001c12.5 13.488 35.987 7.486 40.325-10.668l15.984-62.671 61.994 17.667c17.836 4.994 34.651-11.837 29.661-29.671l-17.661-62.015 62.65-15.99c17.987-4.302 24.366-27.367 10.664-40.339l-45.984-45.004z"]};var faCircle={prefix:'fas',iconName:'circle',icon:[512,512,[],"f111","M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"]};var faCircleNotch={prefix:'fas',iconName:'circle-notch',icon:[512,512,[],"f1ce","M288 39.056v16.659c0 10.804 7.281 20.159 17.686 23.066C383.204 100.434 440 171.518 440 256c0 101.689-82.295 184-184 184-101.689 0-184-82.295-184-184 0-84.47 56.786-155.564 134.312-177.219C216.719 75.874 224 66.517 224 55.712V39.064c0-15.709-14.834-27.153-30.046-23.234C86.603 43.482 7.394 141.206 8.003 257.332c.72 137.052 111.477 246.956 248.531 246.667C393.255 503.711 504 392.788 504 256c0-115.633-79.14-212.779-186.211-240.236C302.678 11.889 288 23.456 288 39.056z"]};var faCog={prefix:'fas',iconName:'cog',icon:[512,512,[],"f013","M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"]};var faEnvelope={prefix:'fas',iconName:'envelope',icon:[512,512,[],"f0e0","M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"]};var faFlag={prefix:'fas',iconName:'flag',icon:[512,512,[],"f024","M349.565 98.783C295.978 98.783 251.721 64 184.348 64c-24.955 0-47.309 4.384-68.045 12.013a55.947 55.947 0 0 0 3.586-23.562C118.117 24.015 94.806 1.206 66.338.048 34.345-1.254 8 24.296 8 56c0 19.026 9.497 35.825 24 45.945V488c0 13.255 10.745 24 24 24h16c13.255 0 24-10.745 24-24v-94.4c28.311-12.064 63.582-22.122 114.435-22.122 53.588 0 97.844 34.783 165.217 34.783 48.169 0 86.667-16.294 122.505-40.858C506.84 359.452 512 349.571 512 339.045v-243.1c0-23.393-24.269-38.87-45.485-29.016-34.338 15.948-76.454 31.854-116.95 31.854z"]};var faHeart={prefix:'fas',iconName:'heart',icon:[512,512,[],"f004","M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"]};var faHome={prefix:'fas',iconName:'home',icon:[576,512,[],"f015","M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z"]};var faInfo={prefix:'fas',iconName:'info',icon:[192,512,[],"f129","M20 424.229h20V279.771H20c-11.046 0-20-8.954-20-20V212c0-11.046 8.954-20 20-20h112c11.046 0 20 8.954 20 20v212.229h20c11.046 0 20 8.954 20 20V492c0 11.046-8.954 20-20 20H20c-11.046 0-20-8.954-20-20v-47.771c0-11.046 8.954-20 20-20zM96 0C56.235 0 24 32.235 24 72s32.235 72 72 72 72-32.235 72-72S135.764 0 96 0z"]};var faLink={prefix:'fas',iconName:'link',icon:[512,512,[],"f0c1","M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"]};var faMagic={prefix:'fas',iconName:'magic',icon:[512,512,[],"f0d0","M224 96l16-32 32-16-32-16-16-32-16 32-32 16 32 16 16 32zM80 160l26.66-53.33L160 80l-53.34-26.67L80 0 53.34 53.33 0 80l53.34 26.67L80 160zm352 128l-26.66 53.33L352 368l53.34 26.67L432 448l26.66-53.33L512 368l-53.34-26.67L432 288zm70.62-193.77L417.77 9.38C411.53 3.12 403.34 0 395.15 0c-8.19 0-16.38 3.12-22.63 9.38L9.38 372.52c-12.5 12.5-12.5 32.76 0 45.25l84.85 84.85c6.25 6.25 14.44 9.37 22.62 9.37 8.19 0 16.38-3.12 22.63-9.37l363.14-363.15c12.5-12.48 12.5-32.75 0-45.24zM359.45 203.46l-50.91-50.91 86.6-86.6 50.91 50.91-86.6 86.6z"]};var faMoon={prefix:'fas',iconName:'moon',icon:[512,512,[],"f186","M283.211 512c78.962 0 151.079-35.925 198.857-94.792 7.068-8.708-.639-21.43-11.562-19.35-124.203 23.654-238.262-71.576-238.262-196.954 0-72.222 38.662-138.635 101.498-174.394 9.686-5.512 7.25-20.197-3.756-22.23A258.156 258.156 0 0 0 283.211 0c-141.309 0-256 114.511-256 256 0 141.309 114.511 256 256 256z"]};var faPencilAlt={prefix:'fas',iconName:'pencil-alt',icon:[512,512,[],"f303","M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"]};var faPlay={prefix:'fas',iconName:'play',icon:[448,512,[],"f04b","M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z"]};var faQuoteLeft={prefix:'fas',iconName:'quote-left',icon:[512,512,[],"f10d","M464 256h-80v-64c0-35.3 28.7-64 64-64h8c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24h-8c-88.4 0-160 71.6-160 160v240c0 26.5 21.5 48 48 48h128c26.5 0 48-21.5 48-48V304c0-26.5-21.5-48-48-48zm-288 0H96v-64c0-35.3 28.7-64 64-64h8c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24h-8C71.6 32 0 103.6 0 192v240c0 26.5 21.5 48 48 48h128c26.5 0 48-21.5 48-48V304c0-26.5-21.5-48-48-48z"]};var faQuoteRight={prefix:'fas',iconName:'quote-right',icon:[512,512,[],"f10e","M464 32H336c-26.5 0-48 21.5-48 48v128c0 26.5 21.5 48 48 48h80v64c0 35.3-28.7 64-64 64h-8c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h8c88.4 0 160-71.6 160-160V80c0-26.5-21.5-48-48-48zm-288 0H48C21.5 32 0 53.5 0 80v128c0 26.5 21.5 48 48 48h80v64c0 35.3-28.7 64-64 64h-8c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h8c88.4 0 160-71.6 160-160V80c0-26.5-21.5-48-48-48z"]};var faSpinner={prefix:'fas',iconName:'spinner',icon:[512,512,[],"f110","M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z"]};var faStar={prefix:'fas',iconName:'star',icon:[576,512,[],"f005","M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"]};var faStroopwafel={prefix:'fas',iconName:'stroopwafel',icon:[512,512,[],"f551","M188.12 210.74L142.86 256l45.25 45.25L233.37 256l-45.25-45.26zm113.13-22.62L256 142.86l-45.25 45.25L256 233.37l45.25-45.25zm-90.5 135.76L256 369.14l45.26-45.26L256 278.63l-45.25 45.25zM256 0C114.62 0 0 114.62 0 256s114.62 256 256 256 256-114.62 256-256S397.38 0 256 0zm186.68 295.6l-11.31 11.31c-3.12 3.12-8.19 3.12-11.31 0l-28.29-28.29-45.25 45.25 33.94 33.94 16.97-16.97c3.12-3.12 8.19-3.12 11.31 0l11.31 11.31c3.12 3.12 3.12 8.19 0 11.31l-16.97 16.97 16.97 16.97c3.12 3.12 3.12 8.19 0 11.31l-11.31 11.31c-3.12 3.12-8.19 3.12-11.31 0l-16.97-16.97-16.97 16.97c-3.12 3.12-8.19 3.12-11.31 0l-11.31-11.31c-3.12-3.12-3.12-8.19 0-11.31l16.97-16.97-33.94-33.94-45.26 45.26 28.29 28.29c3.12 3.12 3.12 8.19 0 11.31l-11.31 11.31c-3.12 3.12-8.19 3.12-11.31 0L256 414.39l-28.29 28.29c-3.12 3.12-8.19 3.12-11.31 0l-11.31-11.31c-3.12-3.12-3.12-8.19 0-11.31l28.29-28.29-45.25-45.26-33.94 33.94 16.97 16.97c3.12 3.12 3.12 8.19 0 11.31l-11.31 11.31c-3.12 3.12-8.19 3.12-11.31 0l-16.97-16.97-16.97 16.97c-3.12 3.12-8.19 3.12-11.31 0l-11.31-11.31c-3.12-3.12-3.12-8.19 0-11.31l16.97-16.97-16.97-16.97c-3.12-3.12-3.12-8.19 0-11.31l11.31-11.31c3.12-3.12 8.19-3.12 11.31 0l16.97 16.97 33.94-33.94-45.25-45.25-28.29 28.29c-3.12 3.12-8.19 3.12-11.31 0L69.32 295.6c-3.12-3.12-3.12-8.19 0-11.31L97.61 256l-28.29-28.29c-3.12-3.12-3.12-8.19 0-11.31l11.31-11.31c3.12-3.12 8.19-3.12 11.31 0l28.29 28.29 45.25-45.26-33.94-33.94-16.97 16.97c-3.12 3.12-8.19 3.12-11.31 0l-11.31-11.31c-3.12-3.12-3.12-8.19 0-11.31l16.97-16.97-16.97-16.97c-3.12-3.12-3.12-8.19 0-11.31l11.31-11.31c3.12-3.12 8.19-3.12 11.31 0l16.97 16.97 16.97-16.97c3.12-3.12 8.19-3.12 11.31 0l11.31 11.31c3.12 3.12 3.12 8.19 0 11.31l-16.97 16.97 33.94 33.94 45.26-45.25-28.29-28.29c-3.12-3.12-3.12-8.19 0-11.31l11.31-11.31c3.12-3.12 8.19-3.12 11.31 0L256 97.61l28.29-28.29c3.12-3.12 8.19-3.12 11.31 0l11.31 11.31c3.12 3.12 3.12 8.19 0 11.31l-28.29 28.29 45.26 45.25 33.94-33.94-16.97-16.97c-3.12-3.12-3.12-8.19 0-11.31l11.31-11.31c3.12-3.12 8.19-3.12 11.31 0l16.97 16.97 16.97-16.97c3.12-3.12 8.19-3.12 11.31 0l11.31 11.31c3.12 3.12 3.12 8.19 0 11.31l-16.97 16.97 16.97 16.97c3.12 3.12 3.12 8.19 0 11.31l-11.31 11.31c-3.12 3.12-8.19 3.12-11.31 0l-16.97-16.97-33.94 33.94 45.25 45.26 28.29-28.29c3.12-3.12 8.19-3.12 11.31 0l11.31 11.31c3.12 3.12 3.12 8.19 0 11.31L414.39 256l28.29 28.28a8.015 8.015 0 0 1 0 11.32zM278.63 256l45.26 45.25L369.14 256l-45.25-45.26L278.63 256z"]};var faSun={prefix:'fas',iconName:'sun',icon:[512,512,[],"f185","M256 160c-52.9 0-96 43.1-96 96s43.1 96 96 96 96-43.1 96-96-43.1-96-96-96zm246.4 80.5l-94.7-47.3 33.5-100.4c4.5-13.6-8.4-26.5-21.9-21.9l-100.4 33.5-47.4-94.8c-6.4-12.8-24.6-12.8-31 0l-47.3 94.7L92.7 70.8c-13.6-4.5-26.5 8.4-21.9 21.9l33.5 100.4-94.7 47.4c-12.8 6.4-12.8 24.6 0 31l94.7 47.3-33.5 100.5c-4.5 13.6 8.4 26.5 21.9 21.9l100.4-33.5 47.3 94.7c6.4 12.8 24.6 12.8 31 0l47.3-94.7 100.4 33.5c13.6 4.5 26.5-8.4 21.9-21.9l-33.5-100.4 94.7-47.3c13-6.5 13-24.7.2-31.1zm-155.9 106c-49.9 49.9-131.1 49.9-181 0-49.9-49.9-49.9-131.1 0-181 49.9-49.9 131.1-49.9 181 0 49.9 49.9 49.9 131.1 0 181z"]};var faSync={prefix:'fas',iconName:'sync',icon:[512,512,[],"f021","M440.65 12.57l4 82.77A247.16 247.16 0 0 0 255.83 8C134.73 8 33.91 94.92 12.29 209.82A12 12 0 0 0 24.09 224h49.05a12 12 0 0 0 11.67-9.26 175.91 175.91 0 0 1 317-56.94l-101.46-4.86a12 12 0 0 0-12.57 12v47.41a12 12 0 0 0 12 12H500a12 12 0 0 0 12-12V12a12 12 0 0 0-12-12h-47.37a12 12 0 0 0-11.98 12.57zM255.83 432a175.61 175.61 0 0 1-146-77.8l101.8 4.87a12 12 0 0 0 12.57-12v-47.4a12 12 0 0 0-12-12H12a12 12 0 0 0-12 12V500a12 12 0 0 0 12 12h47.35a12 12 0 0 0 12-12.6l-4.15-82.57A247.17 247.17 0 0 0 255.83 504c121.11 0 221.93-86.92 243.55-201.82a12 12 0 0 0-11.8-14.18h-49.05a12 12 0 0 0-11.67 9.26A175.86 175.86 0 0 1 255.83 432z"]};var faTimes={prefix:'fas',iconName:'times',icon:[352,512,[],"f00d","M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"]};
 
-  function styleInject(css, ref) {
-    if (ref === void 0) ref = {};
-    var insertAt = ref.insertAt;
-
-    if (!css || typeof document === 'undefined') {
-      return;
-    }
-
-    var head = document.head || document.getElementsByTagName('head')[0];
-    var style = document.createElement('style');
-    style.type = 'text/css';
-
-    if (insertAt === 'top') {
-      if (head.firstChild) {
-        head.insertBefore(style, head.firstChild);
-      } else {
-        head.appendChild(style);
-      }
-    } else {
-      head.appendChild(style);
-    }
-
-    if (style.styleSheet) {
-      style.styleSheet.cssText = css;
-    } else {
-      style.appendChild(document.createTextNode(css));
-    }
+  function add_css$2() {
+    var style = element("style");
+    style.id = "svelte-1a2mimh-style";
+    style.textContent = ".hue.svelte-1a2mimh{color:#238ae6;animation:svelte-1a2mimh-hue 30s infinite linear}@keyframes svelte-1a2mimh-hue{from{filter:hue-rotate(0deg)}to{filter:hue-rotate(-360deg)}}";
+    append(document.head, style);
   }
-
-  var css_248z$2 = ".hue.svelte-1a2mimh{color:#238ae6;animation:svelte-1a2mimh-hue 30s infinite linear}@keyframes svelte-1a2mimh-hue{from{filter:hue-rotate(0deg)}to{filter:hue-rotate(-360deg)}}";
-  styleInject(css_248z$2);
 
   function get_each_context(ctx, list, i) {
     var child_ctx = ctx.slice();
@@ -664,15 +614,20 @@
     var t0;
     var t1;
     var button_class_value;
-    var mounted;
     var dispose;
 
     function click_handler() {
+      var _ctx;
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
       return (
         /*click_handler*/
-        ctx[7](
+        (_ctx = ctx)[7].apply(_ctx, [
         /*p*/
-        ctx[16])
+        ctx[16]].concat(args))
       );
     }
 
@@ -687,21 +642,17 @@
         /*model*/
         ctx[0].pull == (
         /*p*/
-        ctx[16] == 'None' ? undefined :
+        ctx[16] == "None" ? undefined :
         /*p*/
-        ctx[16].toLowerCase()) ? 'primary' : 'secondary')) + " svelte-1a2mimh"));
+        ctx[16].toLowerCase()) ? "primary" : "secondary")) + " svelte-1a2mimh"));
         attr(button, "type", "button");
+        dispose = listen(button, "click", click_handler);
         this.first = button;
       },
       m: function m(target, anchor) {
         insert(target, button, anchor);
         append(button, t0);
         append(button, t1);
-
-        if (!mounted) {
-          dispose = listen(button, "click", click_handler);
-          mounted = true;
-        }
       },
       p: function p(new_ctx, dirty) {
         ctx = new_ctx;
@@ -712,15 +663,14 @@
         /*model*/
         ctx[0].pull == (
         /*p*/
-        ctx[16] == 'None' ? undefined :
+        ctx[16] == "None" ? undefined :
         /*p*/
-        ctx[16].toLowerCase()) ? 'primary' : 'secondary')) + " svelte-1a2mimh"))) {
+        ctx[16].toLowerCase()) ? "primary" : "secondary")) + " svelte-1a2mimh"))) {
           attr(button, "class", button_class_value);
         }
       },
       d: function d(detaching) {
         if (detaching) detach(button);
-        mounted = false;
         dispose();
       }
     };
@@ -735,15 +685,20 @@
     var t0;
     var t1;
     var button_class_value;
-    var mounted;
     var dispose;
 
     function click_handler_1() {
+      var _ctx2;
+
+      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
+      }
+
       return (
         /*click_handler_1*/
-        ctx[8](
+        (_ctx2 = ctx)[8].apply(_ctx2, [
         /*f*/
-        ctx[13])
+        ctx[13]].concat(args))
       );
     }
 
@@ -758,21 +713,17 @@
         /*model*/
         ctx[0].flip == (
         /*f*/
-        ctx[13] == 'None' ? undefined :
+        ctx[13] == "None" ? undefined :
         /*f*/
-        ctx[13].toLowerCase()) ? 'primary' : 'secondary')) + " svelte-1a2mimh"));
+        ctx[13].toLowerCase()) ? "primary" : "secondary")) + " svelte-1a2mimh"));
         attr(button, "type", "button");
+        dispose = listen(button, "click", click_handler_1);
         this.first = button;
       },
       m: function m(target, anchor) {
         insert(target, button, anchor);
         append(button, t0);
         append(button, t1);
-
-        if (!mounted) {
-          dispose = listen(button, "click", click_handler_1);
-          mounted = true;
-        }
       },
       p: function p(new_ctx, dirty) {
         ctx = new_ctx;
@@ -783,15 +734,14 @@
         /*model*/
         ctx[0].flip == (
         /*f*/
-        ctx[13] == 'None' ? undefined :
+        ctx[13] == "None" ? undefined :
         /*f*/
-        ctx[13].toLowerCase()) ? 'primary' : 'secondary')) + " svelte-1a2mimh"))) {
+        ctx[13].toLowerCase()) ? "primary" : "secondary")) + " svelte-1a2mimh"))) {
           attr(button, "class", button_class_value);
         }
       },
       d: function d(detaching) {
         if (detaching) detach(button);
-        mounted = false;
         dispose();
       }
     };
@@ -800,10 +750,9 @@
 
   function create_each_block(ctx) {
     var div;
-    var fa;
     var t;
     var current;
-    fa = new Fa__default['default']({
+    var fa = new Fa__default['default']({
       props: {
         icon:
         /*icon*/
@@ -934,7 +883,6 @@
     var t30;
     var div17;
     var current;
-    var mounted;
     var dispose;
     var each_value_2 =
     /*pull*/
@@ -967,9 +915,9 @@
     for (var _i = 0; _i < each_value_1.length; _i += 1) {
       var _child_ctx = get_each_context_1(ctx, each_value_1, _i);
 
-      var _key = get_key_1(_child_ctx);
+      var _key3 = get_key_1(_child_ctx);
 
-      each1_lookup.set(_key, each_blocks_1[_i] = create_each_block_1(_key, _child_ctx));
+      each1_lookup.set(_key3, each_blocks_1[_i] = create_each_block_1(_key3, _child_ctx));
     }
 
     var each_value =
@@ -996,10 +944,10 @@
         h1.innerHTML = "<strong><a href=\"https://github.com/Cweili/svelte-fa\" target=\"_blank\">svelte-fa</a></strong>";
         t1 = space();
         p0 = element("p");
-        p0.innerHTML = "<a href=\"https://www.npmjs.com/package/svelte-fa\" target=\"_blank\"><img src=\"https://img.shields.io/npm/v/svelte-fa.svg\" alt=\"npm version\"/></a> \n        <a href=\"https://bundlephobia.com/result?p=svelte-fa\" target=\"_blank\"><img src=\"https://img.shields.io/bundlephobia/minzip/svelte-fa.svg\" alt=\"bundle size\"/></a> \n        <a href=\"https://github.com/Cweili/svelte-fa/blob/master/LICENSE\" target=\"_blank\"><img src=\"https://img.shields.io/npm/l/svelte-fa.svg\" alt=\"MIT licence\"/></a> \n        <a href=\"https://www.npmjs.com/package/svelte-fa\" target=\"_blank\"><img src=\"https://img.shields.io/npm/dt/svelte-fa.svg\" alt=\"npm downloads\"/></a> \n        <a href=\"https://github.com/Cweili/svelte-fa\" target=\"_blank\"><img src=\"https://img.shields.io/github/issues/Cweili/svelte-fa.svg\" alt=\"github issues\"/></a>";
+        p0.innerHTML = "<a href=\"https://www.npmjs.com/package/svelte-fa\" target=\"_blank\"><img src=\"https://img.shields.io/npm/v/svelte-fa.svg\" alt=\"npm version\"></a> \n        <a href=\"https://bundlephobia.com/result?p=svelte-fa\" target=\"_blank\"><img src=\"https://img.shields.io/bundlephobia/minzip/svelte-fa.svg\" alt=\"bundle size\"></a> \n        <a href=\"https://github.com/Cweili/svelte-fa/blob/master/LICENSE\" target=\"_blank\"><img src=\"https://img.shields.io/npm/l/svelte-fa.svg\" alt=\"MIT licence\"></a> \n        <a href=\"https://www.npmjs.com/package/svelte-fa\" target=\"_blank\"><img src=\"https://img.shields.io/npm/dt/svelte-fa.svg\" alt=\"npm downloads\"></a> \n        <a href=\"https://github.com/Cweili/svelte-fa\" target=\"_blank\"><img src=\"https://img.shields.io/github/issues/Cweili/svelte-fa.svg\" alt=\"github issues\"></a>";
         t6 = space();
         p1 = element("p");
-        p1.innerHTML = "Tiny <a class=\"hue svelte-1a2mimh\" href=\"https://fontawesome.com/\" target=\"_blank\">FontAwesome 5</a> component for <a class=\"hue svelte-1a2mimh\" href=\"https://svelte.dev/\" target=\"_blank\">Svelte</a>.";
+        p1.innerHTML = "\n        Tiny <a class=\"hue svelte-1a2mimh\" href=\"https://fontawesome.com/\" target=\"_blank\">FontAwesome 5</a> component for <a class=\"hue svelte-1a2mimh\" href=\"https://svelte.dev/\" target=\"_blank\">Svelte</a>.\n      ";
         t12 = space();
         form = element("form");
         div4 = element("div");
@@ -1061,7 +1009,7 @@
         attr(h1, "class", "hue svelte-1a2mimh");
         attr(p1, "class", "lead mb-5");
         attr(label0, "class", "col-sm-3 col-form-label");
-        attr(input0, "type", "range");
+        set_input_type(input0, "range");
         attr(input0, "class", "form-control-range");
         attr(input0, "min", "1");
         attr(input0, "max", "10");
@@ -1084,7 +1032,7 @@
         attr(div9, "class", "col-sm-9");
         attr(div10, "class", "form-group row");
         attr(label3, "class", "col-sm-3 col-form-label");
-        attr(input1, "type", "range");
+        set_input_type(input1, "range");
         attr(input1, "class", "form-control-range");
         attr(input1, "min", "-360");
         attr(input1, "max", "360");
@@ -1098,6 +1046,17 @@
         attr(div17, "class", "col-md row");
         attr(div18, "class", "row");
         attr(div19, "class", "jumbotron");
+        dispose = [listen(input0, "change",
+        /*input0_change_input_handler*/
+        ctx[6]), listen(input0, "input",
+        /*input0_change_input_handler*/
+        ctx[6]), listen(input1, "change",
+        /*input1_change_input_handler*/
+        ctx[9]), listen(input1, "input",
+        /*input1_change_input_handler*/
+        ctx[9]), listen(form, "submit", prevent_default(
+        /*submit_handler*/
+        ctx[5]))];
       },
       m: function m(target, anchor) {
         insert(target, div19, anchor);
@@ -1169,21 +1128,6 @@
         }
 
         current = true;
-
-        if (!mounted) {
-          dispose = [listen(input0, "change",
-          /*input0_change_input_handler*/
-          ctx[6]), listen(input0, "input",
-          /*input0_change_input_handler*/
-          ctx[6]), listen(input1, "change",
-          /*input1_change_input_handler*/
-          ctx[9]), listen(input1, "input",
-          /*input1_change_input_handler*/
-          ctx[9]), listen(form, "submit", prevent_default(
-          /*submit_handler*/
-          ctx[5]))];
-          mounted = true;
-        }
       },
       p: function p(ctx, _ref) {
         var dirty = _ref[0];
@@ -1201,24 +1145,14 @@
         1) && t16_value !== (t16_value =
         /*model*/
         ctx[0].size + "")) set_data(t16, t16_value);
-
-        if (dirty &
-        /*model, pull, undefined, setValue*/
-        19) {
-          each_value_2 =
-          /*pull*/
-          ctx[1];
-          each_blocks_2 = update_keyed_each(each_blocks_2, dirty, get_key, 1, ctx, each_value_2, each0_lookup, div5, destroy_block, create_each_block_2, null, get_each_context_2);
-        }
-
-        if (dirty &
-        /*model, flip, undefined, setValue*/
-        21) {
-          each_value_1 =
-          /*flip*/
-          ctx[2];
-          each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key_1, 1, ctx, each_value_1, each1_lookup, div8, destroy_block, create_each_block_1, null, get_each_context_1);
-        }
+        var each_value_2 =
+        /*pull*/
+        ctx[1];
+        each_blocks_2 = update_keyed_each(each_blocks_2, dirty, get_key, 1, ctx, each_value_2, each0_lookup, div5, destroy_block, create_each_block_2, null, get_each_context_2);
+        var each_value_1 =
+        /*flip*/
+        ctx[2];
+        each_blocks_1 = update_keyed_each(each_blocks_1, dirty, get_key_1, 1, ctx, each_value_1, each1_lookup, div8, destroy_block, create_each_block_1, null, get_each_context_1);
 
         if (dirty &
         /*model*/
@@ -1300,7 +1234,6 @@
         }
 
         destroy_each(each_blocks, detaching);
-        mounted = false;
         run_all(dispose);
       }
     };
@@ -1313,16 +1246,16 @@
       flip: undefined,
       rotate: 0
     };
-    var pull = ['None', 'Left', 'Right'];
-    var flip = ['None', 'Horizontal', 'Vertical', 'Both'];
+    var pull = ["None", "Left", "Right"];
+    var flip = ["None", "Horizontal", "Vertical", "Both"];
     var icons = [faFlag, faHome, faCog, faMagic];
 
     function setValue(prop, value) {
-      $$invalidate(0, model[prop] = value == 'None' ? undefined : value.toLowerCase(), model);
+      $$invalidate(0, model[prop] = value == "None" ? undefined : value.toLowerCase(), model);
     }
 
     function submit_handler(event) {
-      bubble.call(this, $$self, event);
+      bubble($$self, event);
     }
 
     function input0_change_input_handler() {
@@ -1331,11 +1264,11 @@
     }
 
     var click_handler = function click_handler(p) {
-      return setValue('pull', p);
+      return setValue("pull", p);
     };
 
     var click_handler_1 = function click_handler_1(f) {
-      return setValue('flip', f);
+      return setValue("flip", f);
     };
 
     function input1_change_input_handler() {
@@ -1353,6 +1286,7 @@
       var _this;
 
       _this = _SvelteComponent.call(this) || this;
+      if (!document.getElementById("svelte-1a2mimh-style")) add_css$2();
       init(_assertThisInitialized(_this), options, instance$4, create_fragment$5, safe_not_equal, {});
       return _this;
     }
@@ -1386,7 +1320,7 @@
         append(code_1, t);
         /*code_1_binding*/
 
-        ctx[3](code_1);
+        ctx[4](code_1);
       },
       p: function p(ctx, _ref) {
         var dirty = _ref[0];
@@ -1410,7 +1344,7 @@
         if (detaching) detach(div);
         /*code_1_binding*/
 
-        ctx[3](null);
+        ctx[4](null);
       }
     };
   }
@@ -1418,7 +1352,7 @@
   function instance$3($$self, $$props, $$invalidate) {
     var code = $$props.code;
     var _$$props$lang = $$props.lang,
-        lang = _$$props$lang === void 0 ? 'html' : _$$props$lang;
+        lang = _$$props$lang === void 0 ? "html" : _$$props$lang;
     var el;
 
     function highlight() {
@@ -1428,15 +1362,14 @@
     afterUpdate(highlight);
 
     function code_1_binding($$value) {
-      binding_callbacks[$$value ? 'unshift' : 'push'](function () {
-        el = $$value;
-        $$invalidate(2, el);
+      binding_callbacks[$$value ? "unshift" : "push"](function () {
+        $$invalidate(2, el = $$value);
       });
     }
 
-    $$self.$$set = function ($$props) {
-      if ('code' in $$props) $$invalidate(0, code = $$props.code);
-      if ('lang' in $$props) $$invalidate(1, lang = $$props.lang);
+    $$self.$set = function ($$props) {
+      if ("code" in $$props) $$invalidate(0, code = $$props.code);
+      if ("lang" in $$props) $$invalidate(1, lang = $$props.lang);
     };
 
     $$self.$$.update = function () {
@@ -1447,7 +1380,7 @@
       }
     };
 
-    return [code, lang, el, code_1_binding];
+    return [code, lang, el, highlight, code_1_binding];
   }
 
   var Docs_code = /*#__PURE__*/function (_SvelteComponent) {
@@ -1467,8 +1400,12 @@
     return Docs_code;
   }(SvelteComponent);
 
-  var css_248z$1 = "img.svelte-tdv3q3{max-width:100%;max-height:48px}small.svelte-tdv3q3{position:absolute;right:1rem;bottom:.1rem;color:#ddd;z-index:-1}";
-  styleInject(css_248z$1);
+  function add_css$1() {
+    var style = element("style");
+    style.id = "svelte-tdv3q3-style";
+    style.textContent = "img.svelte-tdv3q3{max-width:100%;max-height:48px}small.svelte-tdv3q3{position:absolute;right:1rem;bottom:.1rem;color:#ddd;z-index:-1}";
+    append(document.head, style);
+  }
 
   function create_fragment$3(ctx) {
     var div;
@@ -1504,7 +1441,7 @@
       },
       p: function p(ctx, _ref) {
         var dirty = _ref[0];
-        set_attributes(img, img_data = get_spread_update(img_levels, [dirty &
+        set_attributes(img, get_spread_update(img_levels, [dirty &
         /*$$props*/
         1 &&
         /*$$props*/
@@ -1520,7 +1457,7 @@
   }
 
   function instance$2($$self, $$props, $$invalidate) {
-    $$self.$$set = function ($$new_props) {
+    $$self.$set = function ($$new_props) {
       $$invalidate(0, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
     };
 
@@ -1535,6 +1472,7 @@
       var _this;
 
       _this = _SvelteComponent.call(this) || this;
+      if (!document.getElementById("svelte-tdv3q3-style")) add_css$1();
       init(_assertThisInitialized(_this), options, instance$2, create_fragment$3, safe_not_equal, {});
       return _this;
     }
@@ -1542,8 +1480,12 @@
     return Docs_img;
   }(SvelteComponent);
 
-  var css_248z = "a.svelte-1yrtkpv.svelte-1yrtkpv,a.svelte-1yrtkpv.svelte-1yrtkpv:visited{color:currentColor}small.svelte-1yrtkpv.svelte-1yrtkpv{visibility:hidden}a.svelte-1yrtkpv:hover+small.svelte-1yrtkpv{visibility:visible}";
-  styleInject(css_248z);
+  function add_css() {
+    var style = element("style");
+    style.id = "svelte-1yrtkpv-style";
+    style.textContent = "a.svelte-1yrtkpv,a.svelte-1yrtkpv:visited{color:currentColor}small.svelte-1yrtkpv{visibility:hidden}a:hover+small.svelte-1yrtkpv{visibility:visible}";
+    append(document.head, style);
+  }
 
   function create_fragment$2(ctx) {
     var h4;
@@ -1552,10 +1494,9 @@
     var a_href_value;
     var t1;
     var small;
-    var fa;
     var h4_class_value;
     var current;
-    fa = new Fa__default['default']({
+    var fa = new Fa__default['default']({
       props: {
         icon: faLink
       }
@@ -1643,19 +1584,19 @@
     var _$$props$level = $$props.level,
         level = _$$props$level === void 0 ? 2 : _$$props$level;
     var _$$props$title = $$props.title,
-        title = _$$props$title === void 0 ? '' : _$$props$title;
+        title = _$$props$title === void 0 ? "" : _$$props$title;
     var id;
 
-    $$self.$$set = function ($$props) {
-      if ('level' in $$props) $$invalidate(0, level = $$props.level);
-      if ('title' in $$props) $$invalidate(1, title = $$props.title);
+    $$self.$set = function ($$props) {
+      if ("level" in $$props) $$invalidate(0, level = $$props.level);
+      if ("title" in $$props) $$invalidate(1, title = $$props.title);
     };
 
     $$self.$$.update = function () {
       if ($$self.$$.dirty &
       /*title*/
       2) {
-        $$invalidate(2, id = title.toLowerCase().replace(/[^\w]/g, '-'));
+        $$invalidate(2, id = title.toLowerCase().replace(/[^\w]/g, "-"));
       }
     };
 
@@ -1669,6 +1610,7 @@
       var _this;
 
       _this = _SvelteComponent.call(this) || this;
+      if (!document.getElementById("svelte-1yrtkpv-style")) add_css();
       init(_assertThisInitialized(_this), options, instance$1, create_fragment$2, safe_not_equal, {
         level: 0,
         title: 1
@@ -1680,17 +1622,15 @@
   }(SvelteComponent);
 
   function create_default_slot_8(ctx) {
-    var fa0;
     var t;
-    var fa1;
     var current;
-    fa0 = new Fa__default['default']({
+    var fa0 = new Fa__default['default']({
       props: {
         icon: faCircle,
         color: "tomato"
       }
     });
-    fa1 = new Fa__default['default']({
+    var fa1 = new Fa__default['default']({
       props: {
         icon: faTimes,
         scale: 0.5,
@@ -1731,16 +1671,14 @@
 
 
   function create_default_slot_7(ctx) {
-    var fa0;
     var t;
-    var fa1;
     var current;
-    fa0 = new Fa__default['default']({
+    var fa0 = new Fa__default['default']({
       props: {
         icon: faBookmark
       }
     });
-    fa1 = new Fa__default['default']({
+    var fa1 = new Fa__default['default']({
       props: {
         icon: faHeart,
         scale: 0.4,
@@ -1782,22 +1720,18 @@
 
 
   function create_default_slot_6(ctx) {
-    var fa0;
     var t0;
-    var fa1;
     var t1;
-    var fa2;
     var t2;
-    var fa3;
     var current;
-    fa0 = new Fa__default['default']({
+    var fa0 = new Fa__default['default']({
       props: {
         icon: faPlay,
         scale: 1.2,
         rotate: -90
       }
     });
-    fa1 = new Fa__default['default']({
+    var fa1 = new Fa__default['default']({
       props: {
         icon: faSun,
         scale: 0.35,
@@ -1805,7 +1739,7 @@
         color: "white"
       }
     });
-    fa2 = new Fa__default['default']({
+    var fa2 = new Fa__default['default']({
       props: {
         icon: faMoon,
         scale: 0.3,
@@ -1814,7 +1748,7 @@
         color: "white"
       }
     });
-    fa3 = new Fa__default['default']({
+    var fa3 = new Fa__default['default']({
       props: {
         icon: faStar,
         scale: 0.3,
@@ -1889,16 +1823,14 @@
 
 
   function create_default_slot_4(ctx) {
-    var fa;
     var t;
-    var falayerstext;
     var current;
-    fa = new Fa__default['default']({
+    var fa = new Fa__default['default']({
       props: {
         icon: faCalendar
       }
     });
-    falayerstext = new Fa.FaLayersText({
+    var falayerstext = new Fa.FaLayersText({
       props: {
         scale: 0.45,
         translateY: 0.1,
@@ -1975,16 +1907,14 @@
 
 
   function create_default_slot_2(ctx) {
-    var fa;
     var t;
-    var falayerstext;
     var current;
-    fa = new Fa__default['default']({
+    var fa = new Fa__default['default']({
       props: {
         icon: faCertificate
       }
     });
-    falayerstext = new Fa.FaLayersText({
+    var falayerstext = new Fa.FaLayersText({
       props: {
         scale: 0.25,
         rotate: -30,
@@ -2061,16 +1991,14 @@
 
 
   function create_default_slot(ctx) {
-    var fa;
     var t;
-    var falayerstext;
     var current;
-    fa = new Fa__default['default']({
+    var fa = new Fa__default['default']({
       props: {
         icon: faEnvelope
       }
     });
-    falayerstext = new Fa.FaLayersText({
+    var falayerstext = new Fa.FaLayersText({
       props: {
         scale: 0.2,
         translateX: 0.4,
@@ -2132,256 +2060,159 @@
 
   function create_fragment$1(ctx) {
     var div19;
-    var docstitle0;
     var t0;
-    var docscode0;
     var t1;
     var div0;
     var t5;
-    var docscode1;
     var t6;
     var div1;
     var t11;
-    var docscode2;
     var t12;
     var div2;
     var t17;
-    var docscode3;
     var t18;
-    var docstitle1;
     var t19;
     var div3;
-    var fa0;
     var t20;
     var t21;
-    var docscode4;
     var t22;
     var div5;
     var div4;
-    var fa1;
     var t23;
-    var docscode5;
     var t24;
-    var docstitle2;
     var t25;
-    var docstitle3;
     var t26;
     var div6;
-    var fa2;
     var t27;
-    var fa3;
     var t28;
-    var fa4;
     var t29;
-    var fa5;
     var t30;
-    var fa6;
     var t31;
-    var fa7;
     var t32;
-    var fa8;
     var t33;
-    var fa9;
     var t34;
-    var docscode6;
     var t35;
-    var docstitle4;
     var t36;
     var div12;
     var div7;
-    var fa10;
     var t37;
     var t38;
     var div8;
-    var fa11;
     var t39;
     var t40;
     var div9;
-    var fa12;
     var t41;
     var t42;
     var div10;
-    var fa13;
     var t43;
     var t44;
     var div11;
-    var fa14;
     var t45;
     var t46;
-    var docscode7;
     var t47;
-    var docstitle5;
     var t48;
     var div13;
-    var fa15;
     var t49;
-    var fa16;
     var t50;
     var t51;
-    var docscode8;
     var t52;
-    var docstitle6;
     var t53;
     var div14;
-    var fa17;
     var t54;
-    var fa18;
     var t55;
-    var fa19;
     var t56;
-    var fa20;
     var t57;
-    var fa21;
     var t58;
-    var fa22;
     var t59;
-    var docscode9;
     var t60;
-    var docstitle7;
     var t61;
-    var docstitle8;
     var t62;
     var div15;
-    var fa23;
     var t63;
-    var fa24;
     var t64;
-    var fa25;
     var t65;
-    var docscode10;
     var t66;
-    var docstitle9;
     var t67;
     var div16;
-    var fa26;
     var t68;
-    var fa27;
     var t69;
-    var fa28;
     var t70;
-    var fa29;
     var t71;
-    var fa30;
     var t72;
-    var docscode11;
     var t73;
-    var docstitle10;
     var t74;
     var div17;
-    var fa31;
     var t75;
-    var fa32;
     var t76;
-    var fa33;
     var t77;
-    var fa34;
     var t78;
-    var fa35;
     var t79;
-    var fa36;
     var t80;
-    var fa37;
     var t81;
-    var fa38;
     var t82;
-    var fa39;
     var t83;
-    var docscode12;
     var t84;
-    var docstitle11;
     var t85;
     var div18;
-    var falayers0;
     var t86;
-    var falayers1;
     var t87;
-    var falayers2;
     var t88;
-    var falayers3;
     var t89;
-    var falayers4;
     var t90;
-    var falayers5;
     var t91;
-    var docscode13;
     var t92;
-    var docscode14;
     var t93;
-    var docstitle12;
     var t94;
-    var docstitle13;
     var t95;
-    var docsimg0;
     var t96;
-    var docscode15;
     var t97;
-    var docscode16;
     var t98;
-    var docstitle14;
     var t99;
-    var docsimg1;
     var t100;
-    var docscode17;
     var t101;
-    var docstitle15;
     var t102;
-    var docsimg2;
     var t103;
-    var docscode18;
     var t104;
-    var docsimg3;
     var t105;
-    var docscode19;
     var t106;
-    var docstitle16;
     var t107;
-    var docsimg4;
     var t108;
-    var docscode20;
     var t109;
-    var docstitle17;
     var t110;
-    var docsimg5;
     var t111;
-    var docscode21;
     var t112;
-    var docsimg6;
     var t113;
-    var docscode22;
     var t114;
-    var docsimg7;
     var t115;
-    var docscode23;
     var t116;
-    var docscode24;
     var current;
-    docstitle0 = new Docs_title({
+    var docstitle0 = new Docs_title({
       props: {
         title: "Installation"
       }
     });
-    docscode0 = new Docs_code({
+    var docscode0 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].installation[0]
       }
     });
-    docscode1 = new Docs_code({
+    var docscode1 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].installation[1]
       }
     });
-    docscode2 = new Docs_code({
+    var docscode2 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].installation[2]
       }
     });
-    docscode3 = new Docs_code({
+    var docscode3 = new Docs_code({
       props: {
         code:
         /*codes*/
@@ -2389,249 +2220,249 @@
         lang: "js"
       }
     });
-    docstitle1 = new Docs_title({
+    var docstitle1 = new Docs_title({
       props: {
         title: "Basic Use"
       }
     });
-    fa0 = new Fa__default['default']({
+    var fa0 = new Fa__default['default']({
       props: {
         icon: faFlag
       }
     });
-    docscode4 = new Docs_code({
+    var docscode4 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].basicUse[0]
       }
     });
-    fa1 = new Fa__default['default']({
+    var fa1 = new Fa__default['default']({
       props: {
         icon: faFlag
       }
     });
-    docscode5 = new Docs_code({
+    var docscode5 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].basicUse[1]
       }
     });
-    docstitle2 = new Docs_title({
+    var docstitle2 = new Docs_title({
       props: {
         title: "Additional Styling"
       }
     });
-    docstitle3 = new Docs_title({
+    var docstitle3 = new Docs_title({
       props: {
         title: "Icon Sizes",
         level: 3
       }
     });
-    fa2 = new Fa__default['default']({
+    var fa2 = new Fa__default['default']({
       props: {
         icon: faFlag,
         size: "xs"
       }
     });
-    fa3 = new Fa__default['default']({
+    var fa3 = new Fa__default['default']({
       props: {
         icon: faFlag,
         size: "sm"
       }
     });
-    fa4 = new Fa__default['default']({
+    var fa4 = new Fa__default['default']({
       props: {
         icon: faFlag,
         size: "lg"
       }
     });
-    fa5 = new Fa__default['default']({
+    var fa5 = new Fa__default['default']({
       props: {
         icon: faFlag,
         size: "2x"
       }
     });
-    fa6 = new Fa__default['default']({
+    var fa6 = new Fa__default['default']({
       props: {
         icon: faFlag,
         size: "2.5x"
       }
     });
-    fa7 = new Fa__default['default']({
+    var fa7 = new Fa__default['default']({
       props: {
         icon: faFlag,
         size: "5x"
       }
     });
-    fa8 = new Fa__default['default']({
+    var fa8 = new Fa__default['default']({
       props: {
         icon: faFlag,
         size: "7x"
       }
     });
-    fa9 = new Fa__default['default']({
+    var fa9 = new Fa__default['default']({
       props: {
         icon: faFlag,
         size: "10x"
       }
     });
-    docscode6 = new Docs_code({
+    var docscode6 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].additionalStyling[0]
       }
     });
-    docstitle4 = new Docs_title({
+    var docstitle4 = new Docs_title({
       props: {
         title: "Fixed Width Icons",
         level: 3
       }
     });
-    fa10 = new Fa__default['default']({
+    var fa10 = new Fa__default['default']({
       props: {
         icon: faHome,
         fw: true,
         style: "background: mistyrose"
       }
     });
-    fa11 = new Fa__default['default']({
+    var fa11 = new Fa__default['default']({
       props: {
         icon: faInfo,
         fw: true,
         style: "background: mistyrose"
       }
     });
-    fa12 = new Fa__default['default']({
+    var fa12 = new Fa__default['default']({
       props: {
         icon: faBook,
         fw: true,
         style: "background: mistyrose"
       }
     });
-    fa13 = new Fa__default['default']({
+    var fa13 = new Fa__default['default']({
       props: {
         icon: faPencilAlt,
         fw: true,
         style: "background: mistyrose"
       }
     });
-    fa14 = new Fa__default['default']({
+    var fa14 = new Fa__default['default']({
       props: {
         icon: faCog,
         fw: true,
         style: "background: mistyrose"
       }
     });
-    docscode7 = new Docs_code({
+    var docscode7 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].additionalStyling[1]
       }
     });
-    docstitle5 = new Docs_title({
+    var docstitle5 = new Docs_title({
       props: {
         title: "Pulled Icons",
         level: 3
       }
     });
-    fa15 = new Fa__default['default']({
+    var fa15 = new Fa__default['default']({
       props: {
         icon: faQuoteLeft,
         pull: "left",
         size: "2x"
       }
     });
-    fa16 = new Fa__default['default']({
+    var fa16 = new Fa__default['default']({
       props: {
         icon: faQuoteRight,
         pull: "right",
         size: "2x"
       }
     });
-    docscode8 = new Docs_code({
+    var docscode8 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].additionalStyling[2]
       }
     });
-    docstitle6 = new Docs_title({
+    var docstitle6 = new Docs_title({
       props: {
         title: "Animating Icons"
       }
     });
-    fa17 = new Fa__default['default']({
+    var fa17 = new Fa__default['default']({
       props: {
         icon: faSpinner,
         size: "3x",
         spin: true
       }
     });
-    fa18 = new Fa__default['default']({
+    var fa18 = new Fa__default['default']({
       props: {
         icon: faCircleNotch,
         size: "3x",
         spin: true
       }
     });
-    fa19 = new Fa__default['default']({
+    var fa19 = new Fa__default['default']({
       props: {
         icon: faSync,
         size: "3x",
         spin: true
       }
     });
-    fa20 = new Fa__default['default']({
+    var fa20 = new Fa__default['default']({
       props: {
         icon: faCog,
         size: "3x",
         spin: true
       }
     });
-    fa21 = new Fa__default['default']({
+    var fa21 = new Fa__default['default']({
       props: {
         icon: faSpinner,
         size: "3x",
         pulse: true
       }
     });
-    fa22 = new Fa__default['default']({
+    var fa22 = new Fa__default['default']({
       props: {
         icon: faStroopwafel,
         size: "3x",
         spin: true
       }
     });
-    docscode9 = new Docs_code({
+    var docscode9 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].animatingIcons[0]
       }
     });
-    docstitle7 = new Docs_title({
+    var docstitle7 = new Docs_title({
       props: {
         title: "Power Transforms"
       }
     });
-    docstitle8 = new Docs_title({
+    var docstitle8 = new Docs_title({
       props: {
         title: "Scaling",
         level: 3
       }
     });
-    fa23 = new Fa__default['default']({
+    var fa23 = new Fa__default['default']({
       props: {
         icon: faMagic,
         size: "4x",
         style: "background: mistyrose"
       }
     });
-    fa24 = new Fa__default['default']({
+    var fa24 = new Fa__default['default']({
       props: {
         icon: faMagic,
         scale: 0.5,
@@ -2639,7 +2470,7 @@
         style: "background: mistyrose"
       }
     });
-    fa25 = new Fa__default['default']({
+    var fa25 = new Fa__default['default']({
       props: {
         icon: faMagic,
         scale: 1.2,
@@ -2647,20 +2478,20 @@
         style: "background: mistyrose"
       }
     });
-    docscode10 = new Docs_code({
+    var docscode10 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].powerTransforms[0]
       }
     });
-    docstitle9 = new Docs_title({
+    var docstitle9 = new Docs_title({
       props: {
         title: "Positioning",
         level: 3
       }
     });
-    fa26 = new Fa__default['default']({
+    var fa26 = new Fa__default['default']({
       props: {
         icon: faMagic,
         scale: 0.5,
@@ -2668,7 +2499,7 @@
         style: "background: mistyrose"
       }
     });
-    fa27 = new Fa__default['default']({
+    var fa27 = new Fa__default['default']({
       props: {
         icon: faMagic,
         scale: 0.5,
@@ -2677,7 +2508,7 @@
         style: "background: mistyrose"
       }
     });
-    fa28 = new Fa__default['default']({
+    var fa28 = new Fa__default['default']({
       props: {
         icon: faMagic,
         scale: 0.5,
@@ -2686,7 +2517,7 @@
         style: "background: mistyrose"
       }
     });
-    fa29 = new Fa__default['default']({
+    var fa29 = new Fa__default['default']({
       props: {
         icon: faMagic,
         scale: 0.5,
@@ -2695,7 +2526,7 @@
         style: "background: mistyrose"
       }
     });
-    fa30 = new Fa__default['default']({
+    var fa30 = new Fa__default['default']({
       props: {
         icon: faMagic,
         scale: 0.5,
@@ -2704,20 +2535,20 @@
         style: "background: mistyrose"
       }
     });
-    docscode11 = new Docs_code({
+    var docscode11 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].powerTransforms[1]
       }
     });
-    docstitle10 = new Docs_title({
+    var docstitle10 = new Docs_title({
       props: {
         title: "Rotating & Flipping",
         level: 3
       }
     });
-    fa31 = new Fa__default['default']({
+    var fa31 = new Fa__default['default']({
       props: {
         icon: faMagic,
         rotate: 90,
@@ -2725,7 +2556,7 @@
         style: "background: mistyrose"
       }
     });
-    fa32 = new Fa__default['default']({
+    var fa32 = new Fa__default['default']({
       props: {
         icon: faMagic,
         rotate: 180,
@@ -2733,7 +2564,7 @@
         style: "background: mistyrose"
       }
     });
-    fa33 = new Fa__default['default']({
+    var fa33 = new Fa__default['default']({
       props: {
         icon: faMagic,
         size: "4x",
@@ -2741,7 +2572,7 @@
         style: "background: mistyrose"
       }
     });
-    fa34 = new Fa__default['default']({
+    var fa34 = new Fa__default['default']({
       props: {
         icon: faMagic,
         size: "4x",
@@ -2749,7 +2580,7 @@
         style: "background: mistyrose"
       }
     });
-    fa35 = new Fa__default['default']({
+    var fa35 = new Fa__default['default']({
       props: {
         icon: faMagic,
         size: "4x",
@@ -2757,7 +2588,7 @@
         style: "background: mistyrose"
       }
     });
-    fa36 = new Fa__default['default']({
+    var fa36 = new Fa__default['default']({
       props: {
         icon: faMagic,
         size: "4x",
@@ -2765,7 +2596,7 @@
         style: "background: mistyrose"
       }
     });
-    fa37 = new Fa__default['default']({
+    var fa37 = new Fa__default['default']({
       props: {
         icon: faMagic,
         size: "4x",
@@ -2773,7 +2604,7 @@
         style: "background: mistyrose"
       }
     });
-    fa38 = new Fa__default['default']({
+    var fa38 = new Fa__default['default']({
       props: {
         icon: faMagic,
         size: "4x",
@@ -2781,7 +2612,7 @@
         style: "background: mistyrose"
       }
     });
-    fa39 = new Fa__default['default']({
+    var fa39 = new Fa__default['default']({
       props: {
         icon: faMagic,
         size: "4x",
@@ -2790,19 +2621,19 @@
         style: "background: mistyrose"
       }
     });
-    docscode12 = new Docs_code({
+    var docscode12 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].powerTransforms[2]
       }
     });
-    docstitle11 = new Docs_title({
+    var docstitle11 = new Docs_title({
       props: {
         title: "Layering & Text"
       }
     });
-    falayers0 = new Fa.FaLayers({
+    var falayers0 = new Fa.FaLayers({
       props: {
         size: "4x",
         style: "background: mistyrose",
@@ -2814,7 +2645,7 @@
         }
       }
     });
-    falayers1 = new Fa.FaLayers({
+    var falayers1 = new Fa.FaLayers({
       props: {
         size: "4x",
         style: "background: mistyrose",
@@ -2826,7 +2657,7 @@
         }
       }
     });
-    falayers2 = new Fa.FaLayers({
+    var falayers2 = new Fa.FaLayers({
       props: {
         size: "4x",
         style: "background: mistyrose",
@@ -2838,7 +2669,7 @@
         }
       }
     });
-    falayers3 = new Fa.FaLayers({
+    var falayers3 = new Fa.FaLayers({
       props: {
         size: "4x",
         style: "background: mistyrose",
@@ -2850,7 +2681,7 @@
         }
       }
     });
-    falayers4 = new Fa.FaLayers({
+    var falayers4 = new Fa.FaLayers({
       props: {
         size: "4x",
         style: "background: mistyrose",
@@ -2862,7 +2693,7 @@
         }
       }
     });
-    falayers5 = new Fa.FaLayers({
+    var falayers5 = new Fa.FaLayers({
       props: {
         size: "4x",
         style: "background: mistyrose",
@@ -2874,7 +2705,7 @@
         }
       }
     });
-    docscode13 = new Docs_code({
+    var docscode13 = new Docs_code({
       props: {
         code:
         /*codes*/
@@ -2882,31 +2713,31 @@
         lang: "js"
       }
     });
-    docscode14 = new Docs_code({
+    var docscode14 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].layering[1]
       }
     });
-    docstitle12 = new Docs_title({
+    var docstitle12 = new Docs_title({
       props: {
         title: "Duotone Icons"
       }
     });
-    docstitle13 = new Docs_title({
+    var docstitle13 = new Docs_title({
       props: {
         title: "Basic Use",
         level: 3
       }
     });
-    docsimg0 = new Docs_img({
+    var docsimg0 = new Docs_img({
       props: {
         src: "assets/duotone-0.png",
         alt: "duotone icons basic use"
       }
     });
-    docscode15 = new Docs_code({
+    var docscode15 = new Docs_code({
       props: {
         code:
         /*codes*/
@@ -2914,122 +2745,122 @@
         lang: "js"
       }
     });
-    docscode16 = new Docs_code({
+    var docscode16 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].duotoneIcons[1]
       }
     });
-    docstitle14 = new Docs_title({
+    var docstitle14 = new Docs_title({
       props: {
         title: "Swapping Layer Opacity",
         level: 3
       }
     });
-    docsimg1 = new Docs_img({
+    var docsimg1 = new Docs_img({
       props: {
         src: "assets/duotone-1.png",
         alt: "swapping duotone icons layer opacity"
       }
     });
-    docscode17 = new Docs_code({
+    var docscode17 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].duotoneIcons[2]
       }
     });
-    docstitle15 = new Docs_title({
+    var docstitle15 = new Docs_title({
       props: {
         title: "Changing Opacity",
         level: 3
       }
     });
-    docsimg2 = new Docs_img({
+    var docsimg2 = new Docs_img({
       props: {
         src: "assets/duotone-2.png",
         alt: "changing duotone icons opacity"
       }
     });
-    docscode18 = new Docs_code({
+    var docscode18 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].duotoneIcons[3]
       }
     });
-    docsimg3 = new Docs_img({
+    var docsimg3 = new Docs_img({
       props: {
         src: "assets/duotone-3.png",
         alt: "changing duotone icons opacity"
       }
     });
-    docscode19 = new Docs_code({
+    var docscode19 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].duotoneIcons[4]
       }
     });
-    docstitle16 = new Docs_title({
+    var docstitle16 = new Docs_title({
       props: {
         title: "Coloring Duotone Icons",
         level: 3
       }
     });
-    docsimg4 = new Docs_img({
+    var docsimg4 = new Docs_img({
       props: {
         src: "assets/duotone-4.png",
         alt: "coloring duotone icons"
       }
     });
-    docscode20 = new Docs_code({
+    var docscode20 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].duotoneIcons[5]
       }
     });
-    docstitle17 = new Docs_title({
+    var docstitle17 = new Docs_title({
       props: {
         title: "Advanced Use",
         level: 3
       }
     });
-    docsimg5 = new Docs_img({
+    var docsimg5 = new Docs_img({
       props: {
         src: "assets/duotone-5.png",
         alt: "duotone icons advanced use"
       }
     });
-    docscode21 = new Docs_code({
+    var docscode21 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].duotoneIcons[6]
       }
     });
-    docsimg6 = new Docs_img({
+    var docsimg6 = new Docs_img({
       props: {
         src: "assets/duotone-6.png",
         alt: "duotone icons advanced use"
       }
     });
-    docscode22 = new Docs_code({
+    var docscode22 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].duotoneIcons[7]
       }
     });
-    docsimg7 = new Docs_img({
+    var docsimg7 = new Docs_img({
       props: {
         src: "assets/duotone-7.png",
         alt: "duotone icons advanced use"
       }
     });
-    docscode23 = new Docs_code({
+    var docscode23 = new Docs_code({
       props: {
         code:
         /*codes*/
@@ -3037,7 +2868,7 @@
         lang: "js"
       }
     });
-    docscode24 = new Docs_code({
+    var docscode24 = new Docs_code({
       props: {
         code:
         /*codes*/
@@ -3052,17 +2883,17 @@
         create_component(docscode0.$$.fragment);
         t1 = space();
         div0 = element("div");
-        div0.innerHTML = "Install FontAwesome icons via <a href=\"https://www.npmjs.com/search?q=%40fortawesome%20svg%20icons\" target=\"_blank\">official packages</a>, for example:";
+        div0.innerHTML = "\n    Install FontAwesome icons via <a href=\"https://www.npmjs.com/search?q=%40fortawesome%20svg%20icons\" target=\"_blank\">official packages</a>, for example:\n  ";
         t5 = space();
         create_component(docscode1.$$.fragment);
         t6 = space();
         div1 = element("div");
-        div1.innerHTML = "<strong>Notice for <a href=\"https://sapper.svelte.dev/\" target=\"_blank\">Sapper</a> user:</strong> You may need to install the component as a devDependency:";
+        div1.innerHTML = "<strong>Notice for <a href=\"https://sapper.svelte.dev/\" target=\"_blank\">Sapper</a> user:</strong> You may need to install the component as a devDependency:\n  ";
         t11 = space();
         create_component(docscode2.$$.fragment);
         t12 = space();
         div2 = element("div");
-        div2.innerHTML = "<strong>Notice for <a href=\"https://kit.svelte.dev/\" target=\"_blank\">Svelte Kit</a> user:</strong> You may need to import the component explicitly as below:";
+        div2.innerHTML = "<strong>Notice for <a href=\"https://kit.svelte.dev/\" target=\"_blank\">Svelte Kit</a> user:</strong> You may need to import the component explicitly as below:\n  ";
         t17 = space();
         create_component(docscode3.$$.fragment);
         t18 = space();
@@ -3895,7 +3726,7 @@
 
   function instance($$self) {
     var codes = {
-      installation: ['npm install svelte-fa', 'npm install @fortawesome/free-solid-svg-icons', 'npm install svelte-fa -D', "import Fa from 'svelte-fa/src/fa.svelte'"],
+      installation: ["npm install svelte-fa", "npm install @fortawesome/free-solid-svg-icons", "npm install svelte-fa -D", "import Fa from 'svelte-fa/src/fa.svelte'"],
       basicUse: ["<script>\n  import Fa from 'svelte-fa'\n  import { faFlag } from '@fortawesome/free-solid-svg-icons'\n</script>\n\n<Fa icon={faFlag} /> Flag", "<div style=\"font-size: 3em; color: tomato\">\n  <Fa icon={faFlag} />\n</div>"],
       additionalStyling: ["<Fa icon={faFlag} size=\"xs\" />\n<Fa icon={faFlag} size=\"sm\" />\n<Fa icon={faFlag} size=\"lg\" />\n<Fa icon={faFlag} size=\"2x\" />\n<Fa icon={faFlag} size=\"2.5x\" />\n<Fa icon={faFlag} size=\"5x\" />\n<Fa icon={faFlag} size=\"7x\" />\n<Fa icon={faFlag} size=\"10x\" />", "<div>\n  <Fa icon={faHome} fw style=\"background: mistyrose\" /> Home\n</div>\n<div>\n  <Fa icon={faInfo} fw style=\"background: mistyrose\" /> Info\n</div>\n<div>\n  <Fa icon={faBook} fw style=\"background: mistyrose\" /> Library\n</div>\n<div>\n  <Fa icon={faPencilAlt} fw style=\"background: mistyrose\" /> Applications\n</div>\n<div>\n  <Fa icon={faCog} fw style=\"background: mistyrose\" /> Settins\n</div>", "<Fa icon={faQuoteLeft} pull=\"left\" size=\"2x\" />\n<Fa icon={faQuoteRight} pull=\"right\" size=\"2x\" />\nGatsby believed in the green light, the orgastic future that year by year recedes before us. It eluded us then, but that\u2019s no matter \u2014 tomorrow we will run faster, stretch our arms further... And one fine morning \u2014 So we beat on, boats against the current, borne back ceaselessly into the past."],
       animatingIcons: ["<Fa icon={faSpinner} size=\"3x\" spin />\n<Fa icon={faCircleNotch} size=\"3x\" spin />\n<Fa icon={faSync} size=\"3x\" spin />\n<Fa icon={faCog} size=\"3x\" spin />\n<Fa icon={faSpinner} size=\"3x\" pulse />\n<Fa icon={faStroopwafel} size=\"3x\" spin />"],
@@ -3922,12 +3753,10 @@
 
   function create_fragment(ctx) {
     var div;
-    var showcase;
     var t;
-    var docs;
     var current;
-    showcase = new Showcase({});
-    docs = new Docs({});
+    var showcase = new Showcase({});
+    var docs = new Docs({});
     return {
       c: function c() {
         div = element("div");

@@ -17,7 +17,11 @@ export default {
   external: ['svelte-fa'],
   plugins: [
     svelte({
-      legacy: true,
+      emitCss: false,
+      compilerOptions: {
+        legacy: true,
+        css: true,
+      },
     }),
     resolve({
       browser: true,
