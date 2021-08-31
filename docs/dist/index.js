@@ -1680,7 +1680,7 @@
   }(SvelteComponent);
 
   function create_fragment$1(ctx) {
-    var div16;
+    var div18;
     var docstitle0;
     var t0;
     var docscode0;
@@ -1797,67 +1797,93 @@
     var t64;
     var fa25;
     var t65;
-    var fa26;
-    var t66;
-    var fa27;
-    var t67;
-    var fa28;
-    var t68;
-    var fa29;
-    var t69;
-    var fa30;
-    var t70;
-    var fa31;
-    var t71;
     var docscode10;
-    var t72;
+    var t66;
     var docstitle9;
+    var t67;
+    var div16;
+    var fa26;
+    var t68;
+    var fa27;
+    var t69;
+    var fa28;
+    var t70;
+    var fa29;
+    var t71;
+    var fa30;
+    var t72;
+    var docscode11;
     var t73;
     var docstitle10;
     var t74;
-    var docsimg0;
+    var div17;
+    var fa31;
     var t75;
-    var docscode11;
+    var fa32;
     var t76;
-    var docscode12;
+    var fa33;
     var t77;
-    var docstitle11;
+    var fa34;
     var t78;
-    var docsimg1;
+    var fa35;
     var t79;
-    var docscode13;
+    var fa36;
     var t80;
-    var docstitle12;
+    var fa37;
     var t81;
-    var docsimg2;
+    var fa38;
     var t82;
-    var docscode14;
+    var fa39;
     var t83;
-    var docsimg3;
+    var docscode12;
     var t84;
-    var docscode15;
+    var docstitle11;
     var t85;
-    var docstitle13;
+    var docstitle12;
     var t86;
-    var docsimg4;
+    var docsimg0;
     var t87;
-    var docscode16;
+    var docscode13;
     var t88;
-    var docstitle14;
+    var docscode14;
     var t89;
-    var docsimg5;
+    var docstitle13;
     var t90;
-    var docscode17;
+    var docsimg1;
     var t91;
-    var docsimg6;
+    var docscode15;
     var t92;
-    var docscode18;
+    var docstitle14;
     var t93;
-    var docsimg7;
+    var docsimg2;
     var t94;
-    var docscode19;
+    var docscode16;
     var t95;
+    var docsimg3;
+    var t96;
+    var docscode17;
+    var t97;
+    var docstitle15;
+    var t98;
+    var docsimg4;
+    var t99;
+    var docscode18;
+    var t100;
+    var docstitle16;
+    var t101;
+    var docsimg5;
+    var t102;
+    var docscode19;
+    var t103;
+    var docsimg6;
+    var t104;
     var docscode20;
+    var t105;
+    var docsimg7;
+    var t106;
+    var docscode21;
+    var t107;
+    var docscode22;
     var current;
     docstitle0 = new Docs_title({
       props: {
@@ -2124,14 +2150,13 @@
     });
     docstitle8 = new Docs_title({
       props: {
-        title: "Rotating & Flipping",
+        title: "Scaling",
         level: 5
       }
     });
     fa23 = new Fa__default['default']({
       props: {
         icon: faMagic,
-        rotate: 90,
         size: "4x",
         style: "background: mistyrose"
       }
@@ -2139,7 +2164,7 @@
     fa24 = new Fa__default['default']({
       props: {
         icon: faMagic,
-        rotate: 180,
+        scale: 0.5,
         size: "4x",
         style: "background: mistyrose"
       }
@@ -2147,57 +2172,8 @@
     fa25 = new Fa__default['default']({
       props: {
         icon: faMagic,
+        scale: 1.2,
         size: "4x",
-        rotate: "270",
-        style: "background: mistyrose"
-      }
-    });
-    fa26 = new Fa__default['default']({
-      props: {
-        icon: faMagic,
-        size: "4x",
-        rotate: "30",
-        style: "background: mistyrose"
-      }
-    });
-    fa27 = new Fa__default['default']({
-      props: {
-        icon: faMagic,
-        size: "4x",
-        rotate: "-30",
-        style: "background: mistyrose"
-      }
-    });
-    fa28 = new Fa__default['default']({
-      props: {
-        icon: faMagic,
-        size: "4x",
-        flip: "vertical",
-        style: "background: mistyrose"
-      }
-    });
-    fa29 = new Fa__default['default']({
-      props: {
-        icon: faMagic,
-        size: "4x",
-        flip: "horizontal",
-        style: "background: mistyrose"
-      }
-    });
-    fa30 = new Fa__default['default']({
-      props: {
-        icon: faMagic,
-        size: "4x",
-        flip: "both",
-        style: "background: mistyrose"
-      }
-    });
-    fa31 = new Fa__default['default']({
-      props: {
-        icon: faMagic,
-        size: "4x",
-        flip: "both",
-        rotate: "30",
         style: "background: mistyrose"
       }
     });
@@ -2210,10 +2186,153 @@
     });
     docstitle9 = new Docs_title({
       props: {
-        title: "Duotone Icons"
+        title: "Positioning",
+        level: 5
+      }
+    });
+    fa26 = new Fa__default['default']({
+      props: {
+        icon: faMagic,
+        scale: 0.5,
+        size: "4x",
+        style: "background: mistyrose"
+      }
+    });
+    fa27 = new Fa__default['default']({
+      props: {
+        icon: faMagic,
+        scale: 0.5,
+        translateX: 0.2,
+        size: "4x",
+        style: "background: mistyrose"
+      }
+    });
+    fa28 = new Fa__default['default']({
+      props: {
+        icon: faMagic,
+        scale: 0.5,
+        translateX: -0.2,
+        size: "4x",
+        style: "background: mistyrose"
+      }
+    });
+    fa29 = new Fa__default['default']({
+      props: {
+        icon: faMagic,
+        scale: 0.5,
+        translateY: 0.2,
+        size: "4x",
+        style: "background: mistyrose"
+      }
+    });
+    fa30 = new Fa__default['default']({
+      props: {
+        icon: faMagic,
+        scale: 0.5,
+        translateY: -0.2,
+        size: "4x",
+        style: "background: mistyrose"
+      }
+    });
+    docscode11 = new Docs_code({
+      props: {
+        code:
+        /*codes*/
+        ctx[0].powerTransforms[1]
       }
     });
     docstitle10 = new Docs_title({
+      props: {
+        title: "Rotating & Flipping",
+        level: 5
+      }
+    });
+    fa31 = new Fa__default['default']({
+      props: {
+        icon: faMagic,
+        rotate: 90,
+        size: "4x",
+        style: "background: mistyrose"
+      }
+    });
+    fa32 = new Fa__default['default']({
+      props: {
+        icon: faMagic,
+        rotate: 180,
+        size: "4x",
+        style: "background: mistyrose"
+      }
+    });
+    fa33 = new Fa__default['default']({
+      props: {
+        icon: faMagic,
+        size: "4x",
+        rotate: "270",
+        style: "background: mistyrose"
+      }
+    });
+    fa34 = new Fa__default['default']({
+      props: {
+        icon: faMagic,
+        size: "4x",
+        rotate: "30",
+        style: "background: mistyrose"
+      }
+    });
+    fa35 = new Fa__default['default']({
+      props: {
+        icon: faMagic,
+        size: "4x",
+        rotate: "-30",
+        style: "background: mistyrose"
+      }
+    });
+    fa36 = new Fa__default['default']({
+      props: {
+        icon: faMagic,
+        size: "4x",
+        flip: "vertical",
+        style: "background: mistyrose"
+      }
+    });
+    fa37 = new Fa__default['default']({
+      props: {
+        icon: faMagic,
+        size: "4x",
+        flip: "horizontal",
+        style: "background: mistyrose"
+      }
+    });
+    fa38 = new Fa__default['default']({
+      props: {
+        icon: faMagic,
+        size: "4x",
+        flip: "both",
+        style: "background: mistyrose"
+      }
+    });
+    fa39 = new Fa__default['default']({
+      props: {
+        icon: faMagic,
+        size: "4x",
+        flip: "both",
+        rotate: "30",
+        style: "background: mistyrose"
+      }
+    });
+    docscode12 = new Docs_code({
+      props: {
+        code:
+        /*codes*/
+        ctx[0].powerTransforms[2]
+      }
+    });
+    docstitle11 = new Docs_title({
+      props: {
+        title: "Duotone Icons"
+      }
+    });
+    docstitle12 = new Docs_title({
       props: {
         title: "Basic Use",
         level: 5
@@ -2225,7 +2344,7 @@
         alt: "duotone icons basic use"
       }
     });
-    docscode11 = new Docs_code({
+    docscode13 = new Docs_code({
       props: {
         code:
         /*codes*/
@@ -2233,14 +2352,14 @@
         lang: "js"
       }
     });
-    docscode12 = new Docs_code({
+    docscode14 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].duotoneIcons[1]
       }
     });
-    docstitle11 = new Docs_title({
+    docstitle13 = new Docs_title({
       props: {
         title: "Swapping Layer Opacity",
         level: 5
@@ -2252,14 +2371,14 @@
         alt: "swapping duotone icons layer opacity"
       }
     });
-    docscode13 = new Docs_code({
+    docscode15 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].duotoneIcons[2]
       }
     });
-    docstitle12 = new Docs_title({
+    docstitle14 = new Docs_title({
       props: {
         title: "Changing Opacity",
         level: 5
@@ -2271,7 +2390,7 @@
         alt: "changing duotone icons opacity"
       }
     });
-    docscode14 = new Docs_code({
+    docscode16 = new Docs_code({
       props: {
         code:
         /*codes*/
@@ -2284,14 +2403,14 @@
         alt: "changing duotone icons opacity"
       }
     });
-    docscode15 = new Docs_code({
+    docscode17 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].duotoneIcons[4]
       }
     });
-    docstitle13 = new Docs_title({
+    docstitle15 = new Docs_title({
       props: {
         title: "Coloring Duotone Icons",
         level: 5
@@ -2303,14 +2422,14 @@
         alt: "coloring duotone icons"
       }
     });
-    docscode16 = new Docs_code({
+    docscode18 = new Docs_code({
       props: {
         code:
         /*codes*/
         ctx[0].duotoneIcons[5]
       }
     });
-    docstitle14 = new Docs_title({
+    docstitle16 = new Docs_title({
       props: {
         title: "Advanced Use",
         level: 5
@@ -2322,7 +2441,7 @@
         alt: "duotone icons advanced use"
       }
     });
-    docscode17 = new Docs_code({
+    docscode19 = new Docs_code({
       props: {
         code:
         /*codes*/
@@ -2335,7 +2454,7 @@
         alt: "duotone icons advanced use"
       }
     });
-    docscode18 = new Docs_code({
+    docscode20 = new Docs_code({
       props: {
         code:
         /*codes*/
@@ -2348,7 +2467,7 @@
         alt: "duotone icons advanced use"
       }
     });
-    docscode19 = new Docs_code({
+    docscode21 = new Docs_code({
       props: {
         code:
         /*codes*/
@@ -2356,7 +2475,7 @@
         lang: "js"
       }
     });
-    docscode20 = new Docs_code({
+    docscode22 = new Docs_code({
       props: {
         code:
         /*codes*/
@@ -2365,7 +2484,7 @@
     });
     return {
       c: function c() {
-        div16 = element("div");
+        div18 = element("div");
         create_component(docstitle0.$$.fragment);
         t0 = space();
         create_component(docscode0.$$.fragment);
@@ -2485,67 +2604,93 @@
         t64 = space();
         create_component(fa25.$$.fragment);
         t65 = space();
-        create_component(fa26.$$.fragment);
-        t66 = space();
-        create_component(fa27.$$.fragment);
-        t67 = space();
-        create_component(fa28.$$.fragment);
-        t68 = space();
-        create_component(fa29.$$.fragment);
-        t69 = space();
-        create_component(fa30.$$.fragment);
-        t70 = space();
-        create_component(fa31.$$.fragment);
-        t71 = space();
         create_component(docscode10.$$.fragment);
-        t72 = space();
+        t66 = space();
         create_component(docstitle9.$$.fragment);
+        t67 = space();
+        div16 = element("div");
+        create_component(fa26.$$.fragment);
+        t68 = space();
+        create_component(fa27.$$.fragment);
+        t69 = space();
+        create_component(fa28.$$.fragment);
+        t70 = space();
+        create_component(fa29.$$.fragment);
+        t71 = space();
+        create_component(fa30.$$.fragment);
+        t72 = space();
+        create_component(docscode11.$$.fragment);
         t73 = space();
         create_component(docstitle10.$$.fragment);
         t74 = space();
-        create_component(docsimg0.$$.fragment);
+        div17 = element("div");
+        create_component(fa31.$$.fragment);
         t75 = space();
-        create_component(docscode11.$$.fragment);
+        create_component(fa32.$$.fragment);
         t76 = space();
-        create_component(docscode12.$$.fragment);
+        create_component(fa33.$$.fragment);
         t77 = space();
-        create_component(docstitle11.$$.fragment);
+        create_component(fa34.$$.fragment);
         t78 = space();
-        create_component(docsimg1.$$.fragment);
+        create_component(fa35.$$.fragment);
         t79 = space();
-        create_component(docscode13.$$.fragment);
+        create_component(fa36.$$.fragment);
         t80 = space();
-        create_component(docstitle12.$$.fragment);
+        create_component(fa37.$$.fragment);
         t81 = space();
-        create_component(docsimg2.$$.fragment);
+        create_component(fa38.$$.fragment);
         t82 = space();
-        create_component(docscode14.$$.fragment);
+        create_component(fa39.$$.fragment);
         t83 = space();
-        create_component(docsimg3.$$.fragment);
+        create_component(docscode12.$$.fragment);
         t84 = space();
-        create_component(docscode15.$$.fragment);
+        create_component(docstitle11.$$.fragment);
         t85 = space();
-        create_component(docstitle13.$$.fragment);
+        create_component(docstitle12.$$.fragment);
         t86 = space();
-        create_component(docsimg4.$$.fragment);
+        create_component(docsimg0.$$.fragment);
         t87 = space();
-        create_component(docscode16.$$.fragment);
+        create_component(docscode13.$$.fragment);
         t88 = space();
-        create_component(docstitle14.$$.fragment);
+        create_component(docscode14.$$.fragment);
         t89 = space();
-        create_component(docsimg5.$$.fragment);
+        create_component(docstitle13.$$.fragment);
         t90 = space();
-        create_component(docscode17.$$.fragment);
+        create_component(docsimg1.$$.fragment);
         t91 = space();
-        create_component(docsimg6.$$.fragment);
+        create_component(docscode15.$$.fragment);
         t92 = space();
-        create_component(docscode18.$$.fragment);
+        create_component(docstitle14.$$.fragment);
         t93 = space();
-        create_component(docsimg7.$$.fragment);
+        create_component(docsimg2.$$.fragment);
         t94 = space();
-        create_component(docscode19.$$.fragment);
+        create_component(docscode16.$$.fragment);
         t95 = space();
+        create_component(docsimg3.$$.fragment);
+        t96 = space();
+        create_component(docscode17.$$.fragment);
+        t97 = space();
+        create_component(docstitle15.$$.fragment);
+        t98 = space();
+        create_component(docsimg4.$$.fragment);
+        t99 = space();
+        create_component(docscode18.$$.fragment);
+        t100 = space();
+        create_component(docstitle16.$$.fragment);
+        t101 = space();
+        create_component(docsimg5.$$.fragment);
+        t102 = space();
+        create_component(docscode19.$$.fragment);
+        t103 = space();
+        create_component(docsimg6.$$.fragment);
+        t104 = space();
         create_component(docscode20.$$.fragment);
+        t105 = space();
+        create_component(docsimg7.$$.fragment);
+        t106 = space();
+        create_component(docscode21.$$.fragment);
+        t107 = space();
+        create_component(docscode22.$$.fragment);
         attr(div0, "class", "shadow-sm p-3 mb-3 rounded clearfix");
         attr(div1, "class", "shadow-sm p-3 mb-3 rounded clearfix");
         attr(div2, "class", "shadow-sm p-3 mb-3 rounded clearfix");
@@ -2558,44 +2703,46 @@
         attr(div13, "class", "shadow-sm p-3 mb-3 rounded clearfix");
         attr(div14, "class", "shadow-sm p-3 mb-3 rounded");
         attr(div15, "class", "shadow-sm p-3 mb-3 rounded");
+        attr(div16, "class", "shadow-sm p-3 mb-3 rounded");
+        attr(div17, "class", "shadow-sm p-3 mb-3 rounded");
       },
       m: function m(target, anchor) {
-        insert(target, div16, anchor);
-        mount_component(docstitle0, div16, null);
-        append(div16, t0);
-        mount_component(docscode0, div16, null);
-        append(div16, t1);
-        append(div16, div0);
-        append(div16, t5);
-        mount_component(docscode1, div16, null);
-        append(div16, t6);
-        append(div16, div1);
-        append(div16, t11);
-        mount_component(docscode2, div16, null);
-        append(div16, t12);
-        append(div16, div2);
-        append(div16, t17);
-        mount_component(docscode3, div16, null);
-        append(div16, t18);
-        mount_component(docstitle1, div16, null);
-        append(div16, t19);
-        append(div16, div3);
+        insert(target, div18, anchor);
+        mount_component(docstitle0, div18, null);
+        append(div18, t0);
+        mount_component(docscode0, div18, null);
+        append(div18, t1);
+        append(div18, div0);
+        append(div18, t5);
+        mount_component(docscode1, div18, null);
+        append(div18, t6);
+        append(div18, div1);
+        append(div18, t11);
+        mount_component(docscode2, div18, null);
+        append(div18, t12);
+        append(div18, div2);
+        append(div18, t17);
+        mount_component(docscode3, div18, null);
+        append(div18, t18);
+        mount_component(docstitle1, div18, null);
+        append(div18, t19);
+        append(div18, div3);
         mount_component(fa0, div3, null);
         append(div3, t20);
-        append(div16, t21);
-        mount_component(docscode4, div16, null);
-        append(div16, t22);
-        append(div16, div5);
+        append(div18, t21);
+        mount_component(docscode4, div18, null);
+        append(div18, t22);
+        append(div18, div5);
         append(div5, div4);
         mount_component(fa1, div4, null);
-        append(div16, t23);
-        mount_component(docscode5, div16, null);
-        append(div16, t24);
-        mount_component(docstitle2, div16, null);
-        append(div16, t25);
-        mount_component(docstitle3, div16, null);
-        append(div16, t26);
-        append(div16, div6);
+        append(div18, t23);
+        mount_component(docscode5, div18, null);
+        append(div18, t24);
+        mount_component(docstitle2, div18, null);
+        append(div18, t25);
+        mount_component(docstitle3, div18, null);
+        append(div18, t26);
+        append(div18, div6);
         mount_component(fa2, div6, null);
         append(div6, t27);
         mount_component(fa3, div6, null);
@@ -2611,12 +2758,12 @@
         mount_component(fa8, div6, null);
         append(div6, t33);
         mount_component(fa9, div6, null);
-        append(div16, t34);
-        mount_component(docscode6, div16, null);
-        append(div16, t35);
-        mount_component(docstitle4, div16, null);
-        append(div16, t36);
-        append(div16, div12);
+        append(div18, t34);
+        mount_component(docscode6, div18, null);
+        append(div18, t35);
+        mount_component(docstitle4, div18, null);
+        append(div18, t36);
+        append(div18, div12);
         append(div12, div7);
         mount_component(fa10, div7, null);
         append(div7, t37);
@@ -2636,22 +2783,22 @@
         append(div12, div11);
         mount_component(fa14, div11, null);
         append(div11, t45);
-        append(div16, t46);
-        mount_component(docscode7, div16, null);
-        append(div16, t47);
-        mount_component(docstitle5, div16, null);
-        append(div16, t48);
-        append(div16, div13);
+        append(div18, t46);
+        mount_component(docscode7, div18, null);
+        append(div18, t47);
+        mount_component(docstitle5, div18, null);
+        append(div18, t48);
+        append(div18, div13);
         mount_component(fa15, div13, null);
         append(div13, t49);
         mount_component(fa16, div13, null);
         append(div13, t50);
-        append(div16, t51);
-        mount_component(docscode8, div16, null);
-        append(div16, t52);
-        mount_component(docstitle6, div16, null);
-        append(div16, t53);
-        append(div16, div14);
+        append(div18, t51);
+        mount_component(docscode8, div18, null);
+        append(div18, t52);
+        mount_component(docstitle6, div18, null);
+        append(div18, t53);
+        append(div18, div14);
         mount_component(fa17, div14, null);
         append(div14, t54);
         mount_component(fa18, div14, null);
@@ -2663,81 +2810,107 @@
         mount_component(fa21, div14, null);
         append(div14, t58);
         mount_component(fa22, div14, null);
-        append(div16, t59);
-        mount_component(docscode9, div16, null);
-        append(div16, t60);
-        mount_component(docstitle7, div16, null);
-        append(div16, t61);
-        mount_component(docstitle8, div16, null);
-        append(div16, t62);
-        append(div16, div15);
+        append(div18, t59);
+        mount_component(docscode9, div18, null);
+        append(div18, t60);
+        mount_component(docstitle7, div18, null);
+        append(div18, t61);
+        mount_component(docstitle8, div18, null);
+        append(div18, t62);
+        append(div18, div15);
         mount_component(fa23, div15, null);
         append(div15, t63);
         mount_component(fa24, div15, null);
         append(div15, t64);
         mount_component(fa25, div15, null);
-        append(div15, t65);
-        mount_component(fa26, div15, null);
-        append(div15, t66);
-        mount_component(fa27, div15, null);
-        append(div15, t67);
-        mount_component(fa28, div15, null);
-        append(div15, t68);
-        mount_component(fa29, div15, null);
-        append(div15, t69);
-        mount_component(fa30, div15, null);
-        append(div15, t70);
-        mount_component(fa31, div15, null);
+        append(div18, t65);
+        mount_component(docscode10, div18, null);
+        append(div18, t66);
+        mount_component(docstitle9, div18, null);
+        append(div18, t67);
+        append(div18, div16);
+        mount_component(fa26, div16, null);
+        append(div16, t68);
+        mount_component(fa27, div16, null);
+        append(div16, t69);
+        mount_component(fa28, div16, null);
+        append(div16, t70);
+        mount_component(fa29, div16, null);
         append(div16, t71);
-        mount_component(docscode10, div16, null);
-        append(div16, t72);
-        mount_component(docstitle9, div16, null);
-        append(div16, t73);
-        mount_component(docstitle10, div16, null);
-        append(div16, t74);
-        mount_component(docsimg0, div16, null);
-        append(div16, t75);
-        mount_component(docscode11, div16, null);
-        append(div16, t76);
-        mount_component(docscode12, div16, null);
-        append(div16, t77);
-        mount_component(docstitle11, div16, null);
-        append(div16, t78);
-        mount_component(docsimg1, div16, null);
-        append(div16, t79);
-        mount_component(docscode13, div16, null);
-        append(div16, t80);
-        mount_component(docstitle12, div16, null);
-        append(div16, t81);
-        mount_component(docsimg2, div16, null);
-        append(div16, t82);
-        mount_component(docscode14, div16, null);
-        append(div16, t83);
-        mount_component(docsimg3, div16, null);
-        append(div16, t84);
-        mount_component(docscode15, div16, null);
-        append(div16, t85);
-        mount_component(docstitle13, div16, null);
-        append(div16, t86);
-        mount_component(docsimg4, div16, null);
-        append(div16, t87);
-        mount_component(docscode16, div16, null);
-        append(div16, t88);
-        mount_component(docstitle14, div16, null);
-        append(div16, t89);
-        mount_component(docsimg5, div16, null);
-        append(div16, t90);
-        mount_component(docscode17, div16, null);
-        append(div16, t91);
-        mount_component(docsimg6, div16, null);
-        append(div16, t92);
-        mount_component(docscode18, div16, null);
-        append(div16, t93);
-        mount_component(docsimg7, div16, null);
-        append(div16, t94);
-        mount_component(docscode19, div16, null);
-        append(div16, t95);
-        mount_component(docscode20, div16, null);
+        mount_component(fa30, div16, null);
+        append(div18, t72);
+        mount_component(docscode11, div18, null);
+        append(div18, t73);
+        mount_component(docstitle10, div18, null);
+        append(div18, t74);
+        append(div18, div17);
+        mount_component(fa31, div17, null);
+        append(div17, t75);
+        mount_component(fa32, div17, null);
+        append(div17, t76);
+        mount_component(fa33, div17, null);
+        append(div17, t77);
+        mount_component(fa34, div17, null);
+        append(div17, t78);
+        mount_component(fa35, div17, null);
+        append(div17, t79);
+        mount_component(fa36, div17, null);
+        append(div17, t80);
+        mount_component(fa37, div17, null);
+        append(div17, t81);
+        mount_component(fa38, div17, null);
+        append(div17, t82);
+        mount_component(fa39, div17, null);
+        append(div18, t83);
+        mount_component(docscode12, div18, null);
+        append(div18, t84);
+        mount_component(docstitle11, div18, null);
+        append(div18, t85);
+        mount_component(docstitle12, div18, null);
+        append(div18, t86);
+        mount_component(docsimg0, div18, null);
+        append(div18, t87);
+        mount_component(docscode13, div18, null);
+        append(div18, t88);
+        mount_component(docscode14, div18, null);
+        append(div18, t89);
+        mount_component(docstitle13, div18, null);
+        append(div18, t90);
+        mount_component(docsimg1, div18, null);
+        append(div18, t91);
+        mount_component(docscode15, div18, null);
+        append(div18, t92);
+        mount_component(docstitle14, div18, null);
+        append(div18, t93);
+        mount_component(docsimg2, div18, null);
+        append(div18, t94);
+        mount_component(docscode16, div18, null);
+        append(div18, t95);
+        mount_component(docsimg3, div18, null);
+        append(div18, t96);
+        mount_component(docscode17, div18, null);
+        append(div18, t97);
+        mount_component(docstitle15, div18, null);
+        append(div18, t98);
+        mount_component(docsimg4, div18, null);
+        append(div18, t99);
+        mount_component(docscode18, div18, null);
+        append(div18, t100);
+        mount_component(docstitle16, div18, null);
+        append(div18, t101);
+        mount_component(docsimg5, div18, null);
+        append(div18, t102);
+        mount_component(docscode19, div18, null);
+        append(div18, t103);
+        mount_component(docsimg6, div18, null);
+        append(div18, t104);
+        mount_component(docscode20, div18, null);
+        append(div18, t105);
+        mount_component(docsimg7, div18, null);
+        append(div18, t106);
+        mount_component(docscode21, div18, null);
+        append(div18, t107);
+        mount_component(docscode22, div18, null);
         current = true;
       },
       p: noop,
@@ -2788,37 +2961,49 @@
         transition_in(fa23.$$.fragment, local);
         transition_in(fa24.$$.fragment, local);
         transition_in(fa25.$$.fragment, local);
+        transition_in(docscode10.$$.fragment, local);
+        transition_in(docstitle9.$$.fragment, local);
         transition_in(fa26.$$.fragment, local);
         transition_in(fa27.$$.fragment, local);
         transition_in(fa28.$$.fragment, local);
         transition_in(fa29.$$.fragment, local);
         transition_in(fa30.$$.fragment, local);
-        transition_in(fa31.$$.fragment, local);
-        transition_in(docscode10.$$.fragment, local);
-        transition_in(docstitle9.$$.fragment, local);
-        transition_in(docstitle10.$$.fragment, local);
-        transition_in(docsimg0.$$.fragment, local);
         transition_in(docscode11.$$.fragment, local);
+        transition_in(docstitle10.$$.fragment, local);
+        transition_in(fa31.$$.fragment, local);
+        transition_in(fa32.$$.fragment, local);
+        transition_in(fa33.$$.fragment, local);
+        transition_in(fa34.$$.fragment, local);
+        transition_in(fa35.$$.fragment, local);
+        transition_in(fa36.$$.fragment, local);
+        transition_in(fa37.$$.fragment, local);
+        transition_in(fa38.$$.fragment, local);
+        transition_in(fa39.$$.fragment, local);
         transition_in(docscode12.$$.fragment, local);
         transition_in(docstitle11.$$.fragment, local);
-        transition_in(docsimg1.$$.fragment, local);
-        transition_in(docscode13.$$.fragment, local);
         transition_in(docstitle12.$$.fragment, local);
-        transition_in(docsimg2.$$.fragment, local);
+        transition_in(docsimg0.$$.fragment, local);
+        transition_in(docscode13.$$.fragment, local);
         transition_in(docscode14.$$.fragment, local);
-        transition_in(docsimg3.$$.fragment, local);
-        transition_in(docscode15.$$.fragment, local);
         transition_in(docstitle13.$$.fragment, local);
-        transition_in(docsimg4.$$.fragment, local);
-        transition_in(docscode16.$$.fragment, local);
+        transition_in(docsimg1.$$.fragment, local);
+        transition_in(docscode15.$$.fragment, local);
         transition_in(docstitle14.$$.fragment, local);
-        transition_in(docsimg5.$$.fragment, local);
+        transition_in(docsimg2.$$.fragment, local);
+        transition_in(docscode16.$$.fragment, local);
+        transition_in(docsimg3.$$.fragment, local);
         transition_in(docscode17.$$.fragment, local);
-        transition_in(docsimg6.$$.fragment, local);
+        transition_in(docstitle15.$$.fragment, local);
+        transition_in(docsimg4.$$.fragment, local);
         transition_in(docscode18.$$.fragment, local);
-        transition_in(docsimg7.$$.fragment, local);
+        transition_in(docstitle16.$$.fragment, local);
+        transition_in(docsimg5.$$.fragment, local);
         transition_in(docscode19.$$.fragment, local);
+        transition_in(docsimg6.$$.fragment, local);
         transition_in(docscode20.$$.fragment, local);
+        transition_in(docsimg7.$$.fragment, local);
+        transition_in(docscode21.$$.fragment, local);
+        transition_in(docscode22.$$.fragment, local);
         current = true;
       },
       o: function o(local) {
@@ -2867,41 +3052,53 @@
         transition_out(fa23.$$.fragment, local);
         transition_out(fa24.$$.fragment, local);
         transition_out(fa25.$$.fragment, local);
+        transition_out(docscode10.$$.fragment, local);
+        transition_out(docstitle9.$$.fragment, local);
         transition_out(fa26.$$.fragment, local);
         transition_out(fa27.$$.fragment, local);
         transition_out(fa28.$$.fragment, local);
         transition_out(fa29.$$.fragment, local);
         transition_out(fa30.$$.fragment, local);
-        transition_out(fa31.$$.fragment, local);
-        transition_out(docscode10.$$.fragment, local);
-        transition_out(docstitle9.$$.fragment, local);
-        transition_out(docstitle10.$$.fragment, local);
-        transition_out(docsimg0.$$.fragment, local);
         transition_out(docscode11.$$.fragment, local);
+        transition_out(docstitle10.$$.fragment, local);
+        transition_out(fa31.$$.fragment, local);
+        transition_out(fa32.$$.fragment, local);
+        transition_out(fa33.$$.fragment, local);
+        transition_out(fa34.$$.fragment, local);
+        transition_out(fa35.$$.fragment, local);
+        transition_out(fa36.$$.fragment, local);
+        transition_out(fa37.$$.fragment, local);
+        transition_out(fa38.$$.fragment, local);
+        transition_out(fa39.$$.fragment, local);
         transition_out(docscode12.$$.fragment, local);
         transition_out(docstitle11.$$.fragment, local);
-        transition_out(docsimg1.$$.fragment, local);
-        transition_out(docscode13.$$.fragment, local);
         transition_out(docstitle12.$$.fragment, local);
-        transition_out(docsimg2.$$.fragment, local);
+        transition_out(docsimg0.$$.fragment, local);
+        transition_out(docscode13.$$.fragment, local);
         transition_out(docscode14.$$.fragment, local);
-        transition_out(docsimg3.$$.fragment, local);
-        transition_out(docscode15.$$.fragment, local);
         transition_out(docstitle13.$$.fragment, local);
-        transition_out(docsimg4.$$.fragment, local);
-        transition_out(docscode16.$$.fragment, local);
+        transition_out(docsimg1.$$.fragment, local);
+        transition_out(docscode15.$$.fragment, local);
         transition_out(docstitle14.$$.fragment, local);
-        transition_out(docsimg5.$$.fragment, local);
+        transition_out(docsimg2.$$.fragment, local);
+        transition_out(docscode16.$$.fragment, local);
+        transition_out(docsimg3.$$.fragment, local);
         transition_out(docscode17.$$.fragment, local);
-        transition_out(docsimg6.$$.fragment, local);
+        transition_out(docstitle15.$$.fragment, local);
+        transition_out(docsimg4.$$.fragment, local);
         transition_out(docscode18.$$.fragment, local);
-        transition_out(docsimg7.$$.fragment, local);
+        transition_out(docstitle16.$$.fragment, local);
+        transition_out(docsimg5.$$.fragment, local);
         transition_out(docscode19.$$.fragment, local);
+        transition_out(docsimg6.$$.fragment, local);
         transition_out(docscode20.$$.fragment, local);
+        transition_out(docsimg7.$$.fragment, local);
+        transition_out(docscode21.$$.fragment, local);
+        transition_out(docscode22.$$.fragment, local);
         current = false;
       },
       d: function d(detaching) {
-        if (detaching) detach(div16);
+        if (detaching) detach(div18);
         destroy_component(docstitle0);
         destroy_component(docscode0);
         destroy_component(docscode1);
@@ -2947,37 +3144,49 @@
         destroy_component(fa23);
         destroy_component(fa24);
         destroy_component(fa25);
+        destroy_component(docscode10);
+        destroy_component(docstitle9);
         destroy_component(fa26);
         destroy_component(fa27);
         destroy_component(fa28);
         destroy_component(fa29);
         destroy_component(fa30);
-        destroy_component(fa31);
-        destroy_component(docscode10);
-        destroy_component(docstitle9);
-        destroy_component(docstitle10);
-        destroy_component(docsimg0);
         destroy_component(docscode11);
+        destroy_component(docstitle10);
+        destroy_component(fa31);
+        destroy_component(fa32);
+        destroy_component(fa33);
+        destroy_component(fa34);
+        destroy_component(fa35);
+        destroy_component(fa36);
+        destroy_component(fa37);
+        destroy_component(fa38);
+        destroy_component(fa39);
         destroy_component(docscode12);
         destroy_component(docstitle11);
-        destroy_component(docsimg1);
-        destroy_component(docscode13);
         destroy_component(docstitle12);
-        destroy_component(docsimg2);
+        destroy_component(docsimg0);
+        destroy_component(docscode13);
         destroy_component(docscode14);
-        destroy_component(docsimg3);
-        destroy_component(docscode15);
         destroy_component(docstitle13);
-        destroy_component(docsimg4);
-        destroy_component(docscode16);
+        destroy_component(docsimg1);
+        destroy_component(docscode15);
         destroy_component(docstitle14);
-        destroy_component(docsimg5);
+        destroy_component(docsimg2);
+        destroy_component(docscode16);
+        destroy_component(docsimg3);
         destroy_component(docscode17);
-        destroy_component(docsimg6);
+        destroy_component(docstitle15);
+        destroy_component(docsimg4);
         destroy_component(docscode18);
-        destroy_component(docsimg7);
+        destroy_component(docstitle16);
+        destroy_component(docsimg5);
         destroy_component(docscode19);
+        destroy_component(docsimg6);
         destroy_component(docscode20);
+        destroy_component(docsimg7);
+        destroy_component(docscode21);
+        destroy_component(docscode22);
       }
     };
   }
@@ -2988,7 +3197,7 @@
       basicUse: ["<script>\n  import Fa from 'svelte-fa'\n  import { faFlag } from '@fortawesome/free-solid-svg-icons'\n</script>\n\n<Fa icon={faFlag} /> Flag", "<div style=\"font-size: 3em; color: tomato\">\n  <Fa icon={faFlag} />\n</div>"],
       additionalStyling: ["<Fa icon={faFlag} size=\"xs\" />\n<Fa icon={faFlag} size=\"sm\" />\n<Fa icon={faFlag} size=\"lg\" />\n<Fa icon={faFlag} size=\"2x\" />\n<Fa icon={faFlag} size=\"2.5x\" />\n<Fa icon={faFlag} size=\"5x\" />\n<Fa icon={faFlag} size=\"7x\" />\n<Fa icon={faFlag} size=\"10x\" />", "<div>\n  <Fa icon={faHome} fw style=\"background: mistyrose\" /> Home\n</div>\n<div>\n  <Fa icon={faInfo} fw style=\"background: mistyrose\" /> Info\n</div>\n<div>\n  <Fa icon={faBook} fw style=\"background: mistyrose\" /> Library\n</div>\n<div>\n  <Fa icon={faPencilAlt} fw style=\"background: mistyrose\" /> Applications\n</div>\n<div>\n  <Fa icon={faCog} fw style=\"background: mistyrose\" /> Settins\n</div>", "<Fa icon={faQuoteLeft} pull=\"left\" size=\"2x\" />\n<Fa icon={faQuoteRight} pull=\"right\" size=\"2x\" />\nGatsby believed in the green light, the orgastic future that year by year recedes before us. It eluded us then, but that\u2019s no matter \u2014 tomorrow we will run faster, stretch our arms further... And one fine morning \u2014 So we beat on, boats against the current, borne back ceaselessly into the past."],
       animatingIcons: ["<Fa icon={faSpinner} size=\"3x\" spin />\n<Fa icon={faCircleNotch} size=\"3x\" spin />\n<Fa icon={faSync} size=\"3x\" spin />\n<Fa icon={faCog} size=\"3x\" spin />\n<Fa icon={faSpinner} size=\"3x\" pulse />\n<Fa icon={faStroopwafel} size=\"3x\" spin />"],
-      powerTransforms: ["<Fa icon={faMagic} size=\"4x\" rotate={90} style=\"background: mistyrose\" />\n<Fa icon={faMagic} size=\"4x\" rotate={180} style=\"background: mistyrose\" />\n<Fa icon={faMagic} size=\"4x\" rotate=\"270\" style=\"background: mistyrose\" />\n<Fa icon={faMagic} size=\"4x\" rotate=\"30\" style=\"background: mistyrose\" />\n<Fa icon={faMagic} size=\"4x\" rotate=\"-30\" style=\"background: mistyrose\" />\n<Fa icon={faMagic} size=\"4x\" flip=\"vertical\" style=\"background: mistyrose\" />\n<Fa icon={faMagic} size=\"4x\" flip=\"horizontal\" style=\"background: mistyrose\" />\n<Fa icon={faMagic} size=\"4x\" flip=\"both\" style=\"background: mistyrose\" />\n<Fa icon={faMagic} size=\"4x\" flip=\"both\" style=\"background: mistyrose\" />"],
+      powerTransforms: ["<Fa icon={faMagic} size=\"4x\" style=\"background: mistyrose\" />\n<Fa icon={faMagic} scale={0.5} size=\"4x\" style=\"background: mistyrose\" />\n<Fa icon={faMagic} scale={1.2} size=\"4x\" style=\"background: mistyrose\" />", "<Fa icon={faMagic} scale={0.5} size=\"4x\" style=\"background: mistyrose\" />\n<Fa icon={faMagic} scale={0.5} translateX={0.2} size=\"4x\" style=\"background: mistyrose\" />\n<Fa icon={faMagic} scale={0.5} translateX={-0.2} size=\"4x\" style=\"background: mistyrose\" />\n<Fa icon={faMagic} scale={0.5} translateY={0.2} size=\"4x\" style=\"background: mistyrose\" />\n<Fa icon={faMagic} scale={0.5} translateY={-0.2} size=\"4x\" style=\"background: mistyrose\" />", "<Fa icon={faMagic} size=\"4x\" rotate={90} style=\"background: mistyrose\" />\n<Fa icon={faMagic} size=\"4x\" rotate={180} style=\"background: mistyrose\" />\n<Fa icon={faMagic} size=\"4x\" rotate=\"270\" style=\"background: mistyrose\" />\n<Fa icon={faMagic} size=\"4x\" rotate=\"30\" style=\"background: mistyrose\" />\n<Fa icon={faMagic} size=\"4x\" rotate=\"-30\" style=\"background: mistyrose\" />\n<Fa icon={faMagic} size=\"4x\" flip=\"vertical\" style=\"background: mistyrose\" />\n<Fa icon={faMagic} size=\"4x\" flip=\"horizontal\" style=\"background: mistyrose\" />\n<Fa icon={faMagic} size=\"4x\" flip=\"both\" style=\"background: mistyrose\" />\n<Fa icon={faMagic} size=\"4x\" flip=\"both\" style=\"background: mistyrose\" />"],
       duotoneIcons: ["import {\n  faCamera,\n  faFireAlt,\n  faBusAlt,\n  faFillDrip,\n} from '@fortawesome/pro-duotone-svg-icons'", "<Fa icon={faCamera} size=\"3x\" />\n<Fa icon={faFireAlt} size=\"3x\" />\n<Fa icon={faBusAlt} size=\"3x\" />\n<Fa icon={faFillDrip} size=\"3x\" />", "<Fa icon={faCamera} size=\"3x\" />\n<Fa icon={faCamera} size=\"3x\" swapOpacity />\n<Fa icon={faFireAlt} size=\"3x\" />\n<Fa icon={faFireAlt} size=\"3x\" swapOpacity />\n<Fa icon={faBusAlt} size=\"3x\" />\n<Fa icon={faBusAlt} size=\"3x\" swapOpacity />\n<Fa icon={faFillDrip} size=\"3x\" />\n<Fa icon={faFillDrip} size=\"3x\" swapOpacity />", "<Fa icon={faBusAlt} size=\"3x\" secondaryOpacity={.2} />\n<Fa icon={faBusAlt} size=\"3x\" secondaryOpacity={.4} />\n<Fa icon={faBusAlt} size=\"3x\" secondaryOpacity={.6} />\n<Fa icon={faBusAlt} size=\"3x\" secondaryOpacity={.8} />\n<Fa icon={faBusAlt} size=\"3x\" secondaryOpacity={1} />", "<Fa icon={faBusAlt} size=\"3x\" primaryOpacity={.2} />\n<Fa icon={faBusAlt} size=\"3x\" primaryOpacity={.4} />\n<Fa icon={faBusAlt} size=\"3x\" primaryOpacity={.6} />\n<Fa icon={faBusAlt} size=\"3x\" primaryOpacity={.8} />\n<Fa icon={faBusAlt} size=\"3x\" primaryOpacity={1} />", "<Fa icon={faBusAlt} size=\"3x\" primaryColor=\"gold\" />\n<Fa icon={faBusAlt} size=\"3x\" primaryColor=\"orangered\" />\n<Fa icon={faFillDrip} size=\"3x\" secondaryColor=\"limegreen\" />\n<Fa icon={faFillDrip} size=\"3x\" secondaryColor=\"rebeccapurple\" />\n<Fa icon={faBatteryFull} size=\"3x\" primaryColor=\"limegreen\" secondaryColor=\"dimgray\" />\n<Fa icon={faBatteryQuarter} size=\"3x\" primaryColor=\"orange\" secondaryColor=\"dimgray\" />", "<Fa icon={faBook} size=\"3x\" secondaryOpacity={1} primaryColor=\"lightseagreen\" secondaryColor=\"linen\" />\n<Fa icon={faBookSpells} size=\"3x\" secondaryOpacity={1} primaryColor=\"mediumpurple\" secondaryColor=\"linen\" />\n<Fa icon={faBookMedical} size=\"3x\" secondaryOpacity={1} primaryColor=\"crimson\" secondaryColor=\"linen\" />\n<Fa icon={faBookUser} size=\"3x\" secondaryOpacity={1} primaryColor=\"peru\" secondaryColor=\"linen\" />\n<Fa icon={faToggleOff} size=\"3x\" secondaryOpacity={1} primaryColor=\"white\" secondaryColor=\"gray\" />\n<Fa icon={faToggleOn} size=\"3x\" secondaryOpacity={1} primaryColor=\"dodgerblue\" secondaryColor=\"white\" />\n<Fa icon={faFilePlus} size=\"3x\" secondaryOpacity={1} primaryColor=\"white\" secondaryColor=\"limegreen\" />\n<Fa icon={faFileExclamation} size=\"3x\" secondaryOpacity={1} primaryColor=\"white\" secondaryColor=\"gold\" />\n<Fa icon={faFileTimes} size=\"3x\" secondaryOpacity={1} primaryColor=\"white\" secondaryColor=\"tomato\" />", "<Fa icon={faCrow} size=\"3x\" secondaryOpacity={1} primaryColor=\"dodgerblue\" secondaryColor=\"gold\" />\n<Fa icon={faCampfire} size=\"3x\" secondaryOpacity={1} primaryColor=\"sienna\" secondaryColor=\"red\" />\n<Fa icon={faBirthdayCake} size=\"3x\" secondaryOpacity={1} primaryColor=\"pink\" secondaryColor=\"palevioletred\" />\n<Fa icon={faEar} size=\"3x\" secondaryOpacity={1} primaryColor=\"sandybrown\" secondaryColor=\"bisque\" />\n<Fa icon={faCorn} size=\"3x\" secondaryOpacity={1} primaryColor=\"mediumseagreen\" secondaryColor=\"gold\" />\n<Fa icon={faCookieBite} size=\"3x\" secondaryOpacity={1} primaryColor=\"saddlebrown\" secondaryColor=\"burlywood\" />", "const themeRavenclaw = {\n  secondaryOpacity: 1,\n  primaryColor: '#0438a1',\n  secondaryColor: '#6c6c6c',\n}", "<Fa icon={faHatWizard} size=\"3x\" {...themeRavenclaw} />\n<Fa icon={faFlaskPotion} size=\"3x\" {...themeRavenclaw} />\n<Fa icon={faWandMagic} size=\"3x\" {...themeRavenclaw} />\n<Fa icon={faScarf} size=\"3x\" {...themeRavenclaw} />\n<Fa icon={faBookSpells} size=\"3x\" {...themeRavenclaw} />"]
     };
     return [codes];

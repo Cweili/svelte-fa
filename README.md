@@ -51,7 +51,7 @@ import Fa from 'svelte-fa'
 import { faFlag } from '@fortawesome/free-solid-svg-icons'
 </script>
 
-<Fa icon={faFlag}/>
+<Fa icon={faFlag} />
 ```
 
 ## Properties
@@ -59,25 +59,31 @@ import { faFlag } from '@fortawesome/free-solid-svg-icons'
 ```html
 <Fa
   icon={faFlag}
-  fw
-  flip="horizontal"
-  pull="left"
-  rotate={90}
   size="2x"
   color="#ff0000"
+  fw
+  pull="left"
+  scale={1.2}
+  translateX={0.2}
+  translateY={0.2}
+  rotate={90}
+  flip="horizontal"
   spin
   pulse
 />
 ```
 
-* `fw`: fixed width
-* `flip`: `string` values `horizontal`, `vertical`, `both`
-* `pull`: `string` values `left`, `right`
-* `rotate`: `number or string` values `90`, `180`, `270`, `30`, `-30` ...
 * `size`: `string` values `xs`, `sm`, `lg` or `2x`, `3x`, `4x`, ..., `10x`
-* `color`: icon color, default `currentColor`
-* `spin`: spin icons
-* `pulse`: pulse spin icons
+* `color`: `string` icon color, default `currentColor`
+* `fw`: `boolean` fixed width
+* `pull`: `string` values `left`, `right`
+* `scale`: `number or string` transform scale, unit is `em`, default `1`
+* `translateX`: `number or string` transform position X, unit is `em`, default `0`
+* `translateY`: `number or string` transform position Y, unit is `em`, default `0`
+* `flip`: `string` values `horizontal`, `vertical`, `both`
+* `rotate`: `number or string` values `90`, `180`, `270`, `30`, `-30` ...
+* `spin`: `boolean` spin icons
+* `pulse`: `boolean` pulse spin icons
 
 ## Duotone Icons
 
@@ -93,7 +99,8 @@ import { faFlag } from '@fortawesome/pro-duotone-svg-icons'
   secondaryColor="#000000"
   primaryOpacity={0.8}
   secondaryOpacity={0.6}
-  swapOpacity/>
+  swapOpacity
+/>
 ```
 
 ### Duotone Icons Theme
@@ -113,7 +120,8 @@ const theme = {
 
 <Fa
   icon={faFlag}
-  {...theme}/>
+  {...theme}
+/>
 ```
 
 [fontawesome]: https://fontawesome.com/
