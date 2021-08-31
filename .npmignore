@@ -1,4 +1,5 @@
 # Build config
+.github
 .travis.yml
 rollup.config.js
 
