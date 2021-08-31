@@ -64,17 +64,20 @@ import { faFlag } from '@fortawesome/free-solid-svg-icons'
   pull="left"
   rotate={90}
   size="2x"
-  color="#ff0000"/>
+  color="#ff0000"
+  spin
+  pulse
+/>
 ```
 
 * `fw`: fixed width
 * `flip`: `string` values `horizontal`, `vertical`, `both`
 * `pull`: `string` values `left`, `right`
-* `spin`: spin icons
-* `pulse`: pulse spin icons
 * `rotate`: `number or string` values `90`, `180`, `270`, `30`, `-30` ...
 * `size`: `string` values `xs`, `sm`, `lg` or `2x`, `3x`, `4x`, ..., `10x`
 * `color`: icon color, default `currentColor`
+* `spin`: spin icons
+* `pulse`: pulse spin icons
 
 ## Duotone Icons
 
