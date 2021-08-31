@@ -1,4 +1,10 @@
 <script>
+import {
+  joinCss,
+  getStyles,
+  getTransform,
+} from './utils';
+
 let clazz = '';
 export { clazz as class };
 export let id = '';
@@ -29,96 +35,25 @@ export let secondaryOpacity = 0.4;
 export let swapOpacity = false;
 
 let i;
-let s;
 let c;
+let s;
 let transform;
 
 $: i = (icon && icon.icon) || [0, 0, '', [], ''];
 
-$: c = [
-  clazz,
-  spin && 'spin',
-  pulse && 'pulse',
-]
-  .filter((cls) => cls)
-  .join('');
+$: c = joinCss(
+  [
+    clazz,
+    'fa',
+    spin && 'spin',
+    pulse && 'pulse',
+  ],
+  ' ',
+);
 
-$: {
-  let float;
-  let width;
-  const height = '1em';
-  let lineHeight;
-  let fontSize;
-  let textAlign;
-  let verticalAlign = '-.125em';
-  const overflow = 'visible';
+$: s = getStyles(style, size, pull, fw);
 
-  if (fw) {
-    textAlign = 'center';
-    width = '1.25em';
-  }
-
-  if (pull) {
-    float = pull;
-  }
-
-  if (size) {
-    if (size == 'lg') {
-      fontSize = '1.33333em';
-      lineHeight = '.75em';
-      verticalAlign = '-.225em';
-    } else if (size == 'xs') {
-      fontSize = '.75em';
-    } else if (size == 'sm') {
-      fontSize = '.875em';
-    } else {
-      fontSize = size.replace('x', 'em');
-    }
-  }
-
-  const styleObj = {
-    float,
-    width,
-    height,
-    'line-height': lineHeight,
-    'font-size': fontSize,
-    'text-align': textAlign,
-    'vertical-align': verticalAlign,
-    overflow,
-  };
-  let styleStr = '';
-  for (const prop in styleObj) {
-    if (styleObj[prop]) {
-      styleStr += `${prop}:${styleObj[prop]};`;
-    }
-  }
-  s = styleStr + style;
-}
-
-$: {
-  const float = parseFloat;
-  let t = `translate(${float(translateX) * 512} ${float(translateY) * 512})`;
-  let flipX = 1;
-  let flipY = 1;
-
-  if (flip) {
-    if (flip == 'horizontal') {
-      flipX = -1;
-    } else if (flip == 'vertical') {
-      flipY = -1;
-    } else {
-      flipX = flipY = -1;
-    }
-  }
-
-  t += ` scale(${flipX * float(scale)} ${flipY * float(scale)})`;
-
-  if (rotate) {
-    t += ` rotate(${rotate} 0 0)`;
-  }
-
-  transform = t;
-}
+$: transform = getTransform(scale, translateX, translateY, rotate, flip, 512);
 </script>
 
 <style>
@@ -151,27 +86,28 @@ $: {
     xmlns="http://www.w3.org/2000/svg"
   >
     <g
-      transform="translate(256 256)"
+      transform={`translate(${i[0] / 2} ${i[1] / 2})`}
+      transform-origin={`${i[0] / 4} 0`}
     >
       <g {transform}>
         {#if typeof i[4] == 'string'}
           <path
             d={i[4]}
             fill={color || primaryColor || 'currentColor'}
-            transform="translate(-256 -256)"
+            transform={`translate(${i[0] / -2} ${i[1] / -2})`}
           />
         {:else}
           <path
             d={i[4][0]}
             fill={secondaryColor || color || 'currentColor'}
             fill-opacity={swapOpacity != false ? primaryOpacity : secondaryOpacity}
-            transform="translate(-256 -256)"
+            transform={`translate(${i[0] / -2} ${i[1] / -2})`}
           />
           <path
             d={i[4][1]}
             fill={primaryColor || color || 'currentColor'}
             fill-opacity={swapOpacity != false ? secondaryOpacity : primaryOpacity}
-            transform="translate(-256 -256)"
+            transform={`translate(${i[0] / -2} ${i[1] / -2})`}
           />
         {/if}
       </g>

@@ -1,6 +1,6 @@
 {
   "name": "svelte-fa",
-  "version": "2.3.1",
+  "version": "2.3.0",
   "description": "Tiny FontAwesome 5 component for Svelte",
   "keywords": [
     "fontawesome",
@@ -25,7 +25,7 @@
   "svelte": "src/fa.svelte",
   "browser": "dist/svelte-fa.js",
   "module": "dist/svelte-fa.mjs",
-  "main": "src/fa.svelte",
+  "main": "src/index.js",
   "types": "src/index.d.ts",
   "sideEffects": false,
   "scripts": {

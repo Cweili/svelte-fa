@@ -142,13 +142,13 @@ test('scale', async () => {
     scale: 0.5,
   });
   let transform = getFa().querySelector('g > g').getAttribute('transform');
-  expect(transform).toContain('scale(0.5 0.5)');
+  expect(transform).toContain('scale(0.5,0.5)');
 
   await setProps({
     scale: 2,
   });
   transform = getFa().querySelector('g > g').getAttribute('transform');
-  expect(transform).toContain('scale(2 2)');
+  expect(transform).toContain('scale(2,2)');
 });
 
 test('translate', async () => {
@@ -156,14 +156,14 @@ test('translate', async () => {
     translateX: 1,
   });
   let transform = getFa().querySelector('g > g').getAttribute('transform');
-  expect(transform).toContain('translate(512 0)');
+  expect(transform).toContain('translate(512,0)');
 
   await setProps({
     translateX: 0,
     translateY: 1,
   });
   transform = getFa().querySelector('g > g').getAttribute('transform');
-  expect(transform).toContain('translate(0 512)');
+  expect(transform).toContain('translate(0,512)');
 });
 
 test('flip', async () => {
@@ -171,19 +171,19 @@ test('flip', async () => {
     flip: 'both',
   });
   let transform = getFa().querySelector('g > g').getAttribute('transform');
-  expect(transform).toContain('scale(-1 -1)');
+  expect(transform).toContain('scale(-1,-1)');
 
   await setProps({
     flip: 'horizontal',
   });
   transform = getFa().querySelector('g > g').getAttribute('transform');
-  expect(transform).toContain('scale(-1 1)');
+  expect(transform).toContain('scale(-1,1)');
 
   await setProps({
     flip: 'vertical',
   });
   transform = getFa().querySelector('g > g').getAttribute('transform');
-  expect(transform).toContain('scale(1 -1)');
+  expect(transform).toContain('scale(1,-1)');
 });
 
 test('rotate', async () => {
@@ -191,7 +191,7 @@ test('rotate', async () => {
     rotate: 90,
   });
   let transform = getFa().querySelector('g > g').getAttribute('transform');
-  expect(transform).toContain('rotate(90 0 0)');
+  expect(transform).toContain('rotate(90)');
 
   await setProps({
     rotate: null,

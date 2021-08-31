@@ -6,7 +6,7 @@ import pkg from './package.json';
 
 export default [
   {
-    input: pkg.svelte,
+    input: pkg.main,
     output: [
       {
         file: pkg.browser,
@@ -32,7 +32,7 @@ export default [
     ],
   },
   {
-    input: pkg.svelte,
+    input: pkg.main,
     output: [
       {
         file: pkg.module,
@@ -41,7 +41,6 @@ export default [
       {
         file: pkg.browser.replace(/\.js$/, '.cjs.js'),
         format: 'cjs',
-        exports: 'default',
       },
     ],
     plugins: [
