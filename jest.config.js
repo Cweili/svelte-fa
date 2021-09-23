@@ -1,6 +1,11 @@
 module.exports = {
+  moduleFileExtensions: [
+    'js',
+    'ts',
+    'svelte',
+  ],
   transform: {
-    '^.+\\.[jt]sx?$': 'babel-jest',
+    '^.+\\.[jt]s$': 'babel-jest',
     '^.+\\.svelte$': 'svelte-jester',
   },
   transformIgnorePatterns: [
