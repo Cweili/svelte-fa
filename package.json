@@ -62,7 +62,7 @@
     "rollup-plugin-svelte": "^7.1.0",
     "sirv-cli": "^1.0.0",
     "svelte": "^3.16.7",
-    "svelte-jester": "^1.3.0",
+    "svelte-jester": "^2.1.5",
     "tsd": "^0.17.0"
   },
   "tsd": {
