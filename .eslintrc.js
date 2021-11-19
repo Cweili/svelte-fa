@@ -9,13 +9,20 @@ module.exports = {
   extends: ['airbnb-base'],
   plugins: ['svelte3'],
   env: {
+    es6: true,
     browser: true,
   },
   parser: 'babel-eslint',
   parserOptions: {
-    ecmaVersion: 2017,
+    ecmaVersion: 2019,
     sourceType: 'module',
   },
+  overrides: [
+    {
+      files: ['*.svelte'],
+      processor: 'svelte3/svelte3',
+    },
+  ],
   rules: {
     eqeqeq: 0,
     'no-multi-assign': 0,
