@@ -21,7 +21,7 @@ function mountFaLayers(layersProps, textProps) {
     props: layersProps,
   });
   faLayersText = new FaLayersText({
-    target: document.querySelector('.layers'),
+    target: document.querySelector('.svelte-fa-layers'),
     props: textProps,
   });
 }

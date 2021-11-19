@@ -25,7 +25,7 @@ let s;
 $: c = joinCss(
   [
     clazz,
-    'layers-text',
+    'svelte-fa-layers-text',
   ],
   ' ',
 );
