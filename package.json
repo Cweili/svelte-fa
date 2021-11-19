@@ -1,6 +1,6 @@
 {
   "name": "svelte-fa",
-  "version": "2.3.3",
+  "version": "2.4.0",
   "description": "Tiny FontAwesome 5 component for Svelte",
   "keywords": [
     "fontawesome",
