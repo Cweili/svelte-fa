@@ -7,7 +7,7 @@
 
 
 [![github][badge-issues]][github]
-[![build][badge-build]][travis]
+[![workflows][badge-build]][workflows]
 [![coverage][badge-coverage]][coveralls]
 
 Tiny [FontAwesome 5][fontawesome] component for [Svelte][svelte].
@@ -188,8 +188,8 @@ const theme = {
 [badge-issues]: https://img.shields.io/github/issues/Cweili/svelte-fa.svg
 [github]: https://github.com/Cweili/svelte-fa
 
-[badge-build]: https://img.shields.io/travis/com/Cweili/svelte-fa/master.svg
-[travis]: https://travis-ci.com/Cweili/svelte-fa
+[badge-build]: https://img.shields.io/github/workflow/status/Cweili/svelte-fa/ci/master
+[workflows]: https://github.com/Cweili/svelte-fa/actions/workflows/ci.yml?query=branch%3Amaster
 
 [badge-coverage]: https://img.shields.io/coveralls/github/Cweili/svelte-fa/master.svg
 [coveralls]: https://coveralls.io/github/Cweili/svelte-fa?branch=master

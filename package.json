@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
+    "@babel/eslint-parser": "^7.16.3",
     "@babel/preset-env": "^7.4.4",
     "@cweili/fa-test-util": "^0.1.0",
     "@rollup/plugin-babel": "^5.2.1",
@@ -47,7 +48,6 @@
     "@rollup/plugin-node-resolve": "^13.0.0",
     "@rollup/plugin-replace": "^3.0.0",
     "@types/jest": "^27.0.3",
-    "babel-eslint": "^10.1.0",
     "babel-jest": "^27.3.1",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^15.0.0",
