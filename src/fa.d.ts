@@ -12,9 +12,9 @@ declare class Fa extends SvelteComponent {
     icon: IconDefinition
 
     size?:
-      | 'lg'
       | 'xs'
       | 'sm'
+      | 'lg'
       | '1x'
       | '2x'
       | '3x'
