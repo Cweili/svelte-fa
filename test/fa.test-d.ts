@@ -29,8 +29,13 @@ expectType<
   | '8x'
   | '9x'
   | '10x'
+  | `${number}x`
   | undefined
 >(fa.$$prop_def.size);
+expectAssignable<typeof fa.$$prop_def.size>("1.5x");
+//@ts-expect-error - this shouldn't be assignable
+expectAssignable<typeof fa.$$prop_def.size>("arbitrary-string-x");
+
 expectType<string | undefined>(fa.$$prop_def.color);
 
 expectType<boolean | undefined>(fa.$$prop_def.fw);
