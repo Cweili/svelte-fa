@@ -63,7 +63,7 @@
     "sirv-cli": "^1.0.0",
     "svelte": "^3.16.7",
     "svelte-jester": "^2.1.5",
-    "tsd": "^0.19.0"
+    "tsd": "^0.20.0"
   },
   "tsd": {
     "directory": "test",
