@@ -7,11 +7,12 @@
 
 
 [![github][badge-issues]][github]
-[![workflows][badge-build]][workflows]
+[![build][badge-build]][workflows]
 [![coverage][badge-coverage]][coveralls]
 
-Tiny [FontAwesome 5][fontawesome] component for [Svelte][svelte].
+Tiny [FontAwesome 5+][fontawesome] component for [Svelte][svelte].
 
+* FontAwesome version 5 and 6
 * FontAwesome svg icons
 * Tree-shakable, only import used icons
 * No CSS file required
@@ -75,7 +76,7 @@ import { faFlag } from '@fortawesome/free-solid-svg-icons'
 ```
 
 * `icon`: icon from FontAwesome packages, for example: `@fortawesome/free-solid-svg-icons`
-* `size`: `string` values `xs`, `sm`, `lg` or `2x`, `3x`, `4x`, ..., `10x`
+* `size`: `string` values `xs`, `sm`, `lg` or `2x`, `3x`, `4x`, ..., `${number}x`
 * `color`: `string` icon color, default `currentColor`
 * `fw`: `boolean` fixed width
 * `pull`: `string` values `left`, `right`
@@ -115,12 +116,12 @@ import Fa, {
 
 ### `FaLayers` Properties
 
-* `size`: `string` values `xs`, `sm`, `lg` or `2x`, `3x`, `4x`, ..., `10x`
+* `size`: `string` values `xs`, `sm`, `lg` or `2x`, `3x`, `4x`, ..., `${number}x`
 * `pull`: `string` values `left`, `right`
 
 ### `FaLayersText` Properties
 
-* `size`: `string` values `xs`, `sm`, `lg` or `2x`, `3x`, `4x`, ..., `10x`
+* `size`: `string` values `xs`, `sm`, `lg` or `2x`, `3x`, `4x`, ..., `${number}x`
 * `color`: `string` icon color, default `currentColor`
 * `scale`: `number | string` transform scale, unit is `em`, default `1`
 * `translateX`: `number | string` transform position X, unit is `em`, default `0`

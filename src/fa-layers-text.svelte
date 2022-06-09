@@ -21,7 +21,6 @@ export let flip = false;
 
 let s;
 
-
 $: s = getStyles(
   joinCss([
     joinCss({

@@ -25,7 +25,7 @@ declare class Fa extends SvelteComponent {
       | '8x'
       | '9x'
       | '10x'
-      | (`${number}x` & {});
+      | `${number}x`;
     color?: string;
 
     fw?: boolean

@@ -1,7 +1,7 @@
 <script>
 import {
   getStyles,
-  getTransform
+  getTransform,
 } from './utils';
 
 let clazz = '';

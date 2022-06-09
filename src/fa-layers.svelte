@@ -1,6 +1,6 @@
 <script>
 import {
-  getStyles
+  getStyles,
 } from './utils';
 
 let clazz = '';
