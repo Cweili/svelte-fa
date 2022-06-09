@@ -1,7 +1,6 @@
 <script>
 import {
-  joinCss,
-  getStyles,
+  getStyles
 } from './utils';
 
 let clazz = '';
@@ -12,16 +11,7 @@ export let style = '';
 export let size = '';
 export let pull = '';
 
-let c;
 let s;
-
-$: c = joinCss(
-  [
-    clazz,
-    'svelte-fa-layers',
-  ],
-  ' ',
-);
 
 $: s = getStyles(style, size, pull, true);
 </script>
@@ -56,7 +46,7 @@ $: s = getStyles(style, size, pull, true);
 
 <span
   id={id}
-  class={c}
+  class="svelte-fa-layers {clazz}"
   style={s}
 >
   <slot></slot>

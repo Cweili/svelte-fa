@@ -1,8 +1,7 @@
 <script>
 import {
-  joinCss,
   getStyles,
-  getTransform,
+  getTransform
 } from './utils';
 
 let clazz = '';
@@ -35,21 +34,10 @@ export let secondaryOpacity = 0.4;
 export let swapOpacity = false;
 
 let i;
-let c;
 let s;
 let transform;
 
 $: i = (icon && icon.icon) || [0, 0, '', [], ''];
-
-$: c = joinCss(
-  [
-    clazz,
-    'svelte-fa',
-    spin && 'spin',
-    pulse && 'pulse',
-  ],
-  ' ',
-);
 
 $: s = getStyles(style, size, pull, fw);
 
@@ -78,36 +66,39 @@ $: transform = getTransform(scale, translateX, translateY, rotate, flip, 512);
 {#if i[4]}
   <svg
     {id}
-    class={c}
+    class="svelte-fa {clazz}"
+    class:pulse
+    class:spin
     style={s}
-    viewBox={`0 0 ${i[0]} ${i[1]}`}
+    viewBox="0 0 {i[0]} {i[1]}"
     aria-hidden="true"
     role="img"
     xmlns="http://www.w3.org/2000/svg"
   >
     <g
-      transform={`translate(${i[0] / 2} ${i[1] / 2})`}
-      transform-origin={`${i[0] / 4} 0`}
+      transform="translate({i[0] / 2} {i[1] / 2})"
+      transform-origin="{i[0] / 4} 0"
     >
       <g {transform}>
         {#if typeof i[4] == 'string'}
           <path
             d={i[4]}
             fill={color || primaryColor || 'currentColor'}
-            transform={`translate(${i[0] / -2} ${i[1] / -2})`}
+            transform="translate({i[0] / -2} {i[1] / -2})"
           />
         {:else}
+          <!-- Duotone icons -->
           <path
             d={i[4][0]}
             fill={secondaryColor || color || 'currentColor'}
             fill-opacity={swapOpacity != false ? primaryOpacity : secondaryOpacity}
-            transform={`translate(${i[0] / -2} ${i[1] / -2})`}
+            transform="translate({i[0] / -2} {i[1] / -2})"
           />
           <path
             d={i[4][1]}
             fill={primaryColor || color || 'currentColor'}
             fill-opacity={swapOpacity != false ? secondaryOpacity : primaryOpacity}
-            transform={`translate(${i[0] / -2} ${i[1] / -2})`}
+            transform="translate({i[0] / -2} {i[1] / -2})"
           />
         {/if}
       </g>

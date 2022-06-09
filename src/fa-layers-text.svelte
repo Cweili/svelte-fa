@@ -19,16 +19,8 @@ export let translateY = 0;
 export let rotate = '';
 export let flip = false;
 
-let c;
 let s;
 
-$: c = joinCss(
-  [
-    clazz,
-    'svelte-fa-layers-text',
-  ],
-  ' ',
-);
 
 $: s = getStyles(
   joinCss([
@@ -44,7 +36,7 @@ $: s = getStyles(
 );
 </script>
 
-<span id={id} class={c}>
+<span id={id} class="svelte-fa-layers-text {clazz}">
   <span style={s}>
     <slot></slot>
   </span>
