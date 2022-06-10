@@ -4,7 +4,7 @@ import {
   faFlag,
   faHome,
   faCog,
-  faMagic,
+  faSeedling,
 } from '@fortawesome/free-solid-svg-icons';
 
 let model = {
@@ -20,7 +20,7 @@ let icons = [
   faFlag,
   faHome,
   faCog,
-  faMagic,
+  faSeedling,
 ];
 
 function setValue(prop, value) {
