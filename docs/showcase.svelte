@@ -56,7 +56,7 @@ function setValue(prop, value) {
           class="hue"
           href="https://fontawesome.com/"
           target="_blank"
-        >FontAwesome 5+</a> component for <a
+        >FontAwesome</a> component for <a
           class="hue"
           href="https://svelte.dev/"
           target="_blank"

@@ -39,7 +39,12 @@ const codes = {
     'npm install svelte-fa',
     'npm install @fortawesome/free-solid-svg-icons',
     'npm install svelte-fa -D',
-    "import Fa from 'svelte-fa/src/fa.svelte'",
+    `import Fa from 'svelte-fa/src/fa.svelte'
+import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons/index.es'`,
+    `// app.d.ts
+declare module '@fortawesome/pro-solid-svg-icons/index.es' {
+  export * from '@fortawesome/pro-solid-svg-icons';
+}`
   ],
   basicUse: [
     `<\
@@ -223,10 +228,17 @@ Gatsby believed in the green light, the orgastic future that year by year recede
   </div>
   <DocsCode code={codes.installation[2]} />
   <div class="shadow-sm p-3 mb-3 rounded clearfix">
-    <strong>Notice for <a href="https://kit.svelte.dev/" target="_blank">Svelte Kit</a> user:</strong> You may need to import the component explicitly as below:
+    <strong>Notice for <a href="https://kit.svelte.dev/" target="_blank">SvelteKit</a>/<a href="https://www.npmjs.com/package/vite" target="_blank">Vite</a> user:</strong> You may need to import the component explicitly as below:
   </div>
   <DocsCode
     code={codes.installation[3]}
+    lang="js"
+  />
+  <div class="shadow-sm p-3 mb-3 rounded clearfix">
+    When using typescript with SvelteKit/Vite, you may also needed to add type definitions that redirect to the non-index.es export:
+  </div>
+  <DocsCode
+    code={codes.installation[4]}
     lang="js"
   />
 
@@ -235,6 +247,11 @@ Gatsby believed in the green light, the orgastic future that year by year recede
     <Fa icon={faFlag} /> Flag
   </div>
   <DocsCode code={codes.basicUse[0]} />
+  <div class="shadow-sm p-3 mb-3 rounded clearfix">
+    Icons import from <a href="https://www.npmjs.com/search?q=%40fortawesome%20svg%20icons" target="_blank">FontAwesome packages</a>, for example: @fortawesome/free-solid-svg-icons.
+    <br/>
+    Icons gallery: <a href="https://fontawesome.com/icons" target="_blank">FontAwesome icons</a>
+  </div>
   <div class="shadow-sm p-3 mb-3 rounded">
     <div style="font-size: 3em; color: tomato">
       <Fa icon={faFlag} />

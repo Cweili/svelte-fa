@@ -10,7 +10,7 @@
 [![build][badge-build]][workflows]
 [![coverage][badge-coverage]][coveralls]
 
-Tiny [FontAwesome 5+][fontawesome] component for [Svelte][svelte].
+Tiny [FontAwesome][fontawesome] component for [Svelte][svelte].
 
 * FontAwesome version 5 and 6
 * FontAwesome svg icons
@@ -33,16 +33,32 @@ Install FontAwesome icons via [official packages][fontawesome-npm], for example:
 npm install @fortawesome/free-solid-svg-icons
 ```
 
-**Notice for [Sapper][sapper] user:** You may need to install the component as a devDependency:
+Icons gallery: [FontAwesome icons][fontawesome-icons]
+
+### Work with [Sapper][sapper]
+
+You may need to install the component as a devDependency:
 
 ```shell
 npm install svelte-fa -D
 ```
 
-**Notice for [Svelte Kit][sveltekit] user:** You may need to import the component explicitly as below:
+### Work with [SvelteKit][sveltekit]/[Vite][vite]
+
+You may need to import the component explicitly as below:
 
 ```js
 import Fa from 'svelte-fa/src/fa.svelte'
+import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons/index.es'
+```
+
+When using typescript with SvelteKit/Vite, you may also needed to add type definitions that redirect to the non-`index.es` export:
+
+```ts
+// app.d.ts
+declare module '@fortawesome/pro-solid-svg-icons/index.es' {
+  export * from '@fortawesome/pro-solid-svg-icons';
+}
 ```
 
 ## Usage
@@ -75,7 +91,7 @@ import { faFlag } from '@fortawesome/free-solid-svg-icons'
 />
 ```
 
-* `icon`: icon from FontAwesome packages, for example: `@fortawesome/free-solid-svg-icons`
+* `icon`: icon from [FontAwesome packages][fontawesome-npm], for example: `@fortawesome/free-solid-svg-icons`, icons gallery: [FontAwesome icons][fontawesome-icons]
 * `size`: `string` values `xs`, `sm`, `lg` or `2x`, `3x`, `4x`, ..., `${number}x`
 * `color`: `string` icon color, default `currentColor`
 * `fw`: `boolean` fixed width
@@ -168,11 +184,13 @@ const theme = {
 />
 ```
 
+[fontawesome-icons]: https://fontawesome.com/icons
 [fontawesome]: https://fontawesome.com/
 [fontawesome-npm]: https://www.npmjs.com/search?q=%40fortawesome%20svg%20icons
 [svelte]: https://svelte.dev/
 [sapper]: https://sapper.svelte.dev/
 [sveltekit]: https://kit.svelte.dev/
+[vite]: https://www.npmjs.com/package/vite
 
 [doc]: https://cweili.github.io/svelte-fa/
 
