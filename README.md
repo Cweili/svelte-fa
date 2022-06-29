@@ -31,6 +31,7 @@ Install FontAwesome icons via [official packages][fontawesome-npm], for example:
 
 ```shell
 npm install @fortawesome/free-solid-svg-icons
+npm install @fortawesome/free-brands-svg-icons
 ```
 
 Icons gallery: [FontAwesome icons][fontawesome-icons]
@@ -67,9 +68,11 @@ declare module '@fortawesome/pro-solid-svg-icons/index.es' {
 <script>
 import Fa from 'svelte-fa'
 import { faFlag } from '@fortawesome/free-solid-svg-icons'
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 </script>
 
 <Fa icon={faFlag} />
+<Fa icon={faGithub} />
 ```
 
 ## `Fa` Properties
