@@ -6,7 +6,7 @@ import {
 
 let clazz = '';
 export { clazz as class };
-export let id = '';
+export let id;
 export let style = '';
 
 export let icon;
