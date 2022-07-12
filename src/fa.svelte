@@ -6,7 +6,7 @@ import {
 
 let clazz = '';
 export { clazz as class };
-export let id;
+export let id = '';
 export let style = '';
 
 export let icon;
@@ -65,7 +65,7 @@ $: transform = getTransform(scale, translateX, translateY, rotate, flip, 512);
 
 {#if i[4]}
   <svg
-    {id}
+    id={id || undefined}
     class="svelte-fa {clazz}"
     class:pulse
     class:spin
