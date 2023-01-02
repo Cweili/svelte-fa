@@ -47,7 +47,7 @@
     "@rollup/plugin-commonjs": "^22.0.1",
     "@rollup/plugin-node-resolve": "^13.0.0",
     "@rollup/plugin-replace": "^4.0.0",
-    "@types/jest": "^28.1.1",
+    "@types/jest": "^29.2.5",
     "babel-jest": "^28.1.1",
     "eslint": "^8.4.1",
     "eslint-config-airbnb-base": "^15.0.0",
