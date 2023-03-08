@@ -210,7 +210,7 @@ const theme = {
 [badge-issues]: https://img.shields.io/github/issues/Cweili/svelte-fa.svg
 [github]: https://github.com/Cweili/svelte-fa
 
-[badge-build]: https://img.shields.io/github/workflow/status/Cweili/svelte-fa/ci/master
+[badge-build]: https://img.shields.io/github/actions/workflow/status/Cweili/svelte-fa/ci.yml?branch=master
 [workflows]: https://github.com/Cweili/svelte-fa/actions/workflows/ci.yml?query=branch%3Amaster
 
 [badge-coverage]: https://img.shields.io/coveralls/github/Cweili/svelte-fa/master.svg
