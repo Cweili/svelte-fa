@@ -80,6 +80,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
 ```html
 <Fa
   icon={faFlag}
+  class="bg-gold"
   size="2x"
   color="#ff0000"
   fw
@@ -95,6 +96,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons';
 ```
 
 * `icon`: icon from [FontAwesome packages][fontawesome-npm], for example: `@fortawesome/free-solid-svg-icons`, icons gallery: [FontAwesome icons][fontawesome-icons]
+* `class`: `string` values `${your preffered any css class}`
 * `size`: `string` values `xs`, `sm`, `lg` or `2x`, `3x`, `4x`, ..., `${number}x`
 * `color`: `string` icon color, default `currentColor`
 * `fw`: `boolean` fixed width
