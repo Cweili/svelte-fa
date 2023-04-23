@@ -46,7 +46,7 @@ script>
   <Fa icon={faPencilAlt} fw style="background: mistyrose" /> Applications
 </div>
 <div>
-  <Fa icon={faCog} fw style="background: mistyrose" /> Settins
+  <Fa icon={faCog} fw style="background: mistyrose" /> Settings
 </div>`,
     `<Fa icon={faQuoteLeft} pull="left" size="2x" />
 <Fa icon={faQuoteRight} pull="right" size="2x" />
