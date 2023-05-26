@@ -46,7 +46,7 @@
     <Fa icon={faPencilAlt} fw style="background: mistyrose" /> Applications
   </div>
   <div>
-    <Fa icon={faCog} fw style="background: mistyrose" /> Settins
+    <Fa icon={faCog} fw style="background: mistyrose" /> Settings
   </div>
 </div>
 <DocsCode code={codes.additionalStyling[1]} />

@@ -1775,7 +1775,7 @@
         t19 = space();
         div5 = element("div");
         create_component(fa12.$$.fragment);
-        t20 = text(" Settins");
+        t20 = text(" Settings");
         t21 = space();
         create_component(docscode1.$$.fragment);
         t22 = space();
