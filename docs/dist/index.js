@@ -823,7 +823,7 @@
     };
   }
 
-  function create_fragment$5(ctx) {
+  function create_fragment$c(ctx) {
     var div19;
     var div18;
     var div16;
@@ -1238,7 +1238,7 @@
     };
   }
 
-  function instance$4($$self, $$props, $$invalidate) {
+  function instance$3($$self, $$props, $$invalidate) {
     var model = {
       size: 5,
       pull: undefined,
@@ -1286,7 +1286,7 @@
 
       _this = _SvelteComponent.call(this) || this;
       if (!document.getElementById("svelte-1a2mimh-style")) add_css$2();
-      init(_assertThisInitialized(_this), options, instance$4, create_fragment$5, safe_not_equal, {});
+      init(_assertThisInitialized(_this), options, instance$3, create_fragment$c, safe_not_equal, {});
       return _this;
     }
 
@@ -1295,7 +1295,7 @@
 
   var Showcase$1 = Showcase;
 
-  function create_fragment$4(ctx) {
+  function create_fragment$b(ctx) {
     var div;
     var pre;
     var code_1;
@@ -1350,7 +1350,7 @@
     };
   }
 
-  function instance$3($$self, $$props, $$invalidate) {
+  function instance$2($$self, $$props, $$invalidate) {
     var code = $$props.code;
     var _$$props$lang = $$props.lang,
         lang = _$$props$lang === void 0 ? "html" : _$$props$lang;
@@ -1391,7 +1391,7 @@
       var _this;
 
       _this = _SvelteComponent.call(this) || this;
-      init(_assertThisInitialized(_this), options, instance$3, create_fragment$4, safe_not_equal, {
+      init(_assertThisInitialized(_this), options, instance$2, create_fragment$b, safe_not_equal, {
         code: 0,
         lang: 1
       });
@@ -1405,94 +1405,12 @@
 
   function add_css$1() {
     var style = element("style");
-    style.id = "svelte-tdv3q3-style";
-    style.textContent = "img.svelte-tdv3q3{max-width:100%;max-height:48px}small.svelte-tdv3q3{position:absolute;right:1rem;bottom:.1rem;color:#ddd;z-index:-1}";
-    append(document.head, style);
-  }
-
-  function create_fragment$3(ctx) {
-    var div;
-    var img;
-    var t0;
-    var small;
-    var img_levels = [
-    /*$$props*/
-    ctx[0]];
-    var img_data = {};
-
-    for (var i = 0; i < img_levels.length; i += 1) {
-      img_data = assign(img_data, img_levels[i]);
-    }
-
-    return {
-      c: function c() {
-        div = element("div");
-        img = element("img");
-        t0 = space();
-        small = element("small");
-        small.textContent = "images © fontawesome.com";
-        set_attributes(img, img_data);
-        toggle_class(img, "svelte-tdv3q3", true);
-        attr(small, "class", "svelte-tdv3q3");
-        attr(div, "class", "position-relative shadow-sm p-3 mb-3 rounded");
-      },
-      m: function m(target, anchor) {
-        insert(target, div, anchor);
-        append(div, img);
-        append(div, t0);
-        append(div, small);
-      },
-      p: function p(ctx, _ref) {
-        var dirty = _ref[0];
-        set_attributes(img, get_spread_update(img_levels, [dirty &
-        /*$$props*/
-        1 &&
-        /*$$props*/
-        ctx[0]]));
-        toggle_class(img, "svelte-tdv3q3", true);
-      },
-      i: noop,
-      o: noop,
-      d: function d(detaching) {
-        if (detaching) detach(div);
-      }
-    };
-  }
-
-  function instance$2($$self, $$props, $$invalidate) {
-    $$self.$set = function ($$new_props) {
-      $$invalidate(0, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
-    };
-
-    $$props = exclude_internal_props($$props);
-    return [$$props];
-  }
-
-  var Docs_img = /*#__PURE__*/function (_SvelteComponent) {
-    _inheritsLoose(Docs_img, _SvelteComponent);
-
-    function Docs_img(options) {
-      var _this;
-
-      _this = _SvelteComponent.call(this) || this;
-      if (!document.getElementById("svelte-tdv3q3-style")) add_css$1();
-      init(_assertThisInitialized(_this), options, instance$2, create_fragment$3, safe_not_equal, {});
-      return _this;
-    }
-
-    return Docs_img;
-  }(SvelteComponent);
-
-  var DocsImg = Docs_img;
-
-  function add_css() {
-    var style = element("style");
     style.id = "svelte-1yrtkpv-style";
     style.textContent = "a.svelte-1yrtkpv,a.svelte-1yrtkpv:visited{color:currentColor}small.svelte-1yrtkpv{visibility:hidden}a:hover+small.svelte-1yrtkpv{visibility:visible}";
     append(document.head, style);
   }
 
-  function create_fragment$2(ctx) {
+  function create_fragment$a(ctx) {
     var h4;
     var a;
     var t0;
@@ -1615,8 +1533,8 @@
       var _this;
 
       _this = _SvelteComponent.call(this) || this;
-      if (!document.getElementById("svelte-1yrtkpv-style")) add_css();
-      init(_assertThisInitialized(_this), options, instance$1, create_fragment$2, safe_not_equal, {
+      if (!document.getElementById("svelte-1yrtkpv-style")) add_css$1();
+      init(_assertThisInitialized(_this), options, instance$1, create_fragment$a, safe_not_equal, {
         level: 0,
         title: 1
       });
@@ -1627,6 +1545,1332 @@
   }(SvelteComponent);
 
   var DocsTitle = Docs_title;
+
+  var codes = {
+    installation: ["npm install svelte-fa", "npm install @fortawesome/free-solid-svg-icons\nnpm install @fortawesome/free-brands-svg-icons", "npm install svelte-fa -D", "import Fa from 'svelte-fa/src/fa.svelte'\nimport { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons/index.es'", "// app.d.ts\ndeclare module '@fortawesome/pro-solid-svg-icons/index.es' {\n  export * from '@fortawesome/pro-solid-svg-icons';\n}"],
+    basicUse: ["<script>\n  import Fa from 'svelte-fa'\n  import { faFlag } from '@fortawesome/free-solid-svg-icons'\n</script>\n\n<Fa icon={faFlag} /> Flag", "<div style=\"font-size: 3em; color: tomato\">\n  <Fa icon={faFlag} />\n</div>"],
+    additionalStyling: ["<Fa icon={faFlag} size=\"xs\" />\n<Fa icon={faFlag} size=\"sm\" />\n<Fa icon={faFlag} size=\"lg\" />\n<Fa icon={faFlag} size=\"2x\" />\n<Fa icon={faFlag} size=\"2.5x\" />\n<Fa icon={faFlag} size=\"5x\" />\n<Fa icon={faFlag} size=\"7x\" />\n<Fa icon={faFlag} size=\"10x\" />", "<div>\n  <Fa icon={faHome} fw style=\"background: mistyrose\" /> Home\n</div>\n<div>\n  <Fa icon={faInfo} fw style=\"background: mistyrose\" /> Info\n</div>\n<div>\n  <Fa icon={faBook} fw style=\"background: mistyrose\" /> Library\n</div>\n<div>\n  <Fa icon={faPencilAlt} fw style=\"background: mistyrose\" /> Applications\n</div>\n<div>\n  <Fa icon={faCog} fw style=\"background: mistyrose\" /> Settings\n</div>", "<Fa icon={faQuoteLeft} pull=\"left\" size=\"2x\" />\n<Fa icon={faQuoteRight} pull=\"right\" size=\"2x\" />\nGatsby believed in the green light, the orgastic future that year by year recedes before us. It eluded us then, but that\u2019s no matter \u2014 tomorrow we will run faster, stretch our arms further... And one fine morning \u2014 So we beat on, boats against the current, borne back ceaselessly into the past."],
+    animatingIcons: ["<Fa icon={faSpinner} size=\"3x\" spin />\n<Fa icon={faCircleNotch} size=\"3x\" spin />\n<Fa icon={faSync} size=\"3x\" spin />\n<Fa icon={faCog} size=\"3x\" spin />\n<Fa icon={faSpinner} size=\"3x\" pulse />\n<Fa icon={faStroopwafel} size=\"3x\" spin />"],
+    powerTransforms: ["<Fa icon={faSeedling} size=\"4x\" style=\"background: mistyrose\" />\n<Fa icon={faSeedling} scale={0.5} size=\"4x\" style=\"background: mistyrose\" />\n<Fa icon={faSeedling} scale={1.2} size=\"4x\" style=\"background: mistyrose\" />", "<Fa icon={faSeedling} scale={0.5} size=\"4x\" style=\"background: mistyrose\" />\n<Fa icon={faSeedling} scale={0.5} translateX={0.2} size=\"4x\" style=\"background: mistyrose\" />\n<Fa icon={faSeedling} scale={0.5} translateX={-0.2} size=\"4x\" style=\"background: mistyrose\" />\n<Fa icon={faSeedling} scale={0.5} translateY={0.2} size=\"4x\" style=\"background: mistyrose\" />\n<Fa icon={faSeedling} scale={0.5} translateY={-0.2} size=\"4x\" style=\"background: mistyrose\" />", "<Fa icon={faSeedling} size=\"4x\" rotate={90} style=\"background: mistyrose\" />\n<Fa icon={faSeedling} size=\"4x\" rotate={180} style=\"background: mistyrose\" />\n<Fa icon={faSeedling} size=\"4x\" rotate=\"270\" style=\"background: mistyrose\" />\n<Fa icon={faSeedling} size=\"4x\" rotate=\"30\" style=\"background: mistyrose\" />\n<Fa icon={faSeedling} size=\"4x\" rotate=\"-30\" style=\"background: mistyrose\" />\n<Fa icon={faSeedling} size=\"4x\" flip=\"vertical\" style=\"background: mistyrose\" />\n<Fa icon={faSeedling} size=\"4x\" flip=\"horizontal\" style=\"background: mistyrose\" />\n<Fa icon={faSeedling} size=\"4x\" flip=\"both\" style=\"background: mistyrose\" />\n<Fa icon={faSeedling} size=\"4x\" flip=\"both\" style=\"background: mistyrose\" />"],
+    layering: ["import Fa, {\n  FaLayers,\n  FaLayersText,\n} from 'svelte-fa';", "<FaLayers size=\"4x\" style=\"background: mistyrose\">\n  <Fa icon={faCircle} color=\"tomato\" />\n  <Fa icon={faTimes} scale={0.5} color=\"white\" />\n</FaLayers>\n<FaLayers size=\"4x\" style=\"background: mistyrose\">\n  <Fa icon={faBookmark} />\n  <Fa icon={faHeart} scale={0.4} translateY={-0.1} color=\"tomato\" />\n</FaLayers>\n<FaLayers size=\"4x\" style=\"background: mistyrose\">\n  <Fa icon={faPlay} scale={1.2} rotate={-90} />\n  <Fa icon={faSun} scale={0.35} translateY={-0.2} color=\"white\" />\n  <Fa icon={faMoon} scale={0.3} translateX={-0.25} translateY={0.25} color=\"white\" />\n  <Fa icon={faStar} scale={0.3} translateX={0.25} translateY={0.25} color=\"white\" />\n</FaLayers>\n<FaLayers size=\"4x\" style=\"background: mistyrose\">\n  <Fa icon={faCalendar} />\n  <FaLayersText scale={0.45} translateY={0.06} color=\"white\" style=\"font-weight: 900\">\n    27\n  </FaLayersText>\n</FaLayers>\n<FaLayers size=\"4x\" style=\"background: mistyrose\">\n  <Fa icon={faCertificate} />\n  <FaLayersText scale={0.25} rotate={-30} color=\"white\" style=\"font-weight: 900\">\n    NEW\n  </FaLayersText>\n</FaLayers>\n<FaLayers size=\"4x\" style=\"background: mistyrose\">\n  <Fa icon={faEnvelope} />\n  <FaLayersText scale={0.2} translateX={0.4} translateY={-0.4} color=\"white\" style=\"padding: 0 .2em; background: tomato; border-radius: 1em\">\n    1,419\n  </FaLayersText>\n</FaLayers>"],
+    duotoneIcons: ["import {\n  faCamera,\n  faFireAlt,\n  faBusAlt,\n  faFillDrip,\n} from '@fortawesome/pro-duotone-svg-icons'", "<Fa icon={faCamera} size=\"3x\" />\n<Fa icon={faFireAlt} size=\"3x\" />\n<Fa icon={faBusAlt} size=\"3x\" />\n<Fa icon={faFillDrip} size=\"3x\" />", "<Fa icon={faCamera} size=\"3x\" />\n<Fa icon={faCamera} size=\"3x\" swapOpacity />\n<Fa icon={faFireAlt} size=\"3x\" />\n<Fa icon={faFireAlt} size=\"3x\" swapOpacity />\n<Fa icon={faBusAlt} size=\"3x\" />\n<Fa icon={faBusAlt} size=\"3x\" swapOpacity />\n<Fa icon={faFillDrip} size=\"3x\" />\n<Fa icon={faFillDrip} size=\"3x\" swapOpacity />", "<Fa icon={faBusAlt} size=\"3x\" secondaryOpacity={.2} />\n<Fa icon={faBusAlt} size=\"3x\" secondaryOpacity={.4} />\n<Fa icon={faBusAlt} size=\"3x\" secondaryOpacity={.6} />\n<Fa icon={faBusAlt} size=\"3x\" secondaryOpacity={.8} />\n<Fa icon={faBusAlt} size=\"3x\" secondaryOpacity={1} />", "<Fa icon={faBusAlt} size=\"3x\" primaryOpacity={.2} />\n<Fa icon={faBusAlt} size=\"3x\" primaryOpacity={.4} />\n<Fa icon={faBusAlt} size=\"3x\" primaryOpacity={.6} />\n<Fa icon={faBusAlt} size=\"3x\" primaryOpacity={.8} />\n<Fa icon={faBusAlt} size=\"3x\" primaryOpacity={1} />", "<Fa icon={faBusAlt} size=\"3x\" primaryColor=\"gold\" />\n<Fa icon={faBusAlt} size=\"3x\" primaryColor=\"orangered\" />\n<Fa icon={faFillDrip} size=\"3x\" secondaryColor=\"limegreen\" />\n<Fa icon={faFillDrip} size=\"3x\" secondaryColor=\"rebeccapurple\" />\n<Fa icon={faBatteryFull} size=\"3x\" primaryColor=\"limegreen\" secondaryColor=\"dimgray\" />\n<Fa icon={faBatteryQuarter} size=\"3x\" primaryColor=\"orange\" secondaryColor=\"dimgray\" />", "<Fa icon={faBook} size=\"3x\" secondaryOpacity={1} primaryColor=\"lightseagreen\" secondaryColor=\"linen\" />\n<Fa icon={faBookSpells} size=\"3x\" secondaryOpacity={1} primaryColor=\"mediumpurple\" secondaryColor=\"linen\" />\n<Fa icon={faBookMedical} size=\"3x\" secondaryOpacity={1} primaryColor=\"crimson\" secondaryColor=\"linen\" />\n<Fa icon={faBookUser} size=\"3x\" secondaryOpacity={1} primaryColor=\"peru\" secondaryColor=\"linen\" />\n<Fa icon={faToggleOff} size=\"3x\" secondaryOpacity={1} primaryColor=\"white\" secondaryColor=\"gray\" />\n<Fa icon={faToggleOn} size=\"3x\" secondaryOpacity={1} primaryColor=\"dodgerblue\" secondaryColor=\"white\" />\n<Fa icon={faFilePlus} size=\"3x\" secondaryOpacity={1} primaryColor=\"white\" secondaryColor=\"limegreen\" />\n<Fa icon={faFileExclamation} size=\"3x\" secondaryOpacity={1} primaryColor=\"white\" secondaryColor=\"gold\" />\n<Fa icon={faFileTimes} size=\"3x\" secondaryOpacity={1} primaryColor=\"white\" secondaryColor=\"tomato\" />", "<Fa icon={faCrow} size=\"3x\" secondaryOpacity={1} primaryColor=\"dodgerblue\" secondaryColor=\"gold\" />\n<Fa icon={faCampfire} size=\"3x\" secondaryOpacity={1} primaryColor=\"sienna\" secondaryColor=\"red\" />\n<Fa icon={faBirthdayCake} size=\"3x\" secondaryOpacity={1} primaryColor=\"pink\" secondaryColor=\"palevioletred\" />\n<Fa icon={faEar} size=\"3x\" secondaryOpacity={1} primaryColor=\"sandybrown\" secondaryColor=\"bisque\" />\n<Fa icon={faCorn} size=\"3x\" secondaryOpacity={1} primaryColor=\"mediumseagreen\" secondaryColor=\"gold\" />\n<Fa icon={faCookieBite} size=\"3x\" secondaryOpacity={1} primaryColor=\"saddlebrown\" secondaryColor=\"burlywood\" />", "const themeRavenclaw = {\n  secondaryOpacity: 1,\n  primaryColor: '#0438a1',\n  secondaryColor: '#6c6c6c',\n}", "<Fa icon={faHatWizard} size=\"3x\" {...themeRavenclaw} />\n<Fa icon={faFlaskPotion} size=\"3x\" {...themeRavenclaw} />\n<Fa icon={faWandMagic} size=\"3x\" {...themeRavenclaw} />\n<Fa icon={faScarf} size=\"3x\" {...themeRavenclaw} />\n<Fa icon={faBookSpells} size=\"3x\" {...themeRavenclaw} />"]
+  };
+  var codes$1 = codes;
+
+  function create_fragment$9(ctx) {
+    var t0;
+    var t1;
+    var div0;
+    var t2;
+    var t3;
+    var t4;
+    var t5;
+    var t6;
+    var t7;
+    var t8;
+    var t9;
+    var t10;
+    var t11;
+    var div6;
+    var div1;
+    var t12;
+    var t13;
+    var div2;
+    var t14;
+    var t15;
+    var div3;
+    var t16;
+    var t17;
+    var div4;
+    var t18;
+    var t19;
+    var div5;
+    var t20;
+    var t21;
+    var t22;
+    var t23;
+    var div7;
+    var t24;
+    var t25;
+    var t26;
+    var current;
+    var docstitle0 = new DocsTitle({
+      props: {
+        title: "Additional Styling"
+      }
+    });
+    var docstitle1 = new DocsTitle({
+      props: {
+        title: "Icon Sizes",
+        level: 3
+      }
+    });
+    var fa0 = new Fa__default["default"]({
+      props: {
+        icon: faFlag,
+        size: "xs"
+      }
+    });
+    var fa1 = new Fa__default["default"]({
+      props: {
+        icon: faFlag,
+        size: "sm"
+      }
+    });
+    var fa2 = new Fa__default["default"]({
+      props: {
+        icon: faFlag,
+        size: "lg"
+      }
+    });
+    var fa3 = new Fa__default["default"]({
+      props: {
+        icon: faFlag,
+        size: "2x"
+      }
+    });
+    var fa4 = new Fa__default["default"]({
+      props: {
+        icon: faFlag,
+        size: "2.5x"
+      }
+    });
+    var fa5 = new Fa__default["default"]({
+      props: {
+        icon: faFlag,
+        size: "5x"
+      }
+    });
+    var fa6 = new Fa__default["default"]({
+      props: {
+        icon: faFlag,
+        size: "7x"
+      }
+    });
+    var fa7 = new Fa__default["default"]({
+      props: {
+        icon: faFlag,
+        size: "10x"
+      }
+    });
+    var docscode0 = new DocsCode({
+      props: {
+        code: codes$1.additionalStyling[0]
+      }
+    });
+    var docstitle2 = new DocsTitle({
+      props: {
+        title: "Fixed Width Icons",
+        level: 3
+      }
+    });
+    var fa8 = new Fa__default["default"]({
+      props: {
+        icon: faHome,
+        fw: true,
+        style: "background: mistyrose"
+      }
+    });
+    var fa9 = new Fa__default["default"]({
+      props: {
+        icon: faInfo,
+        fw: true,
+        style: "background: mistyrose"
+      }
+    });
+    var fa10 = new Fa__default["default"]({
+      props: {
+        icon: faBook,
+        fw: true,
+        style: "background: mistyrose"
+      }
+    });
+    var fa11 = new Fa__default["default"]({
+      props: {
+        icon: faPencilAlt,
+        fw: true,
+        style: "background: mistyrose"
+      }
+    });
+    var fa12 = new Fa__default["default"]({
+      props: {
+        icon: faCog,
+        fw: true,
+        style: "background: mistyrose"
+      }
+    });
+    var docscode1 = new DocsCode({
+      props: {
+        code: codes$1.additionalStyling[1]
+      }
+    });
+    var docstitle3 = new DocsTitle({
+      props: {
+        title: "Pulled Icons",
+        level: 3
+      }
+    });
+    var fa13 = new Fa__default["default"]({
+      props: {
+        icon: faQuoteLeft,
+        pull: "left",
+        size: "2x"
+      }
+    });
+    var fa14 = new Fa__default["default"]({
+      props: {
+        icon: faQuoteRight,
+        pull: "right",
+        size: "2x"
+      }
+    });
+    var docscode2 = new DocsCode({
+      props: {
+        code: codes$1.additionalStyling[2]
+      }
+    });
+    return {
+      c: function c() {
+        create_component(docstitle0.$$.fragment);
+        t0 = space();
+        create_component(docstitle1.$$.fragment);
+        t1 = space();
+        div0 = element("div");
+        create_component(fa0.$$.fragment);
+        t2 = space();
+        create_component(fa1.$$.fragment);
+        t3 = space();
+        create_component(fa2.$$.fragment);
+        t4 = space();
+        create_component(fa3.$$.fragment);
+        t5 = space();
+        create_component(fa4.$$.fragment);
+        t6 = space();
+        create_component(fa5.$$.fragment);
+        t7 = space();
+        create_component(fa6.$$.fragment);
+        t8 = space();
+        create_component(fa7.$$.fragment);
+        t9 = space();
+        create_component(docscode0.$$.fragment);
+        t10 = space();
+        create_component(docstitle2.$$.fragment);
+        t11 = space();
+        div6 = element("div");
+        div1 = element("div");
+        create_component(fa8.$$.fragment);
+        t12 = text(" Home");
+        t13 = space();
+        div2 = element("div");
+        create_component(fa9.$$.fragment);
+        t14 = text(" Info");
+        t15 = space();
+        div3 = element("div");
+        create_component(fa10.$$.fragment);
+        t16 = text(" Library");
+        t17 = space();
+        div4 = element("div");
+        create_component(fa11.$$.fragment);
+        t18 = text(" Applications");
+        t19 = space();
+        div5 = element("div");
+        create_component(fa12.$$.fragment);
+        t20 = text(" Settings");
+        t21 = space();
+        create_component(docscode1.$$.fragment);
+        t22 = space();
+        create_component(docstitle3.$$.fragment);
+        t23 = space();
+        div7 = element("div");
+        create_component(fa13.$$.fragment);
+        t24 = space();
+        create_component(fa14.$$.fragment);
+        t25 = text("\n  Gatsby believed in the green light, the orgastic future that year by year recedes\n  before us. It eluded us then, but that’s no matter — tomorrow we will run faster,\n  stretch our arms further... And one fine morning — So we beat on, boats against\n  the current, borne back ceaselessly into the past.");
+        t26 = space();
+        create_component(docscode2.$$.fragment);
+        attr(div0, "class", "shadow-sm p-3 mb-3 rounded");
+        attr(div6, "class", "shadow-sm p-3 mb-3 rounded");
+        attr(div7, "class", "shadow-sm p-3 mb-3 rounded clearfix");
+      },
+      m: function m(target, anchor) {
+        mount_component(docstitle0, target, anchor);
+        insert(target, t0, anchor);
+        mount_component(docstitle1, target, anchor);
+        insert(target, t1, anchor);
+        insert(target, div0, anchor);
+        mount_component(fa0, div0, null);
+        append(div0, t2);
+        mount_component(fa1, div0, null);
+        append(div0, t3);
+        mount_component(fa2, div0, null);
+        append(div0, t4);
+        mount_component(fa3, div0, null);
+        append(div0, t5);
+        mount_component(fa4, div0, null);
+        append(div0, t6);
+        mount_component(fa5, div0, null);
+        append(div0, t7);
+        mount_component(fa6, div0, null);
+        append(div0, t8);
+        mount_component(fa7, div0, null);
+        insert(target, t9, anchor);
+        mount_component(docscode0, target, anchor);
+        insert(target, t10, anchor);
+        mount_component(docstitle2, target, anchor);
+        insert(target, t11, anchor);
+        insert(target, div6, anchor);
+        append(div6, div1);
+        mount_component(fa8, div1, null);
+        append(div1, t12);
+        append(div6, t13);
+        append(div6, div2);
+        mount_component(fa9, div2, null);
+        append(div2, t14);
+        append(div6, t15);
+        append(div6, div3);
+        mount_component(fa10, div3, null);
+        append(div3, t16);
+        append(div6, t17);
+        append(div6, div4);
+        mount_component(fa11, div4, null);
+        append(div4, t18);
+        append(div6, t19);
+        append(div6, div5);
+        mount_component(fa12, div5, null);
+        append(div5, t20);
+        insert(target, t21, anchor);
+        mount_component(docscode1, target, anchor);
+        insert(target, t22, anchor);
+        mount_component(docstitle3, target, anchor);
+        insert(target, t23, anchor);
+        insert(target, div7, anchor);
+        mount_component(fa13, div7, null);
+        append(div7, t24);
+        mount_component(fa14, div7, null);
+        append(div7, t25);
+        insert(target, t26, anchor);
+        mount_component(docscode2, target, anchor);
+        current = true;
+      },
+      p: noop,
+      i: function i(local) {
+        if (current) return;
+        transition_in(docstitle0.$$.fragment, local);
+        transition_in(docstitle1.$$.fragment, local);
+        transition_in(fa0.$$.fragment, local);
+        transition_in(fa1.$$.fragment, local);
+        transition_in(fa2.$$.fragment, local);
+        transition_in(fa3.$$.fragment, local);
+        transition_in(fa4.$$.fragment, local);
+        transition_in(fa5.$$.fragment, local);
+        transition_in(fa6.$$.fragment, local);
+        transition_in(fa7.$$.fragment, local);
+        transition_in(docscode0.$$.fragment, local);
+        transition_in(docstitle2.$$.fragment, local);
+        transition_in(fa8.$$.fragment, local);
+        transition_in(fa9.$$.fragment, local);
+        transition_in(fa10.$$.fragment, local);
+        transition_in(fa11.$$.fragment, local);
+        transition_in(fa12.$$.fragment, local);
+        transition_in(docscode1.$$.fragment, local);
+        transition_in(docstitle3.$$.fragment, local);
+        transition_in(fa13.$$.fragment, local);
+        transition_in(fa14.$$.fragment, local);
+        transition_in(docscode2.$$.fragment, local);
+        current = true;
+      },
+      o: function o(local) {
+        transition_out(docstitle0.$$.fragment, local);
+        transition_out(docstitle1.$$.fragment, local);
+        transition_out(fa0.$$.fragment, local);
+        transition_out(fa1.$$.fragment, local);
+        transition_out(fa2.$$.fragment, local);
+        transition_out(fa3.$$.fragment, local);
+        transition_out(fa4.$$.fragment, local);
+        transition_out(fa5.$$.fragment, local);
+        transition_out(fa6.$$.fragment, local);
+        transition_out(fa7.$$.fragment, local);
+        transition_out(docscode0.$$.fragment, local);
+        transition_out(docstitle2.$$.fragment, local);
+        transition_out(fa8.$$.fragment, local);
+        transition_out(fa9.$$.fragment, local);
+        transition_out(fa10.$$.fragment, local);
+        transition_out(fa11.$$.fragment, local);
+        transition_out(fa12.$$.fragment, local);
+        transition_out(docscode1.$$.fragment, local);
+        transition_out(docstitle3.$$.fragment, local);
+        transition_out(fa13.$$.fragment, local);
+        transition_out(fa14.$$.fragment, local);
+        transition_out(docscode2.$$.fragment, local);
+        current = false;
+      },
+      d: function d(detaching) {
+        destroy_component(docstitle0, detaching);
+        if (detaching) detach(t0);
+        destroy_component(docstitle1, detaching);
+        if (detaching) detach(t1);
+        if (detaching) detach(div0);
+        destroy_component(fa0);
+        destroy_component(fa1);
+        destroy_component(fa2);
+        destroy_component(fa3);
+        destroy_component(fa4);
+        destroy_component(fa5);
+        destroy_component(fa6);
+        destroy_component(fa7);
+        if (detaching) detach(t9);
+        destroy_component(docscode0, detaching);
+        if (detaching) detach(t10);
+        destroy_component(docstitle2, detaching);
+        if (detaching) detach(t11);
+        if (detaching) detach(div6);
+        destroy_component(fa8);
+        destroy_component(fa9);
+        destroy_component(fa10);
+        destroy_component(fa11);
+        destroy_component(fa12);
+        if (detaching) detach(t21);
+        destroy_component(docscode1, detaching);
+        if (detaching) detach(t22);
+        destroy_component(docstitle3, detaching);
+        if (detaching) detach(t23);
+        if (detaching) detach(div7);
+        destroy_component(fa13);
+        destroy_component(fa14);
+        if (detaching) detach(t26);
+        destroy_component(docscode2, detaching);
+      }
+    };
+  }
+
+  var Additional_styling = /*#__PURE__*/function (_SvelteComponent) {
+    _inheritsLoose(Additional_styling, _SvelteComponent);
+
+    function Additional_styling(options) {
+      var _this;
+
+      _this = _SvelteComponent.call(this) || this;
+      init(_assertThisInitialized(_this), options, null, create_fragment$9, safe_not_equal, {});
+      return _this;
+    }
+
+    return Additional_styling;
+  }(SvelteComponent);
+
+  var AdditionalStyling = Additional_styling;
+
+  function create_fragment$8(ctx) {
+    var t0;
+    var div;
+    var t1;
+    var t2;
+    var t3;
+    var t4;
+    var t5;
+    var t6;
+    var current;
+    var docstitle = new DocsTitle({
+      props: {
+        title: "Animating Icons"
+      }
+    });
+    var fa0 = new Fa__default["default"]({
+      props: {
+        icon: faSpinner,
+        size: "3x",
+        spin: true
+      }
+    });
+    var fa1 = new Fa__default["default"]({
+      props: {
+        icon: faCircleNotch,
+        size: "3x",
+        spin: true
+      }
+    });
+    var fa2 = new Fa__default["default"]({
+      props: {
+        icon: faSync,
+        size: "3x",
+        spin: true
+      }
+    });
+    var fa3 = new Fa__default["default"]({
+      props: {
+        icon: faCog,
+        size: "3x",
+        spin: true
+      }
+    });
+    var fa4 = new Fa__default["default"]({
+      props: {
+        icon: faSpinner,
+        size: "3x",
+        pulse: true
+      }
+    });
+    var fa5 = new Fa__default["default"]({
+      props: {
+        icon: faStroopwafel,
+        size: "3x",
+        spin: true
+      }
+    });
+    var docscode = new DocsCode({
+      props: {
+        code: codes$1.animatingIcons[0]
+      }
+    });
+    return {
+      c: function c() {
+        create_component(docstitle.$$.fragment);
+        t0 = space();
+        div = element("div");
+        create_component(fa0.$$.fragment);
+        t1 = space();
+        create_component(fa1.$$.fragment);
+        t2 = space();
+        create_component(fa2.$$.fragment);
+        t3 = space();
+        create_component(fa3.$$.fragment);
+        t4 = space();
+        create_component(fa4.$$.fragment);
+        t5 = space();
+        create_component(fa5.$$.fragment);
+        t6 = space();
+        create_component(docscode.$$.fragment);
+        attr(div, "class", "shadow-sm p-3 mb-3 rounded");
+      },
+      m: function m(target, anchor) {
+        mount_component(docstitle, target, anchor);
+        insert(target, t0, anchor);
+        insert(target, div, anchor);
+        mount_component(fa0, div, null);
+        append(div, t1);
+        mount_component(fa1, div, null);
+        append(div, t2);
+        mount_component(fa2, div, null);
+        append(div, t3);
+        mount_component(fa3, div, null);
+        append(div, t4);
+        mount_component(fa4, div, null);
+        append(div, t5);
+        mount_component(fa5, div, null);
+        insert(target, t6, anchor);
+        mount_component(docscode, target, anchor);
+        current = true;
+      },
+      p: noop,
+      i: function i(local) {
+        if (current) return;
+        transition_in(docstitle.$$.fragment, local);
+        transition_in(fa0.$$.fragment, local);
+        transition_in(fa1.$$.fragment, local);
+        transition_in(fa2.$$.fragment, local);
+        transition_in(fa3.$$.fragment, local);
+        transition_in(fa4.$$.fragment, local);
+        transition_in(fa5.$$.fragment, local);
+        transition_in(docscode.$$.fragment, local);
+        current = true;
+      },
+      o: function o(local) {
+        transition_out(docstitle.$$.fragment, local);
+        transition_out(fa0.$$.fragment, local);
+        transition_out(fa1.$$.fragment, local);
+        transition_out(fa2.$$.fragment, local);
+        transition_out(fa3.$$.fragment, local);
+        transition_out(fa4.$$.fragment, local);
+        transition_out(fa5.$$.fragment, local);
+        transition_out(docscode.$$.fragment, local);
+        current = false;
+      },
+      d: function d(detaching) {
+        destroy_component(docstitle, detaching);
+        if (detaching) detach(t0);
+        if (detaching) detach(div);
+        destroy_component(fa0);
+        destroy_component(fa1);
+        destroy_component(fa2);
+        destroy_component(fa3);
+        destroy_component(fa4);
+        destroy_component(fa5);
+        if (detaching) detach(t6);
+        destroy_component(docscode, detaching);
+      }
+    };
+  }
+
+  var Animating_icons = /*#__PURE__*/function (_SvelteComponent) {
+    _inheritsLoose(Animating_icons, _SvelteComponent);
+
+    function Animating_icons(options) {
+      var _this;
+
+      _this = _SvelteComponent.call(this) || this;
+      init(_assertThisInitialized(_this), options, null, create_fragment$8, safe_not_equal, {});
+      return _this;
+    }
+
+    return Animating_icons;
+  }(SvelteComponent);
+
+  var AnimatingIcons = Animating_icons;
+
+  function create_fragment$7(ctx) {
+    var t0;
+    var div0;
+    var t1;
+    var t2;
+    var t3;
+    var div1;
+    var t9;
+    var div3;
+    var div2;
+    var t10;
+    var current;
+    var docstitle = new DocsTitle({
+      props: {
+        title: "Basic Use"
+      }
+    });
+    var fa0 = new Fa__default["default"]({
+      props: {
+        icon: faFlag
+      }
+    });
+    var docscode0 = new DocsCode({
+      props: {
+        code: codes$1.basicUse[0]
+      }
+    });
+    var fa1 = new Fa__default["default"]({
+      props: {
+        icon: faFlag
+      }
+    });
+    var docscode1 = new DocsCode({
+      props: {
+        code: codes$1.basicUse[1]
+      }
+    });
+    return {
+      c: function c() {
+        create_component(docstitle.$$.fragment);
+        t0 = space();
+        div0 = element("div");
+        create_component(fa0.$$.fragment);
+        t1 = text(" Flag");
+        t2 = space();
+        create_component(docscode0.$$.fragment);
+        t3 = space();
+        div1 = element("div");
+        div1.innerHTML = "\n  Icons import from <a href=\"https://www.npmjs.com/search?q=%40fortawesome%20svg%20icons\" target=\"_blank\">FontAwesome packages</a>, for example: @fortawesome/free-solid-svg-icons.\n  <br>\n  Icons gallery:\n  <a href=\"https://fontawesome.com/icons\" target=\"_blank\">FontAwesome icons</a>";
+        t9 = space();
+        div3 = element("div");
+        div2 = element("div");
+        create_component(fa1.$$.fragment);
+        t10 = space();
+        create_component(docscode1.$$.fragment);
+        attr(div0, "class", "shadow-sm p-3 mb-3 rounded");
+        attr(div1, "class", "shadow-sm p-3 mb-3 rounded clearfix");
+        set_style(div2, "font-size", "3em");
+        set_style(div2, "color", "tomato");
+        attr(div3, "class", "shadow-sm p-3 mb-3 rounded");
+      },
+      m: function m(target, anchor) {
+        mount_component(docstitle, target, anchor);
+        insert(target, t0, anchor);
+        insert(target, div0, anchor);
+        mount_component(fa0, div0, null);
+        append(div0, t1);
+        insert(target, t2, anchor);
+        mount_component(docscode0, target, anchor);
+        insert(target, t3, anchor);
+        insert(target, div1, anchor);
+        insert(target, t9, anchor);
+        insert(target, div3, anchor);
+        append(div3, div2);
+        mount_component(fa1, div2, null);
+        insert(target, t10, anchor);
+        mount_component(docscode1, target, anchor);
+        current = true;
+      },
+      p: noop,
+      i: function i(local) {
+        if (current) return;
+        transition_in(docstitle.$$.fragment, local);
+        transition_in(fa0.$$.fragment, local);
+        transition_in(docscode0.$$.fragment, local);
+        transition_in(fa1.$$.fragment, local);
+        transition_in(docscode1.$$.fragment, local);
+        current = true;
+      },
+      o: function o(local) {
+        transition_out(docstitle.$$.fragment, local);
+        transition_out(fa0.$$.fragment, local);
+        transition_out(docscode0.$$.fragment, local);
+        transition_out(fa1.$$.fragment, local);
+        transition_out(docscode1.$$.fragment, local);
+        current = false;
+      },
+      d: function d(detaching) {
+        destroy_component(docstitle, detaching);
+        if (detaching) detach(t0);
+        if (detaching) detach(div0);
+        destroy_component(fa0);
+        if (detaching) detach(t2);
+        destroy_component(docscode0, detaching);
+        if (detaching) detach(t3);
+        if (detaching) detach(div1);
+        if (detaching) detach(t9);
+        if (detaching) detach(div3);
+        destroy_component(fa1);
+        if (detaching) detach(t10);
+        destroy_component(docscode1, detaching);
+      }
+    };
+  }
+
+  var Basic_use = /*#__PURE__*/function (_SvelteComponent) {
+    _inheritsLoose(Basic_use, _SvelteComponent);
+
+    function Basic_use(options) {
+      var _this;
+
+      _this = _SvelteComponent.call(this) || this;
+      init(_assertThisInitialized(_this), options, null, create_fragment$7, safe_not_equal, {});
+      return _this;
+    }
+
+    return Basic_use;
+  }(SvelteComponent);
+
+  var BasicUse = Basic_use;
+
+  function add_css() {
+    var style = element("style");
+    style.id = "svelte-tdv3q3-style";
+    style.textContent = "img.svelte-tdv3q3{max-width:100%;max-height:48px}small.svelte-tdv3q3{position:absolute;right:1rem;bottom:.1rem;color:#ddd;z-index:-1}";
+    append(document.head, style);
+  }
+
+  function create_fragment$6(ctx) {
+    var div;
+    var img;
+    var t0;
+    var small;
+    var img_levels = [
+    /*$$props*/
+    ctx[0]];
+    var img_data = {};
+
+    for (var i = 0; i < img_levels.length; i += 1) {
+      img_data = assign(img_data, img_levels[i]);
+    }
+
+    return {
+      c: function c() {
+        div = element("div");
+        img = element("img");
+        t0 = space();
+        small = element("small");
+        small.textContent = "images © fontawesome.com";
+        set_attributes(img, img_data);
+        toggle_class(img, "svelte-tdv3q3", true);
+        attr(small, "class", "svelte-tdv3q3");
+        attr(div, "class", "position-relative shadow-sm p-3 mb-3 rounded");
+      },
+      m: function m(target, anchor) {
+        insert(target, div, anchor);
+        append(div, img);
+        append(div, t0);
+        append(div, small);
+      },
+      p: function p(ctx, _ref) {
+        var dirty = _ref[0];
+        set_attributes(img, get_spread_update(img_levels, [dirty &
+        /*$$props*/
+        1 &&
+        /*$$props*/
+        ctx[0]]));
+        toggle_class(img, "svelte-tdv3q3", true);
+      },
+      i: noop,
+      o: noop,
+      d: function d(detaching) {
+        if (detaching) detach(div);
+      }
+    };
+  }
+
+  function instance($$self, $$props, $$invalidate) {
+    $$self.$set = function ($$new_props) {
+      $$invalidate(0, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
+    };
+
+    $$props = exclude_internal_props($$props);
+    return [$$props];
+  }
+
+  var Docs_img = /*#__PURE__*/function (_SvelteComponent) {
+    _inheritsLoose(Docs_img, _SvelteComponent);
+
+    function Docs_img(options) {
+      var _this;
+
+      _this = _SvelteComponent.call(this) || this;
+      if (!document.getElementById("svelte-tdv3q3-style")) add_css();
+      init(_assertThisInitialized(_this), options, instance, create_fragment$6, safe_not_equal, {});
+      return _this;
+    }
+
+    return Docs_img;
+  }(SvelteComponent);
+
+  var DocsImg = Docs_img;
+
+  function create_fragment$5(ctx) {
+    var t0;
+    var t1;
+    var t2;
+    var t3;
+    var t4;
+    var t5;
+    var t6;
+    var t7;
+    var t8;
+    var t9;
+    var t10;
+    var t11;
+    var t12;
+    var t13;
+    var t14;
+    var t15;
+    var t16;
+    var t17;
+    var t18;
+    var t19;
+    var t20;
+    var t21;
+    var t22;
+    var current;
+    var docstitle0 = new DocsTitle({
+      props: {
+        title: "Duotone Icons"
+      }
+    });
+    var docstitle1 = new DocsTitle({
+      props: {
+        title: "Basic Use",
+        level: 3
+      }
+    });
+    var docsimg0 = new DocsImg({
+      props: {
+        src: "assets/duotone-0.png",
+        alt: "duotone icons basic use"
+      }
+    });
+    var docscode0 = new DocsCode({
+      props: {
+        code: codes$1.duotoneIcons[0],
+        lang: "js"
+      }
+    });
+    var docscode1 = new DocsCode({
+      props: {
+        code: codes$1.duotoneIcons[1]
+      }
+    });
+    var docstitle2 = new DocsTitle({
+      props: {
+        title: "Swapping Layer Opacity",
+        level: 3
+      }
+    });
+    var docsimg1 = new DocsImg({
+      props: {
+        src: "assets/duotone-1.png",
+        alt: "swapping duotone icons layer opacity"
+      }
+    });
+    var docscode2 = new DocsCode({
+      props: {
+        code: codes$1.duotoneIcons[2]
+      }
+    });
+    var docstitle3 = new DocsTitle({
+      props: {
+        title: "Changing Opacity",
+        level: 3
+      }
+    });
+    var docsimg2 = new DocsImg({
+      props: {
+        src: "assets/duotone-2.png",
+        alt: "changing duotone icons opacity"
+      }
+    });
+    var docscode3 = new DocsCode({
+      props: {
+        code: codes$1.duotoneIcons[3]
+      }
+    });
+    var docsimg3 = new DocsImg({
+      props: {
+        src: "assets/duotone-3.png",
+        alt: "changing duotone icons opacity"
+      }
+    });
+    var docscode4 = new DocsCode({
+      props: {
+        code: codes$1.duotoneIcons[4]
+      }
+    });
+    var docstitle4 = new DocsTitle({
+      props: {
+        title: "Coloring Duotone Icons",
+        level: 3
+      }
+    });
+    var docsimg4 = new DocsImg({
+      props: {
+        src: "assets/duotone-4.png",
+        alt: "coloring duotone icons"
+      }
+    });
+    var docscode5 = new DocsCode({
+      props: {
+        code: codes$1.duotoneIcons[5]
+      }
+    });
+    var docstitle5 = new DocsTitle({
+      props: {
+        title: "Advanced Use",
+        level: 3
+      }
+    });
+    var docsimg5 = new DocsImg({
+      props: {
+        src: "assets/duotone-5.png",
+        alt: "duotone icons advanced use"
+      }
+    });
+    var docscode6 = new DocsCode({
+      props: {
+        code: codes$1.duotoneIcons[6]
+      }
+    });
+    var docsimg6 = new DocsImg({
+      props: {
+        src: "assets/duotone-6.png",
+        alt: "duotone icons advanced use"
+      }
+    });
+    var docscode7 = new DocsCode({
+      props: {
+        code: codes$1.duotoneIcons[7]
+      }
+    });
+    var docsimg7 = new DocsImg({
+      props: {
+        src: "assets/duotone-7.png",
+        alt: "duotone icons advanced use"
+      }
+    });
+    var docscode8 = new DocsCode({
+      props: {
+        code: codes$1.duotoneIcons[8],
+        lang: "js"
+      }
+    });
+    var docscode9 = new DocsCode({
+      props: {
+        code: codes$1.duotoneIcons[9]
+      }
+    });
+    return {
+      c: function c() {
+        create_component(docstitle0.$$.fragment);
+        t0 = space();
+        create_component(docstitle1.$$.fragment);
+        t1 = space();
+        create_component(docsimg0.$$.fragment);
+        t2 = space();
+        create_component(docscode0.$$.fragment);
+        t3 = space();
+        create_component(docscode1.$$.fragment);
+        t4 = space();
+        create_component(docstitle2.$$.fragment);
+        t5 = space();
+        create_component(docsimg1.$$.fragment);
+        t6 = space();
+        create_component(docscode2.$$.fragment);
+        t7 = space();
+        create_component(docstitle3.$$.fragment);
+        t8 = space();
+        create_component(docsimg2.$$.fragment);
+        t9 = space();
+        create_component(docscode3.$$.fragment);
+        t10 = space();
+        create_component(docsimg3.$$.fragment);
+        t11 = space();
+        create_component(docscode4.$$.fragment);
+        t12 = space();
+        create_component(docstitle4.$$.fragment);
+        t13 = space();
+        create_component(docsimg4.$$.fragment);
+        t14 = space();
+        create_component(docscode5.$$.fragment);
+        t15 = space();
+        create_component(docstitle5.$$.fragment);
+        t16 = space();
+        create_component(docsimg5.$$.fragment);
+        t17 = space();
+        create_component(docscode6.$$.fragment);
+        t18 = space();
+        create_component(docsimg6.$$.fragment);
+        t19 = space();
+        create_component(docscode7.$$.fragment);
+        t20 = space();
+        create_component(docsimg7.$$.fragment);
+        t21 = space();
+        create_component(docscode8.$$.fragment);
+        t22 = space();
+        create_component(docscode9.$$.fragment);
+      },
+      m: function m(target, anchor) {
+        mount_component(docstitle0, target, anchor);
+        insert(target, t0, anchor);
+        mount_component(docstitle1, target, anchor);
+        insert(target, t1, anchor);
+        mount_component(docsimg0, target, anchor);
+        insert(target, t2, anchor);
+        mount_component(docscode0, target, anchor);
+        insert(target, t3, anchor);
+        mount_component(docscode1, target, anchor);
+        insert(target, t4, anchor);
+        mount_component(docstitle2, target, anchor);
+        insert(target, t5, anchor);
+        mount_component(docsimg1, target, anchor);
+        insert(target, t6, anchor);
+        mount_component(docscode2, target, anchor);
+        insert(target, t7, anchor);
+        mount_component(docstitle3, target, anchor);
+        insert(target, t8, anchor);
+        mount_component(docsimg2, target, anchor);
+        insert(target, t9, anchor);
+        mount_component(docscode3, target, anchor);
+        insert(target, t10, anchor);
+        mount_component(docsimg3, target, anchor);
+        insert(target, t11, anchor);
+        mount_component(docscode4, target, anchor);
+        insert(target, t12, anchor);
+        mount_component(docstitle4, target, anchor);
+        insert(target, t13, anchor);
+        mount_component(docsimg4, target, anchor);
+        insert(target, t14, anchor);
+        mount_component(docscode5, target, anchor);
+        insert(target, t15, anchor);
+        mount_component(docstitle5, target, anchor);
+        insert(target, t16, anchor);
+        mount_component(docsimg5, target, anchor);
+        insert(target, t17, anchor);
+        mount_component(docscode6, target, anchor);
+        insert(target, t18, anchor);
+        mount_component(docsimg6, target, anchor);
+        insert(target, t19, anchor);
+        mount_component(docscode7, target, anchor);
+        insert(target, t20, anchor);
+        mount_component(docsimg7, target, anchor);
+        insert(target, t21, anchor);
+        mount_component(docscode8, target, anchor);
+        insert(target, t22, anchor);
+        mount_component(docscode9, target, anchor);
+        current = true;
+      },
+      p: noop,
+      i: function i(local) {
+        if (current) return;
+        transition_in(docstitle0.$$.fragment, local);
+        transition_in(docstitle1.$$.fragment, local);
+        transition_in(docsimg0.$$.fragment, local);
+        transition_in(docscode0.$$.fragment, local);
+        transition_in(docscode1.$$.fragment, local);
+        transition_in(docstitle2.$$.fragment, local);
+        transition_in(docsimg1.$$.fragment, local);
+        transition_in(docscode2.$$.fragment, local);
+        transition_in(docstitle3.$$.fragment, local);
+        transition_in(docsimg2.$$.fragment, local);
+        transition_in(docscode3.$$.fragment, local);
+        transition_in(docsimg3.$$.fragment, local);
+        transition_in(docscode4.$$.fragment, local);
+        transition_in(docstitle4.$$.fragment, local);
+        transition_in(docsimg4.$$.fragment, local);
+        transition_in(docscode5.$$.fragment, local);
+        transition_in(docstitle5.$$.fragment, local);
+        transition_in(docsimg5.$$.fragment, local);
+        transition_in(docscode6.$$.fragment, local);
+        transition_in(docsimg6.$$.fragment, local);
+        transition_in(docscode7.$$.fragment, local);
+        transition_in(docsimg7.$$.fragment, local);
+        transition_in(docscode8.$$.fragment, local);
+        transition_in(docscode9.$$.fragment, local);
+        current = true;
+      },
+      o: function o(local) {
+        transition_out(docstitle0.$$.fragment, local);
+        transition_out(docstitle1.$$.fragment, local);
+        transition_out(docsimg0.$$.fragment, local);
+        transition_out(docscode0.$$.fragment, local);
+        transition_out(docscode1.$$.fragment, local);
+        transition_out(docstitle2.$$.fragment, local);
+        transition_out(docsimg1.$$.fragment, local);
+        transition_out(docscode2.$$.fragment, local);
+        transition_out(docstitle3.$$.fragment, local);
+        transition_out(docsimg2.$$.fragment, local);
+        transition_out(docscode3.$$.fragment, local);
+        transition_out(docsimg3.$$.fragment, local);
+        transition_out(docscode4.$$.fragment, local);
+        transition_out(docstitle4.$$.fragment, local);
+        transition_out(docsimg4.$$.fragment, local);
+        transition_out(docscode5.$$.fragment, local);
+        transition_out(docstitle5.$$.fragment, local);
+        transition_out(docsimg5.$$.fragment, local);
+        transition_out(docscode6.$$.fragment, local);
+        transition_out(docsimg6.$$.fragment, local);
+        transition_out(docscode7.$$.fragment, local);
+        transition_out(docsimg7.$$.fragment, local);
+        transition_out(docscode8.$$.fragment, local);
+        transition_out(docscode9.$$.fragment, local);
+        current = false;
+      },
+      d: function d(detaching) {
+        destroy_component(docstitle0, detaching);
+        if (detaching) detach(t0);
+        destroy_component(docstitle1, detaching);
+        if (detaching) detach(t1);
+        destroy_component(docsimg0, detaching);
+        if (detaching) detach(t2);
+        destroy_component(docscode0, detaching);
+        if (detaching) detach(t3);
+        destroy_component(docscode1, detaching);
+        if (detaching) detach(t4);
+        destroy_component(docstitle2, detaching);
+        if (detaching) detach(t5);
+        destroy_component(docsimg1, detaching);
+        if (detaching) detach(t6);
+        destroy_component(docscode2, detaching);
+        if (detaching) detach(t7);
+        destroy_component(docstitle3, detaching);
+        if (detaching) detach(t8);
+        destroy_component(docsimg2, detaching);
+        if (detaching) detach(t9);
+        destroy_component(docscode3, detaching);
+        if (detaching) detach(t10);
+        destroy_component(docsimg3, detaching);
+        if (detaching) detach(t11);
+        destroy_component(docscode4, detaching);
+        if (detaching) detach(t12);
+        destroy_component(docstitle4, detaching);
+        if (detaching) detach(t13);
+        destroy_component(docsimg4, detaching);
+        if (detaching) detach(t14);
+        destroy_component(docscode5, detaching);
+        if (detaching) detach(t15);
+        destroy_component(docstitle5, detaching);
+        if (detaching) detach(t16);
+        destroy_component(docsimg5, detaching);
+        if (detaching) detach(t17);
+        destroy_component(docscode6, detaching);
+        if (detaching) detach(t18);
+        destroy_component(docsimg6, detaching);
+        if (detaching) detach(t19);
+        destroy_component(docscode7, detaching);
+        if (detaching) detach(t20);
+        destroy_component(docsimg7, detaching);
+        if (detaching) detach(t21);
+        destroy_component(docscode8, detaching);
+        if (detaching) detach(t22);
+        destroy_component(docscode9, detaching);
+      }
+    };
+  }
+
+  var Duotone_icons = /*#__PURE__*/function (_SvelteComponent) {
+    _inheritsLoose(Duotone_icons, _SvelteComponent);
+
+    function Duotone_icons(options) {
+      var _this;
+
+      _this = _SvelteComponent.call(this) || this;
+      init(_assertThisInitialized(_this), options, null, create_fragment$5, safe_not_equal, {});
+      return _this;
+    }
+
+    return Duotone_icons;
+  }(SvelteComponent);
+
+  var DuotoneIcons = Duotone_icons;
+
+  function create_fragment$4(ctx) {
+    var t0;
+    var t1;
+    var div0;
+    var t5;
+    var t6;
+    var div1;
+    var t11;
+    var t12;
+    var div2;
+    var t19;
+    var t20;
+    var div3;
+    var t22;
+    var current;
+    var docstitle = new DocsTitle({
+      props: {
+        title: "Installation"
+      }
+    });
+    var docscode0 = new DocsCode({
+      props: {
+        code: codes$1.installation[0]
+      }
+    });
+    var docscode1 = new DocsCode({
+      props: {
+        code: codes$1.installation[1]
+      }
+    });
+    var docscode2 = new DocsCode({
+      props: {
+        code: codes$1.installation[2]
+      }
+    });
+    var docscode3 = new DocsCode({
+      props: {
+        code: codes$1.installation[3],
+        lang: "js"
+      }
+    });
+    var docscode4 = new DocsCode({
+      props: {
+        code: codes$1.installation[4],
+        lang: "js"
+      }
+    });
+    return {
+      c: function c() {
+        create_component(docstitle.$$.fragment);
+        t0 = space();
+        create_component(docscode0.$$.fragment);
+        t1 = space();
+        div0 = element("div");
+        div0.innerHTML = "\n  Install FontAwesome icons via <a href=\"https://www.npmjs.com/search?q=%40fortawesome%20svg%20icons\" target=\"_blank\">official packages</a>, for example:\n";
+        t5 = space();
+        create_component(docscode1.$$.fragment);
+        t6 = space();
+        div1 = element("div");
+        div1.innerHTML = "<strong>Notice for <a href=\"https://sapper.svelte.dev/\" target=\"_blank\">Sapper</a> user:</strong> You may need to install the component as a devDependency:\n";
+        t11 = space();
+        create_component(docscode2.$$.fragment);
+        t12 = space();
+        div2 = element("div");
+        div2.innerHTML = "<strong>Notice for <a href=\"https://kit.svelte.dev/\" target=\"_blank\">SvelteKit</a>/<a href=\"https://www.npmjs.com/package/vite\" target=\"_blank\">Vite</a> user:</strong> You may need to import the component explicitly as below:\n";
+        t19 = space();
+        create_component(docscode3.$$.fragment);
+        t20 = space();
+        div3 = element("div");
+        div3.textContent = "When using typescript with SvelteKit/Vite, you may also needed to add type\n  definitions that redirect to the non-index.es export:";
+        t22 = space();
+        create_component(docscode4.$$.fragment);
+        attr(div0, "class", "shadow-sm p-3 mb-3 rounded clearfix");
+        attr(div1, "class", "shadow-sm p-3 mb-3 rounded clearfix");
+        attr(div2, "class", "shadow-sm p-3 mb-3 rounded clearfix");
+        attr(div3, "class", "shadow-sm p-3 mb-3 rounded clearfix");
+      },
+      m: function m(target, anchor) {
+        mount_component(docstitle, target, anchor);
+        insert(target, t0, anchor);
+        mount_component(docscode0, target, anchor);
+        insert(target, t1, anchor);
+        insert(target, div0, anchor);
+        insert(target, t5, anchor);
+        mount_component(docscode1, target, anchor);
+        insert(target, t6, anchor);
+        insert(target, div1, anchor);
+        insert(target, t11, anchor);
+        mount_component(docscode2, target, anchor);
+        insert(target, t12, anchor);
+        insert(target, div2, anchor);
+        insert(target, t19, anchor);
+        mount_component(docscode3, target, anchor);
+        insert(target, t20, anchor);
+        insert(target, div3, anchor);
+        insert(target, t22, anchor);
+        mount_component(docscode4, target, anchor);
+        current = true;
+      },
+      p: noop,
+      i: function i(local) {
+        if (current) return;
+        transition_in(docstitle.$$.fragment, local);
+        transition_in(docscode0.$$.fragment, local);
+        transition_in(docscode1.$$.fragment, local);
+        transition_in(docscode2.$$.fragment, local);
+        transition_in(docscode3.$$.fragment, local);
+        transition_in(docscode4.$$.fragment, local);
+        current = true;
+      },
+      o: function o(local) {
+        transition_out(docstitle.$$.fragment, local);
+        transition_out(docscode0.$$.fragment, local);
+        transition_out(docscode1.$$.fragment, local);
+        transition_out(docscode2.$$.fragment, local);
+        transition_out(docscode3.$$.fragment, local);
+        transition_out(docscode4.$$.fragment, local);
+        current = false;
+      },
+      d: function d(detaching) {
+        destroy_component(docstitle, detaching);
+        if (detaching) detach(t0);
+        destroy_component(docscode0, detaching);
+        if (detaching) detach(t1);
+        if (detaching) detach(div0);
+        if (detaching) detach(t5);
+        destroy_component(docscode1, detaching);
+        if (detaching) detach(t6);
+        if (detaching) detach(div1);
+        if (detaching) detach(t11);
+        destroy_component(docscode2, detaching);
+        if (detaching) detach(t12);
+        if (detaching) detach(div2);
+        if (detaching) detach(t19);
+        destroy_component(docscode3, detaching);
+        if (detaching) detach(t20);
+        if (detaching) detach(div3);
+        if (detaching) detach(t22);
+        destroy_component(docscode4, detaching);
+      }
+    };
+  }
+
+  var Installation = /*#__PURE__*/function (_SvelteComponent) {
+    _inheritsLoose(Installation, _SvelteComponent);
+
+    function Installation(options) {
+      var _this;
+
+      _this = _SvelteComponent.call(this) || this;
+      init(_assertThisInitialized(_this), options, null, create_fragment$4, safe_not_equal, {});
+      return _this;
+    }
+
+    return Installation;
+  }(SvelteComponent);
+
+  var Installation$1 = Installation;
 
   function create_default_slot_8(ctx) {
     var t;
@@ -1674,7 +2918,7 @@
         destroy_component(fa1, detaching);
       }
     };
-  } // (453:4) <FaLayers size="4x" style="background: mistyrose">
+  } // (29:2) <FaLayers size="4x" style="background: mistyrose">
 
 
   function create_default_slot_7(ctx) {
@@ -1723,7 +2967,7 @@
         destroy_component(fa1, detaching);
       }
     };
-  } // (457:4) <FaLayers size="4x" style="background: mistyrose">
+  } // (33:2) <FaLayers size="4x" style="background: mistyrose">
 
 
   function create_default_slot_6(ctx) {
@@ -1810,7 +3054,7 @@
         destroy_component(fa3, detaching);
       }
     };
-  } // (465:6) <FaLayersText scale={0.45} translateY={0.1} color="white" style="font-weight: 900">
+  } // (53:4) <FaLayersText       scale={0.45}       translateY={0.1}       color="white"       style="font-weight: 900"     >
 
 
   function create_default_slot_5(ctx) {
@@ -1826,7 +3070,7 @@
         if (detaching) detach(t);
       }
     };
-  } // (463:4) <FaLayers size="4x" style="background: mistyrose">
+  } // (51:2) <FaLayers size="4x" style="background: mistyrose">
 
 
   function create_default_slot_4(ctx) {
@@ -1868,7 +3112,7 @@
 
         if (dirty &
         /*$$scope*/
-        2) {
+        1) {
           falayerstext_changes.$$scope = {
             dirty: dirty,
             ctx: ctx
@@ -1894,7 +3138,7 @@
         destroy_component(falayerstext, detaching);
       }
     };
-  } // (471:6) <FaLayersText scale={0.25} rotate={-30} color="white" style="font-weight: 900">
+  } // (64:4) <FaLayersText       scale={0.25}       rotate={-30}       color="white"       style="font-weight: 900"     >
 
 
   function create_default_slot_3(ctx) {
@@ -1910,7 +3154,7 @@
         if (detaching) detach(t);
       }
     };
-  } // (469:4) <FaLayers size="4x" style="background: mistyrose">
+  } // (62:2) <FaLayers size="4x" style="background: mistyrose">
 
 
   function create_default_slot_2(ctx) {
@@ -1952,7 +3196,7 @@
 
         if (dirty &
         /*$$scope*/
-        2) {
+        1) {
           falayerstext_changes.$$scope = {
             dirty: dirty,
             ctx: ctx
@@ -1978,7 +3222,7 @@
         destroy_component(falayerstext, detaching);
       }
     };
-  } // (477:6) <FaLayersText scale={0.2} translateX={0.4} translateY={-0.4} color="white" style="padding: 0 .2em; background: tomato; border-radius: 1em">
+  } // (75:4) <FaLayersText       scale={0.2}       translateX={0.4}       translateY={-0.4}       color="white"       style="padding: 0 .2em; background: tomato; border-radius: 1em"     >
 
 
   function create_default_slot_1(ctx) {
@@ -1994,7 +3238,7 @@
         if (detaching) detach(t);
       }
     };
-  } // (475:4) <FaLayers size="4x" style="background: mistyrose">
+  } // (73:2) <FaLayers size="4x" style="background: mistyrose">
 
 
   function create_default_slot(ctx) {
@@ -2037,7 +3281,7 @@
 
         if (dirty &
         /*$$scope*/
-        2) {
+        1) {
           falayerstext_changes.$$scope = {
             dirty: dirty,
             ctx: ctx
@@ -2065,590 +3309,18 @@
     };
   }
 
-  function create_fragment$1(ctx) {
-    var div21;
+  function create_fragment$3(ctx) {
     var t0;
+    var div;
     var t1;
-    var div0;
+    var t2;
+    var t3;
+    var t4;
     var t5;
     var t6;
-    var div1;
-    var t11;
-    var t12;
-    var div2;
-    var t19;
-    var t20;
-    var div3;
-    var t22;
-    var t23;
-    var t24;
-    var div4;
-    var t25;
-    var t26;
-    var t27;
-    var div5;
-    var t33;
-    var div7;
-    var div6;
-    var t34;
-    var t35;
-    var t36;
-    var t37;
-    var div8;
-    var t38;
-    var t39;
-    var t40;
-    var t41;
-    var t42;
-    var t43;
-    var t44;
-    var t45;
-    var t46;
-    var t47;
-    var div14;
-    var div9;
-    var t48;
-    var t49;
-    var div10;
-    var t50;
-    var t51;
-    var div11;
-    var t52;
-    var t53;
-    var div12;
-    var t54;
-    var t55;
-    var div13;
-    var t56;
-    var t57;
-    var t58;
-    var t59;
-    var div15;
-    var t60;
-    var t61;
-    var t62;
-    var t63;
-    var t64;
-    var div16;
-    var t65;
-    var t66;
-    var t67;
-    var t68;
-    var t69;
-    var t70;
-    var t71;
-    var t72;
-    var t73;
-    var div17;
-    var t74;
-    var t75;
-    var t76;
-    var t77;
-    var t78;
-    var div18;
-    var t79;
-    var t80;
-    var t81;
-    var t82;
-    var t83;
-    var t84;
-    var t85;
-    var div19;
-    var t86;
-    var t87;
-    var t88;
-    var t89;
-    var t90;
-    var t91;
-    var t92;
-    var t93;
-    var t94;
-    var t95;
-    var t96;
-    var div20;
-    var t97;
-    var t98;
-    var t99;
-    var t100;
-    var t101;
-    var t102;
-    var t103;
-    var t104;
-    var t105;
-    var t106;
-    var t107;
-    var t108;
-    var t109;
-    var t110;
-    var t111;
-    var t112;
-    var t113;
-    var t114;
-    var t115;
-    var t116;
-    var t117;
-    var t118;
-    var t119;
-    var t120;
-    var t121;
-    var t122;
-    var t123;
-    var t124;
-    var t125;
-    var t126;
-    var t127;
+    var t7;
     var current;
-    var docstitle0 = new DocsTitle({
-      props: {
-        title: "Installation"
-      }
-    });
-    var docscode0 = new DocsCode({
-      props: {
-        code:
-        /*codes*/
-        ctx[0].installation[0]
-      }
-    });
-    var docscode1 = new DocsCode({
-      props: {
-        code:
-        /*codes*/
-        ctx[0].installation[1]
-      }
-    });
-    var docscode2 = new DocsCode({
-      props: {
-        code:
-        /*codes*/
-        ctx[0].installation[2]
-      }
-    });
-    var docscode3 = new DocsCode({
-      props: {
-        code:
-        /*codes*/
-        ctx[0].installation[3],
-        lang: "js"
-      }
-    });
-    var docscode4 = new DocsCode({
-      props: {
-        code:
-        /*codes*/
-        ctx[0].installation[4],
-        lang: "js"
-      }
-    });
-    var docstitle1 = new DocsTitle({
-      props: {
-        title: "Basic Use"
-      }
-    });
-    var fa0 = new Fa__default["default"]({
-      props: {
-        icon: faFlag
-      }
-    });
-    var docscode5 = new DocsCode({
-      props: {
-        code:
-        /*codes*/
-        ctx[0].basicUse[0]
-      }
-    });
-    var fa1 = new Fa__default["default"]({
-      props: {
-        icon: faFlag
-      }
-    });
-    var docscode6 = new DocsCode({
-      props: {
-        code:
-        /*codes*/
-        ctx[0].basicUse[1]
-      }
-    });
-    var docstitle2 = new DocsTitle({
-      props: {
-        title: "Additional Styling"
-      }
-    });
-    var docstitle3 = new DocsTitle({
-      props: {
-        title: "Icon Sizes",
-        level: 3
-      }
-    });
-    var fa2 = new Fa__default["default"]({
-      props: {
-        icon: faFlag,
-        size: "xs"
-      }
-    });
-    var fa3 = new Fa__default["default"]({
-      props: {
-        icon: faFlag,
-        size: "sm"
-      }
-    });
-    var fa4 = new Fa__default["default"]({
-      props: {
-        icon: faFlag,
-        size: "lg"
-      }
-    });
-    var fa5 = new Fa__default["default"]({
-      props: {
-        icon: faFlag,
-        size: "2x"
-      }
-    });
-    var fa6 = new Fa__default["default"]({
-      props: {
-        icon: faFlag,
-        size: "2.5x"
-      }
-    });
-    var fa7 = new Fa__default["default"]({
-      props: {
-        icon: faFlag,
-        size: "5x"
-      }
-    });
-    var fa8 = new Fa__default["default"]({
-      props: {
-        icon: faFlag,
-        size: "7x"
-      }
-    });
-    var fa9 = new Fa__default["default"]({
-      props: {
-        icon: faFlag,
-        size: "10x"
-      }
-    });
-    var docscode7 = new DocsCode({
-      props: {
-        code:
-        /*codes*/
-        ctx[0].additionalStyling[0]
-      }
-    });
-    var docstitle4 = new DocsTitle({
-      props: {
-        title: "Fixed Width Icons",
-        level: 3
-      }
-    });
-    var fa10 = new Fa__default["default"]({
-      props: {
-        icon: faHome,
-        fw: true,
-        style: "background: mistyrose"
-      }
-    });
-    var fa11 = new Fa__default["default"]({
-      props: {
-        icon: faInfo,
-        fw: true,
-        style: "background: mistyrose"
-      }
-    });
-    var fa12 = new Fa__default["default"]({
-      props: {
-        icon: faBook,
-        fw: true,
-        style: "background: mistyrose"
-      }
-    });
-    var fa13 = new Fa__default["default"]({
-      props: {
-        icon: faPencilAlt,
-        fw: true,
-        style: "background: mistyrose"
-      }
-    });
-    var fa14 = new Fa__default["default"]({
-      props: {
-        icon: faCog,
-        fw: true,
-        style: "background: mistyrose"
-      }
-    });
-    var docscode8 = new DocsCode({
-      props: {
-        code:
-        /*codes*/
-        ctx[0].additionalStyling[1]
-      }
-    });
-    var docstitle5 = new DocsTitle({
-      props: {
-        title: "Pulled Icons",
-        level: 3
-      }
-    });
-    var fa15 = new Fa__default["default"]({
-      props: {
-        icon: faQuoteLeft,
-        pull: "left",
-        size: "2x"
-      }
-    });
-    var fa16 = new Fa__default["default"]({
-      props: {
-        icon: faQuoteRight,
-        pull: "right",
-        size: "2x"
-      }
-    });
-    var docscode9 = new DocsCode({
-      props: {
-        code:
-        /*codes*/
-        ctx[0].additionalStyling[2]
-      }
-    });
-    var docstitle6 = new DocsTitle({
-      props: {
-        title: "Animating Icons"
-      }
-    });
-    var fa17 = new Fa__default["default"]({
-      props: {
-        icon: faSpinner,
-        size: "3x",
-        spin: true
-      }
-    });
-    var fa18 = new Fa__default["default"]({
-      props: {
-        icon: faCircleNotch,
-        size: "3x",
-        spin: true
-      }
-    });
-    var fa19 = new Fa__default["default"]({
-      props: {
-        icon: faSync,
-        size: "3x",
-        spin: true
-      }
-    });
-    var fa20 = new Fa__default["default"]({
-      props: {
-        icon: faCog,
-        size: "3x",
-        spin: true
-      }
-    });
-    var fa21 = new Fa__default["default"]({
-      props: {
-        icon: faSpinner,
-        size: "3x",
-        pulse: true
-      }
-    });
-    var fa22 = new Fa__default["default"]({
-      props: {
-        icon: faStroopwafel,
-        size: "3x",
-        spin: true
-      }
-    });
-    var docscode10 = new DocsCode({
-      props: {
-        code:
-        /*codes*/
-        ctx[0].animatingIcons[0]
-      }
-    });
-    var docstitle7 = new DocsTitle({
-      props: {
-        title: "Power Transforms"
-      }
-    });
-    var docstitle8 = new DocsTitle({
-      props: {
-        title: "Scaling",
-        level: 3
-      }
-    });
-    var fa23 = new Fa__default["default"]({
-      props: {
-        icon: faSeedling,
-        size: "4x",
-        style: "background: mistyrose"
-      }
-    });
-    var fa24 = new Fa__default["default"]({
-      props: {
-        icon: faSeedling,
-        scale: 0.5,
-        size: "4x",
-        style: "background: mistyrose"
-      }
-    });
-    var fa25 = new Fa__default["default"]({
-      props: {
-        icon: faSeedling,
-        scale: 1.2,
-        size: "4x",
-        style: "background: mistyrose"
-      }
-    });
-    var docscode11 = new DocsCode({
-      props: {
-        code:
-        /*codes*/
-        ctx[0].powerTransforms[0]
-      }
-    });
-    var docstitle9 = new DocsTitle({
-      props: {
-        title: "Positioning",
-        level: 3
-      }
-    });
-    var fa26 = new Fa__default["default"]({
-      props: {
-        icon: faSeedling,
-        scale: 0.5,
-        size: "4x",
-        style: "background: mistyrose"
-      }
-    });
-    var fa27 = new Fa__default["default"]({
-      props: {
-        icon: faSeedling,
-        scale: 0.5,
-        translateX: 0.2,
-        size: "4x",
-        style: "background: mistyrose"
-      }
-    });
-    var fa28 = new Fa__default["default"]({
-      props: {
-        icon: faSeedling,
-        scale: 0.5,
-        translateX: -0.2,
-        size: "4x",
-        style: "background: mistyrose"
-      }
-    });
-    var fa29 = new Fa__default["default"]({
-      props: {
-        icon: faSeedling,
-        scale: 0.5,
-        translateY: 0.2,
-        size: "4x",
-        style: "background: mistyrose"
-      }
-    });
-    var fa30 = new Fa__default["default"]({
-      props: {
-        icon: faSeedling,
-        scale: 0.5,
-        translateY: -0.2,
-        size: "4x",
-        style: "background: mistyrose"
-      }
-    });
-    var docscode12 = new DocsCode({
-      props: {
-        code:
-        /*codes*/
-        ctx[0].powerTransforms[1]
-      }
-    });
-    var docstitle10 = new DocsTitle({
-      props: {
-        title: "Rotating & Flipping",
-        level: 3
-      }
-    });
-    var fa31 = new Fa__default["default"]({
-      props: {
-        icon: faSeedling,
-        rotate: 90,
-        size: "4x",
-        style: "background: mistyrose"
-      }
-    });
-    var fa32 = new Fa__default["default"]({
-      props: {
-        icon: faSeedling,
-        rotate: 180,
-        size: "4x",
-        style: "background: mistyrose"
-      }
-    });
-    var fa33 = new Fa__default["default"]({
-      props: {
-        icon: faSeedling,
-        size: "4x",
-        rotate: "270",
-        style: "background: mistyrose"
-      }
-    });
-    var fa34 = new Fa__default["default"]({
-      props: {
-        icon: faSeedling,
-        size: "4x",
-        rotate: "30",
-        style: "background: mistyrose"
-      }
-    });
-    var fa35 = new Fa__default["default"]({
-      props: {
-        icon: faSeedling,
-        size: "4x",
-        rotate: "-30",
-        style: "background: mistyrose"
-      }
-    });
-    var fa36 = new Fa__default["default"]({
-      props: {
-        icon: faSeedling,
-        size: "4x",
-        flip: "vertical",
-        style: "background: mistyrose"
-      }
-    });
-    var fa37 = new Fa__default["default"]({
-      props: {
-        icon: faSeedling,
-        size: "4x",
-        flip: "horizontal",
-        style: "background: mistyrose"
-      }
-    });
-    var fa38 = new Fa__default["default"]({
-      props: {
-        icon: faSeedling,
-        size: "4x",
-        flip: "both",
-        style: "background: mistyrose"
-      }
-    });
-    var fa39 = new Fa__default["default"]({
-      props: {
-        icon: faSeedling,
-        size: "4x",
-        flip: "both",
-        rotate: "30",
-        style: "background: mistyrose"
-      }
-    });
-    var docscode13 = new DocsCode({
-      props: {
-        code:
-        /*codes*/
-        ctx[0].powerTransforms[2]
-      }
-    });
-    var docstitle11 = new DocsTitle({
+    var docstitle = new DocsTitle({
       props: {
         title: "Layering & Text"
       }
@@ -2725,660 +3397,58 @@
         }
       }
     });
-    var docscode14 = new DocsCode({
+    var docscode0 = new DocsCode({
       props: {
-        code:
-        /*codes*/
-        ctx[0].layering[0],
+        code: codes$1.layering[0],
         lang: "js"
       }
     });
-    var docscode15 = new DocsCode({
+    var docscode1 = new DocsCode({
       props: {
-        code:
-        /*codes*/
-        ctx[0].layering[1]
-      }
-    });
-    var docstitle12 = new DocsTitle({
-      props: {
-        title: "Duotone Icons"
-      }
-    });
-    var docstitle13 = new DocsTitle({
-      props: {
-        title: "Basic Use",
-        level: 3
-      }
-    });
-    var docsimg0 = new DocsImg({
-      props: {
-        src: "assets/duotone-0.png",
-        alt: "duotone icons basic use"
-      }
-    });
-    var docscode16 = new DocsCode({
-      props: {
-        code:
-        /*codes*/
-        ctx[0].duotoneIcons[0],
-        lang: "js"
-      }
-    });
-    var docscode17 = new DocsCode({
-      props: {
-        code:
-        /*codes*/
-        ctx[0].duotoneIcons[1]
-      }
-    });
-    var docstitle14 = new DocsTitle({
-      props: {
-        title: "Swapping Layer Opacity",
-        level: 3
-      }
-    });
-    var docsimg1 = new DocsImg({
-      props: {
-        src: "assets/duotone-1.png",
-        alt: "swapping duotone icons layer opacity"
-      }
-    });
-    var docscode18 = new DocsCode({
-      props: {
-        code:
-        /*codes*/
-        ctx[0].duotoneIcons[2]
-      }
-    });
-    var docstitle15 = new DocsTitle({
-      props: {
-        title: "Changing Opacity",
-        level: 3
-      }
-    });
-    var docsimg2 = new DocsImg({
-      props: {
-        src: "assets/duotone-2.png",
-        alt: "changing duotone icons opacity"
-      }
-    });
-    var docscode19 = new DocsCode({
-      props: {
-        code:
-        /*codes*/
-        ctx[0].duotoneIcons[3]
-      }
-    });
-    var docsimg3 = new DocsImg({
-      props: {
-        src: "assets/duotone-3.png",
-        alt: "changing duotone icons opacity"
-      }
-    });
-    var docscode20 = new DocsCode({
-      props: {
-        code:
-        /*codes*/
-        ctx[0].duotoneIcons[4]
-      }
-    });
-    var docstitle16 = new DocsTitle({
-      props: {
-        title: "Coloring Duotone Icons",
-        level: 3
-      }
-    });
-    var docsimg4 = new DocsImg({
-      props: {
-        src: "assets/duotone-4.png",
-        alt: "coloring duotone icons"
-      }
-    });
-    var docscode21 = new DocsCode({
-      props: {
-        code:
-        /*codes*/
-        ctx[0].duotoneIcons[5]
-      }
-    });
-    var docstitle17 = new DocsTitle({
-      props: {
-        title: "Advanced Use",
-        level: 3
-      }
-    });
-    var docsimg5 = new DocsImg({
-      props: {
-        src: "assets/duotone-5.png",
-        alt: "duotone icons advanced use"
-      }
-    });
-    var docscode22 = new DocsCode({
-      props: {
-        code:
-        /*codes*/
-        ctx[0].duotoneIcons[6]
-      }
-    });
-    var docsimg6 = new DocsImg({
-      props: {
-        src: "assets/duotone-6.png",
-        alt: "duotone icons advanced use"
-      }
-    });
-    var docscode23 = new DocsCode({
-      props: {
-        code:
-        /*codes*/
-        ctx[0].duotoneIcons[7]
-      }
-    });
-    var docsimg7 = new DocsImg({
-      props: {
-        src: "assets/duotone-7.png",
-        alt: "duotone icons advanced use"
-      }
-    });
-    var docscode24 = new DocsCode({
-      props: {
-        code:
-        /*codes*/
-        ctx[0].duotoneIcons[8],
-        lang: "js"
-      }
-    });
-    var docscode25 = new DocsCode({
-      props: {
-        code:
-        /*codes*/
-        ctx[0].duotoneIcons[9]
+        code: codes$1.layering[1]
       }
     });
     return {
       c: function c() {
-        div21 = element("div");
-        create_component(docstitle0.$$.fragment);
+        create_component(docstitle.$$.fragment);
         t0 = space();
-        create_component(docscode0.$$.fragment);
-        t1 = space();
-        div0 = element("div");
-        div0.innerHTML = "\n    Install FontAwesome icons via <a href=\"https://www.npmjs.com/search?q=%40fortawesome%20svg%20icons\" target=\"_blank\">official packages</a>, for example:\n  ";
-        t5 = space();
-        create_component(docscode1.$$.fragment);
-        t6 = space();
-        div1 = element("div");
-        div1.innerHTML = "<strong>Notice for <a href=\"https://sapper.svelte.dev/\" target=\"_blank\">Sapper</a> user:</strong> You may need to install the component as a devDependency:\n  ";
-        t11 = space();
-        create_component(docscode2.$$.fragment);
-        t12 = space();
-        div2 = element("div");
-        div2.innerHTML = "<strong>Notice for <a href=\"https://kit.svelte.dev/\" target=\"_blank\">SvelteKit</a>/<a href=\"https://www.npmjs.com/package/vite\" target=\"_blank\">Vite</a> user:</strong> You may need to import the component explicitly as below:\n  ";
-        t19 = space();
-        create_component(docscode3.$$.fragment);
-        t20 = space();
-        div3 = element("div");
-        div3.textContent = "When using typescript with SvelteKit/Vite, you may also needed to add type definitions that redirect to the non-index.es export:";
-        t22 = space();
-        create_component(docscode4.$$.fragment);
-        t23 = space();
-        create_component(docstitle1.$$.fragment);
-        t24 = space();
-        div4 = element("div");
-        create_component(fa0.$$.fragment);
-        t25 = text(" Flag");
-        t26 = space();
-        create_component(docscode5.$$.fragment);
-        t27 = space();
-        div5 = element("div");
-        div5.innerHTML = "\n    Icons import from <a href=\"https://www.npmjs.com/search?q=%40fortawesome%20svg%20icons\" target=\"_blank\">FontAwesome packages</a>, for example: @fortawesome/free-solid-svg-icons.\n    <br>\n    Icons gallery: <a href=\"https://fontawesome.com/icons\" target=\"_blank\">FontAwesome icons</a>";
-        t33 = space();
-        div7 = element("div");
-        div6 = element("div");
-        create_component(fa1.$$.fragment);
-        t34 = space();
-        create_component(docscode6.$$.fragment);
-        t35 = space();
-        create_component(docstitle2.$$.fragment);
-        t36 = space();
-        create_component(docstitle3.$$.fragment);
-        t37 = space();
-        div8 = element("div");
-        create_component(fa2.$$.fragment);
-        t38 = space();
-        create_component(fa3.$$.fragment);
-        t39 = space();
-        create_component(fa4.$$.fragment);
-        t40 = space();
-        create_component(fa5.$$.fragment);
-        t41 = space();
-        create_component(fa6.$$.fragment);
-        t42 = space();
-        create_component(fa7.$$.fragment);
-        t43 = space();
-        create_component(fa8.$$.fragment);
-        t44 = space();
-        create_component(fa9.$$.fragment);
-        t45 = space();
-        create_component(docscode7.$$.fragment);
-        t46 = space();
-        create_component(docstitle4.$$.fragment);
-        t47 = space();
-        div14 = element("div");
-        div9 = element("div");
-        create_component(fa10.$$.fragment);
-        t48 = text(" Home");
-        t49 = space();
-        div10 = element("div");
-        create_component(fa11.$$.fragment);
-        t50 = text(" Info");
-        t51 = space();
-        div11 = element("div");
-        create_component(fa12.$$.fragment);
-        t52 = text(" Library");
-        t53 = space();
-        div12 = element("div");
-        create_component(fa13.$$.fragment);
-        t54 = text(" Applications");
-        t55 = space();
-        div13 = element("div");
-        create_component(fa14.$$.fragment);
-        t56 = text(" Settins");
-        t57 = space();
-        create_component(docscode8.$$.fragment);
-        t58 = space();
-        create_component(docstitle5.$$.fragment);
-        t59 = space();
-        div15 = element("div");
-        create_component(fa15.$$.fragment);
-        t60 = space();
-        create_component(fa16.$$.fragment);
-        t61 = text("\n    Gatsby believed in the green light, the orgastic future that year by year recedes before us. It eluded us then, but that’s no matter — tomorrow we will run faster, stretch our arms further... And one fine morning — So we beat on, boats against the current, borne back ceaselessly into the past.");
-        t62 = space();
-        create_component(docscode9.$$.fragment);
-        t63 = space();
-        create_component(docstitle6.$$.fragment);
-        t64 = space();
-        div16 = element("div");
-        create_component(fa17.$$.fragment);
-        t65 = space();
-        create_component(fa18.$$.fragment);
-        t66 = space();
-        create_component(fa19.$$.fragment);
-        t67 = space();
-        create_component(fa20.$$.fragment);
-        t68 = space();
-        create_component(fa21.$$.fragment);
-        t69 = space();
-        create_component(fa22.$$.fragment);
-        t70 = space();
-        create_component(docscode10.$$.fragment);
-        t71 = space();
-        create_component(docstitle7.$$.fragment);
-        t72 = space();
-        create_component(docstitle8.$$.fragment);
-        t73 = space();
-        div17 = element("div");
-        create_component(fa23.$$.fragment);
-        t74 = space();
-        create_component(fa24.$$.fragment);
-        t75 = space();
-        create_component(fa25.$$.fragment);
-        t76 = space();
-        create_component(docscode11.$$.fragment);
-        t77 = space();
-        create_component(docstitle9.$$.fragment);
-        t78 = space();
-        div18 = element("div");
-        create_component(fa26.$$.fragment);
-        t79 = space();
-        create_component(fa27.$$.fragment);
-        t80 = space();
-        create_component(fa28.$$.fragment);
-        t81 = space();
-        create_component(fa29.$$.fragment);
-        t82 = space();
-        create_component(fa30.$$.fragment);
-        t83 = space();
-        create_component(docscode12.$$.fragment);
-        t84 = space();
-        create_component(docstitle10.$$.fragment);
-        t85 = space();
-        div19 = element("div");
-        create_component(fa31.$$.fragment);
-        t86 = space();
-        create_component(fa32.$$.fragment);
-        t87 = space();
-        create_component(fa33.$$.fragment);
-        t88 = space();
-        create_component(fa34.$$.fragment);
-        t89 = space();
-        create_component(fa35.$$.fragment);
-        t90 = space();
-        create_component(fa36.$$.fragment);
-        t91 = space();
-        create_component(fa37.$$.fragment);
-        t92 = space();
-        create_component(fa38.$$.fragment);
-        t93 = space();
-        create_component(fa39.$$.fragment);
-        t94 = space();
-        create_component(docscode13.$$.fragment);
-        t95 = space();
-        create_component(docstitle11.$$.fragment);
-        t96 = space();
-        div20 = element("div");
+        div = element("div");
         create_component(falayers0.$$.fragment);
-        t97 = space();
+        t1 = space();
         create_component(falayers1.$$.fragment);
-        t98 = space();
+        t2 = space();
         create_component(falayers2.$$.fragment);
-        t99 = space();
+        t3 = space();
         create_component(falayers3.$$.fragment);
-        t100 = space();
+        t4 = space();
         create_component(falayers4.$$.fragment);
-        t101 = space();
+        t5 = space();
         create_component(falayers5.$$.fragment);
-        t102 = space();
-        create_component(docscode14.$$.fragment);
-        t103 = space();
-        create_component(docscode15.$$.fragment);
-        t104 = space();
-        create_component(docstitle12.$$.fragment);
-        t105 = space();
-        create_component(docstitle13.$$.fragment);
-        t106 = space();
-        create_component(docsimg0.$$.fragment);
-        t107 = space();
-        create_component(docscode16.$$.fragment);
-        t108 = space();
-        create_component(docscode17.$$.fragment);
-        t109 = space();
-        create_component(docstitle14.$$.fragment);
-        t110 = space();
-        create_component(docsimg1.$$.fragment);
-        t111 = space();
-        create_component(docscode18.$$.fragment);
-        t112 = space();
-        create_component(docstitle15.$$.fragment);
-        t113 = space();
-        create_component(docsimg2.$$.fragment);
-        t114 = space();
-        create_component(docscode19.$$.fragment);
-        t115 = space();
-        create_component(docsimg3.$$.fragment);
-        t116 = space();
-        create_component(docscode20.$$.fragment);
-        t117 = space();
-        create_component(docstitle16.$$.fragment);
-        t118 = space();
-        create_component(docsimg4.$$.fragment);
-        t119 = space();
-        create_component(docscode21.$$.fragment);
-        t120 = space();
-        create_component(docstitle17.$$.fragment);
-        t121 = space();
-        create_component(docsimg5.$$.fragment);
-        t122 = space();
-        create_component(docscode22.$$.fragment);
-        t123 = space();
-        create_component(docsimg6.$$.fragment);
-        t124 = space();
-        create_component(docscode23.$$.fragment);
-        t125 = space();
-        create_component(docsimg7.$$.fragment);
-        t126 = space();
-        create_component(docscode24.$$.fragment);
-        t127 = space();
-        create_component(docscode25.$$.fragment);
-        attr(div0, "class", "shadow-sm p-3 mb-3 rounded clearfix");
-        attr(div1, "class", "shadow-sm p-3 mb-3 rounded clearfix");
-        attr(div2, "class", "shadow-sm p-3 mb-3 rounded clearfix");
-        attr(div3, "class", "shadow-sm p-3 mb-3 rounded clearfix");
-        attr(div4, "class", "shadow-sm p-3 mb-3 rounded");
-        attr(div5, "class", "shadow-sm p-3 mb-3 rounded clearfix");
-        set_style(div6, "font-size", "3em");
-        set_style(div6, "color", "tomato");
-        attr(div7, "class", "shadow-sm p-3 mb-3 rounded");
-        attr(div8, "class", "shadow-sm p-3 mb-3 rounded");
-        attr(div14, "class", "shadow-sm p-3 mb-3 rounded");
-        attr(div15, "class", "shadow-sm p-3 mb-3 rounded clearfix");
-        attr(div16, "class", "shadow-sm p-3 mb-3 rounded");
-        attr(div17, "class", "shadow-sm p-3 mb-3 rounded");
-        attr(div18, "class", "shadow-sm p-3 mb-3 rounded");
-        attr(div19, "class", "shadow-sm p-3 mb-3 rounded");
-        attr(div20, "class", "shadow-sm p-3 mb-3 rounded");
+        t6 = space();
+        create_component(docscode0.$$.fragment);
+        t7 = space();
+        create_component(docscode1.$$.fragment);
+        attr(div, "class", "shadow-sm p-3 mb-3 rounded");
       },
       m: function m(target, anchor) {
-        insert(target, div21, anchor);
-        mount_component(docstitle0, div21, null);
-        append(div21, t0);
-        mount_component(docscode0, div21, null);
-        append(div21, t1);
-        append(div21, div0);
-        append(div21, t5);
-        mount_component(docscode1, div21, null);
-        append(div21, t6);
-        append(div21, div1);
-        append(div21, t11);
-        mount_component(docscode2, div21, null);
-        append(div21, t12);
-        append(div21, div2);
-        append(div21, t19);
-        mount_component(docscode3, div21, null);
-        append(div21, t20);
-        append(div21, div3);
-        append(div21, t22);
-        mount_component(docscode4, div21, null);
-        append(div21, t23);
-        mount_component(docstitle1, div21, null);
-        append(div21, t24);
-        append(div21, div4);
-        mount_component(fa0, div4, null);
-        append(div4, t25);
-        append(div21, t26);
-        mount_component(docscode5, div21, null);
-        append(div21, t27);
-        append(div21, div5);
-        append(div21, t33);
-        append(div21, div7);
-        append(div7, div6);
-        mount_component(fa1, div6, null);
-        append(div21, t34);
-        mount_component(docscode6, div21, null);
-        append(div21, t35);
-        mount_component(docstitle2, div21, null);
-        append(div21, t36);
-        mount_component(docstitle3, div21, null);
-        append(div21, t37);
-        append(div21, div8);
-        mount_component(fa2, div8, null);
-        append(div8, t38);
-        mount_component(fa3, div8, null);
-        append(div8, t39);
-        mount_component(fa4, div8, null);
-        append(div8, t40);
-        mount_component(fa5, div8, null);
-        append(div8, t41);
-        mount_component(fa6, div8, null);
-        append(div8, t42);
-        mount_component(fa7, div8, null);
-        append(div8, t43);
-        mount_component(fa8, div8, null);
-        append(div8, t44);
-        mount_component(fa9, div8, null);
-        append(div21, t45);
-        mount_component(docscode7, div21, null);
-        append(div21, t46);
-        mount_component(docstitle4, div21, null);
-        append(div21, t47);
-        append(div21, div14);
-        append(div14, div9);
-        mount_component(fa10, div9, null);
-        append(div9, t48);
-        append(div14, t49);
-        append(div14, div10);
-        mount_component(fa11, div10, null);
-        append(div10, t50);
-        append(div14, t51);
-        append(div14, div11);
-        mount_component(fa12, div11, null);
-        append(div11, t52);
-        append(div14, t53);
-        append(div14, div12);
-        mount_component(fa13, div12, null);
-        append(div12, t54);
-        append(div14, t55);
-        append(div14, div13);
-        mount_component(fa14, div13, null);
-        append(div13, t56);
-        append(div21, t57);
-        mount_component(docscode8, div21, null);
-        append(div21, t58);
-        mount_component(docstitle5, div21, null);
-        append(div21, t59);
-        append(div21, div15);
-        mount_component(fa15, div15, null);
-        append(div15, t60);
-        mount_component(fa16, div15, null);
-        append(div15, t61);
-        append(div21, t62);
-        mount_component(docscode9, div21, null);
-        append(div21, t63);
-        mount_component(docstitle6, div21, null);
-        append(div21, t64);
-        append(div21, div16);
-        mount_component(fa17, div16, null);
-        append(div16, t65);
-        mount_component(fa18, div16, null);
-        append(div16, t66);
-        mount_component(fa19, div16, null);
-        append(div16, t67);
-        mount_component(fa20, div16, null);
-        append(div16, t68);
-        mount_component(fa21, div16, null);
-        append(div16, t69);
-        mount_component(fa22, div16, null);
-        append(div21, t70);
-        mount_component(docscode10, div21, null);
-        append(div21, t71);
-        mount_component(docstitle7, div21, null);
-        append(div21, t72);
-        mount_component(docstitle8, div21, null);
-        append(div21, t73);
-        append(div21, div17);
-        mount_component(fa23, div17, null);
-        append(div17, t74);
-        mount_component(fa24, div17, null);
-        append(div17, t75);
-        mount_component(fa25, div17, null);
-        append(div21, t76);
-        mount_component(docscode11, div21, null);
-        append(div21, t77);
-        mount_component(docstitle9, div21, null);
-        append(div21, t78);
-        append(div21, div18);
-        mount_component(fa26, div18, null);
-        append(div18, t79);
-        mount_component(fa27, div18, null);
-        append(div18, t80);
-        mount_component(fa28, div18, null);
-        append(div18, t81);
-        mount_component(fa29, div18, null);
-        append(div18, t82);
-        mount_component(fa30, div18, null);
-        append(div21, t83);
-        mount_component(docscode12, div21, null);
-        append(div21, t84);
-        mount_component(docstitle10, div21, null);
-        append(div21, t85);
-        append(div21, div19);
-        mount_component(fa31, div19, null);
-        append(div19, t86);
-        mount_component(fa32, div19, null);
-        append(div19, t87);
-        mount_component(fa33, div19, null);
-        append(div19, t88);
-        mount_component(fa34, div19, null);
-        append(div19, t89);
-        mount_component(fa35, div19, null);
-        append(div19, t90);
-        mount_component(fa36, div19, null);
-        append(div19, t91);
-        mount_component(fa37, div19, null);
-        append(div19, t92);
-        mount_component(fa38, div19, null);
-        append(div19, t93);
-        mount_component(fa39, div19, null);
-        append(div21, t94);
-        mount_component(docscode13, div21, null);
-        append(div21, t95);
-        mount_component(docstitle11, div21, null);
-        append(div21, t96);
-        append(div21, div20);
-        mount_component(falayers0, div20, null);
-        append(div20, t97);
-        mount_component(falayers1, div20, null);
-        append(div20, t98);
-        mount_component(falayers2, div20, null);
-        append(div20, t99);
-        mount_component(falayers3, div20, null);
-        append(div20, t100);
-        mount_component(falayers4, div20, null);
-        append(div20, t101);
-        mount_component(falayers5, div20, null);
-        append(div21, t102);
-        mount_component(docscode14, div21, null);
-        append(div21, t103);
-        mount_component(docscode15, div21, null);
-        append(div21, t104);
-        mount_component(docstitle12, div21, null);
-        append(div21, t105);
-        mount_component(docstitle13, div21, null);
-        append(div21, t106);
-        mount_component(docsimg0, div21, null);
-        append(div21, t107);
-        mount_component(docscode16, div21, null);
-        append(div21, t108);
-        mount_component(docscode17, div21, null);
-        append(div21, t109);
-        mount_component(docstitle14, div21, null);
-        append(div21, t110);
-        mount_component(docsimg1, div21, null);
-        append(div21, t111);
-        mount_component(docscode18, div21, null);
-        append(div21, t112);
-        mount_component(docstitle15, div21, null);
-        append(div21, t113);
-        mount_component(docsimg2, div21, null);
-        append(div21, t114);
-        mount_component(docscode19, div21, null);
-        append(div21, t115);
-        mount_component(docsimg3, div21, null);
-        append(div21, t116);
-        mount_component(docscode20, div21, null);
-        append(div21, t117);
-        mount_component(docstitle16, div21, null);
-        append(div21, t118);
-        mount_component(docsimg4, div21, null);
-        append(div21, t119);
-        mount_component(docscode21, div21, null);
-        append(div21, t120);
-        mount_component(docstitle17, div21, null);
-        append(div21, t121);
-        mount_component(docsimg5, div21, null);
-        append(div21, t122);
-        mount_component(docscode22, div21, null);
-        append(div21, t123);
-        mount_component(docsimg6, div21, null);
-        append(div21, t124);
-        mount_component(docscode23, div21, null);
-        append(div21, t125);
-        mount_component(docsimg7, div21, null);
-        append(div21, t126);
-        mount_component(docscode24, div21, null);
-        append(div21, t127);
-        mount_component(docscode25, div21, null);
+        mount_component(docstitle, target, anchor);
+        insert(target, t0, anchor);
+        insert(target, div, anchor);
+        mount_component(falayers0, div, null);
+        append(div, t1);
+        mount_component(falayers1, div, null);
+        append(div, t2);
+        mount_component(falayers2, div, null);
+        append(div, t3);
+        mount_component(falayers3, div, null);
+        append(div, t4);
+        mount_component(falayers4, div, null);
+        append(div, t5);
+        mount_component(falayers5, div, null);
+        insert(target, t6, anchor);
+        mount_component(docscode0, target, anchor);
+        insert(target, t7, anchor);
+        mount_component(docscode1, target, anchor);
         current = true;
       },
       p: function p(ctx, _ref) {
@@ -3387,7 +3457,7 @@
 
         if (dirty &
         /*$$scope*/
-        2) {
+        1) {
           falayers0_changes.$$scope = {
             dirty: dirty,
             ctx: ctx
@@ -3399,7 +3469,7 @@
 
         if (dirty &
         /*$$scope*/
-        2) {
+        1) {
           falayers1_changes.$$scope = {
             dirty: dirty,
             ctx: ctx
@@ -3411,7 +3481,7 @@
 
         if (dirty &
         /*$$scope*/
-        2) {
+        1) {
           falayers2_changes.$$scope = {
             dirty: dirty,
             ctx: ctx
@@ -3423,7 +3493,7 @@
 
         if (dirty &
         /*$$scope*/
-        2) {
+        1) {
           falayers3_changes.$$scope = {
             dirty: dirty,
             ctx: ctx
@@ -3435,7 +3505,7 @@
 
         if (dirty &
         /*$$scope*/
-        2) {
+        1) {
           falayers4_changes.$$scope = {
             dirty: dirty,
             ctx: ctx
@@ -3447,7 +3517,7 @@
 
         if (dirty &
         /*$$scope*/
-        2) {
+        1) {
           falayers5_changes.$$scope = {
             dirty: dirty,
             ctx: ctx
@@ -3458,322 +3528,574 @@
       },
       i: function i(local) {
         if (current) return;
-        transition_in(docstitle0.$$.fragment, local);
-        transition_in(docscode0.$$.fragment, local);
-        transition_in(docscode1.$$.fragment, local);
-        transition_in(docscode2.$$.fragment, local);
-        transition_in(docscode3.$$.fragment, local);
-        transition_in(docscode4.$$.fragment, local);
-        transition_in(docstitle1.$$.fragment, local);
-        transition_in(fa0.$$.fragment, local);
-        transition_in(docscode5.$$.fragment, local);
-        transition_in(fa1.$$.fragment, local);
-        transition_in(docscode6.$$.fragment, local);
-        transition_in(docstitle2.$$.fragment, local);
-        transition_in(docstitle3.$$.fragment, local);
-        transition_in(fa2.$$.fragment, local);
-        transition_in(fa3.$$.fragment, local);
-        transition_in(fa4.$$.fragment, local);
-        transition_in(fa5.$$.fragment, local);
-        transition_in(fa6.$$.fragment, local);
-        transition_in(fa7.$$.fragment, local);
-        transition_in(fa8.$$.fragment, local);
-        transition_in(fa9.$$.fragment, local);
-        transition_in(docscode7.$$.fragment, local);
-        transition_in(docstitle4.$$.fragment, local);
-        transition_in(fa10.$$.fragment, local);
-        transition_in(fa11.$$.fragment, local);
-        transition_in(fa12.$$.fragment, local);
-        transition_in(fa13.$$.fragment, local);
-        transition_in(fa14.$$.fragment, local);
-        transition_in(docscode8.$$.fragment, local);
-        transition_in(docstitle5.$$.fragment, local);
-        transition_in(fa15.$$.fragment, local);
-        transition_in(fa16.$$.fragment, local);
-        transition_in(docscode9.$$.fragment, local);
-        transition_in(docstitle6.$$.fragment, local);
-        transition_in(fa17.$$.fragment, local);
-        transition_in(fa18.$$.fragment, local);
-        transition_in(fa19.$$.fragment, local);
-        transition_in(fa20.$$.fragment, local);
-        transition_in(fa21.$$.fragment, local);
-        transition_in(fa22.$$.fragment, local);
-        transition_in(docscode10.$$.fragment, local);
-        transition_in(docstitle7.$$.fragment, local);
-        transition_in(docstitle8.$$.fragment, local);
-        transition_in(fa23.$$.fragment, local);
-        transition_in(fa24.$$.fragment, local);
-        transition_in(fa25.$$.fragment, local);
-        transition_in(docscode11.$$.fragment, local);
-        transition_in(docstitle9.$$.fragment, local);
-        transition_in(fa26.$$.fragment, local);
-        transition_in(fa27.$$.fragment, local);
-        transition_in(fa28.$$.fragment, local);
-        transition_in(fa29.$$.fragment, local);
-        transition_in(fa30.$$.fragment, local);
-        transition_in(docscode12.$$.fragment, local);
-        transition_in(docstitle10.$$.fragment, local);
-        transition_in(fa31.$$.fragment, local);
-        transition_in(fa32.$$.fragment, local);
-        transition_in(fa33.$$.fragment, local);
-        transition_in(fa34.$$.fragment, local);
-        transition_in(fa35.$$.fragment, local);
-        transition_in(fa36.$$.fragment, local);
-        transition_in(fa37.$$.fragment, local);
-        transition_in(fa38.$$.fragment, local);
-        transition_in(fa39.$$.fragment, local);
-        transition_in(docscode13.$$.fragment, local);
-        transition_in(docstitle11.$$.fragment, local);
+        transition_in(docstitle.$$.fragment, local);
         transition_in(falayers0.$$.fragment, local);
         transition_in(falayers1.$$.fragment, local);
         transition_in(falayers2.$$.fragment, local);
         transition_in(falayers3.$$.fragment, local);
         transition_in(falayers4.$$.fragment, local);
         transition_in(falayers5.$$.fragment, local);
-        transition_in(docscode14.$$.fragment, local);
-        transition_in(docscode15.$$.fragment, local);
-        transition_in(docstitle12.$$.fragment, local);
-        transition_in(docstitle13.$$.fragment, local);
-        transition_in(docsimg0.$$.fragment, local);
-        transition_in(docscode16.$$.fragment, local);
-        transition_in(docscode17.$$.fragment, local);
-        transition_in(docstitle14.$$.fragment, local);
-        transition_in(docsimg1.$$.fragment, local);
-        transition_in(docscode18.$$.fragment, local);
-        transition_in(docstitle15.$$.fragment, local);
-        transition_in(docsimg2.$$.fragment, local);
-        transition_in(docscode19.$$.fragment, local);
-        transition_in(docsimg3.$$.fragment, local);
-        transition_in(docscode20.$$.fragment, local);
-        transition_in(docstitle16.$$.fragment, local);
-        transition_in(docsimg4.$$.fragment, local);
-        transition_in(docscode21.$$.fragment, local);
-        transition_in(docstitle17.$$.fragment, local);
-        transition_in(docsimg5.$$.fragment, local);
-        transition_in(docscode22.$$.fragment, local);
-        transition_in(docsimg6.$$.fragment, local);
-        transition_in(docscode23.$$.fragment, local);
-        transition_in(docsimg7.$$.fragment, local);
-        transition_in(docscode24.$$.fragment, local);
-        transition_in(docscode25.$$.fragment, local);
+        transition_in(docscode0.$$.fragment, local);
+        transition_in(docscode1.$$.fragment, local);
         current = true;
       },
       o: function o(local) {
-        transition_out(docstitle0.$$.fragment, local);
-        transition_out(docscode0.$$.fragment, local);
-        transition_out(docscode1.$$.fragment, local);
-        transition_out(docscode2.$$.fragment, local);
-        transition_out(docscode3.$$.fragment, local);
-        transition_out(docscode4.$$.fragment, local);
-        transition_out(docstitle1.$$.fragment, local);
-        transition_out(fa0.$$.fragment, local);
-        transition_out(docscode5.$$.fragment, local);
-        transition_out(fa1.$$.fragment, local);
-        transition_out(docscode6.$$.fragment, local);
-        transition_out(docstitle2.$$.fragment, local);
-        transition_out(docstitle3.$$.fragment, local);
-        transition_out(fa2.$$.fragment, local);
-        transition_out(fa3.$$.fragment, local);
-        transition_out(fa4.$$.fragment, local);
-        transition_out(fa5.$$.fragment, local);
-        transition_out(fa6.$$.fragment, local);
-        transition_out(fa7.$$.fragment, local);
-        transition_out(fa8.$$.fragment, local);
-        transition_out(fa9.$$.fragment, local);
-        transition_out(docscode7.$$.fragment, local);
-        transition_out(docstitle4.$$.fragment, local);
-        transition_out(fa10.$$.fragment, local);
-        transition_out(fa11.$$.fragment, local);
-        transition_out(fa12.$$.fragment, local);
-        transition_out(fa13.$$.fragment, local);
-        transition_out(fa14.$$.fragment, local);
-        transition_out(docscode8.$$.fragment, local);
-        transition_out(docstitle5.$$.fragment, local);
-        transition_out(fa15.$$.fragment, local);
-        transition_out(fa16.$$.fragment, local);
-        transition_out(docscode9.$$.fragment, local);
-        transition_out(docstitle6.$$.fragment, local);
-        transition_out(fa17.$$.fragment, local);
-        transition_out(fa18.$$.fragment, local);
-        transition_out(fa19.$$.fragment, local);
-        transition_out(fa20.$$.fragment, local);
-        transition_out(fa21.$$.fragment, local);
-        transition_out(fa22.$$.fragment, local);
-        transition_out(docscode10.$$.fragment, local);
-        transition_out(docstitle7.$$.fragment, local);
-        transition_out(docstitle8.$$.fragment, local);
-        transition_out(fa23.$$.fragment, local);
-        transition_out(fa24.$$.fragment, local);
-        transition_out(fa25.$$.fragment, local);
-        transition_out(docscode11.$$.fragment, local);
-        transition_out(docstitle9.$$.fragment, local);
-        transition_out(fa26.$$.fragment, local);
-        transition_out(fa27.$$.fragment, local);
-        transition_out(fa28.$$.fragment, local);
-        transition_out(fa29.$$.fragment, local);
-        transition_out(fa30.$$.fragment, local);
-        transition_out(docscode12.$$.fragment, local);
-        transition_out(docstitle10.$$.fragment, local);
-        transition_out(fa31.$$.fragment, local);
-        transition_out(fa32.$$.fragment, local);
-        transition_out(fa33.$$.fragment, local);
-        transition_out(fa34.$$.fragment, local);
-        transition_out(fa35.$$.fragment, local);
-        transition_out(fa36.$$.fragment, local);
-        transition_out(fa37.$$.fragment, local);
-        transition_out(fa38.$$.fragment, local);
-        transition_out(fa39.$$.fragment, local);
-        transition_out(docscode13.$$.fragment, local);
-        transition_out(docstitle11.$$.fragment, local);
+        transition_out(docstitle.$$.fragment, local);
         transition_out(falayers0.$$.fragment, local);
         transition_out(falayers1.$$.fragment, local);
         transition_out(falayers2.$$.fragment, local);
         transition_out(falayers3.$$.fragment, local);
         transition_out(falayers4.$$.fragment, local);
         transition_out(falayers5.$$.fragment, local);
-        transition_out(docscode14.$$.fragment, local);
-        transition_out(docscode15.$$.fragment, local);
-        transition_out(docstitle12.$$.fragment, local);
-        transition_out(docstitle13.$$.fragment, local);
-        transition_out(docsimg0.$$.fragment, local);
-        transition_out(docscode16.$$.fragment, local);
-        transition_out(docscode17.$$.fragment, local);
-        transition_out(docstitle14.$$.fragment, local);
-        transition_out(docsimg1.$$.fragment, local);
-        transition_out(docscode18.$$.fragment, local);
-        transition_out(docstitle15.$$.fragment, local);
-        transition_out(docsimg2.$$.fragment, local);
-        transition_out(docscode19.$$.fragment, local);
-        transition_out(docsimg3.$$.fragment, local);
-        transition_out(docscode20.$$.fragment, local);
-        transition_out(docstitle16.$$.fragment, local);
-        transition_out(docsimg4.$$.fragment, local);
-        transition_out(docscode21.$$.fragment, local);
-        transition_out(docstitle17.$$.fragment, local);
-        transition_out(docsimg5.$$.fragment, local);
-        transition_out(docscode22.$$.fragment, local);
-        transition_out(docsimg6.$$.fragment, local);
-        transition_out(docscode23.$$.fragment, local);
-        transition_out(docsimg7.$$.fragment, local);
-        transition_out(docscode24.$$.fragment, local);
-        transition_out(docscode25.$$.fragment, local);
+        transition_out(docscode0.$$.fragment, local);
+        transition_out(docscode1.$$.fragment, local);
         current = false;
       },
       d: function d(detaching) {
-        if (detaching) detach(div21);
-        destroy_component(docstitle0);
-        destroy_component(docscode0);
-        destroy_component(docscode1);
-        destroy_component(docscode2);
-        destroy_component(docscode3);
-        destroy_component(docscode4);
-        destroy_component(docstitle1);
-        destroy_component(fa0);
-        destroy_component(docscode5);
-        destroy_component(fa1);
-        destroy_component(docscode6);
-        destroy_component(docstitle2);
-        destroy_component(docstitle3);
-        destroy_component(fa2);
-        destroy_component(fa3);
-        destroy_component(fa4);
-        destroy_component(fa5);
-        destroy_component(fa6);
-        destroy_component(fa7);
-        destroy_component(fa8);
-        destroy_component(fa9);
-        destroy_component(docscode7);
-        destroy_component(docstitle4);
-        destroy_component(fa10);
-        destroy_component(fa11);
-        destroy_component(fa12);
-        destroy_component(fa13);
-        destroy_component(fa14);
-        destroy_component(docscode8);
-        destroy_component(docstitle5);
-        destroy_component(fa15);
-        destroy_component(fa16);
-        destroy_component(docscode9);
-        destroy_component(docstitle6);
-        destroy_component(fa17);
-        destroy_component(fa18);
-        destroy_component(fa19);
-        destroy_component(fa20);
-        destroy_component(fa21);
-        destroy_component(fa22);
-        destroy_component(docscode10);
-        destroy_component(docstitle7);
-        destroy_component(docstitle8);
-        destroy_component(fa23);
-        destroy_component(fa24);
-        destroy_component(fa25);
-        destroy_component(docscode11);
-        destroy_component(docstitle9);
-        destroy_component(fa26);
-        destroy_component(fa27);
-        destroy_component(fa28);
-        destroy_component(fa29);
-        destroy_component(fa30);
-        destroy_component(docscode12);
-        destroy_component(docstitle10);
-        destroy_component(fa31);
-        destroy_component(fa32);
-        destroy_component(fa33);
-        destroy_component(fa34);
-        destroy_component(fa35);
-        destroy_component(fa36);
-        destroy_component(fa37);
-        destroy_component(fa38);
-        destroy_component(fa39);
-        destroy_component(docscode13);
-        destroy_component(docstitle11);
+        destroy_component(docstitle, detaching);
+        if (detaching) detach(t0);
+        if (detaching) detach(div);
         destroy_component(falayers0);
         destroy_component(falayers1);
         destroy_component(falayers2);
         destroy_component(falayers3);
         destroy_component(falayers4);
         destroy_component(falayers5);
-        destroy_component(docscode14);
-        destroy_component(docscode15);
-        destroy_component(docstitle12);
-        destroy_component(docstitle13);
-        destroy_component(docsimg0);
-        destroy_component(docscode16);
-        destroy_component(docscode17);
-        destroy_component(docstitle14);
-        destroy_component(docsimg1);
-        destroy_component(docscode18);
-        destroy_component(docstitle15);
-        destroy_component(docsimg2);
-        destroy_component(docscode19);
-        destroy_component(docsimg3);
-        destroy_component(docscode20);
-        destroy_component(docstitle16);
-        destroy_component(docsimg4);
-        destroy_component(docscode21);
-        destroy_component(docstitle17);
-        destroy_component(docsimg5);
-        destroy_component(docscode22);
-        destroy_component(docsimg6);
-        destroy_component(docscode23);
-        destroy_component(docsimg7);
-        destroy_component(docscode24);
-        destroy_component(docscode25);
+        if (detaching) detach(t6);
+        destroy_component(docscode0, detaching);
+        if (detaching) detach(t7);
+        destroy_component(docscode1, detaching);
       }
     };
   }
 
-  function instance($$self) {
-    var codes = {
-      installation: ["npm install svelte-fa", "npm install @fortawesome/free-solid-svg-icons\nnpm install @fortawesome/free-brands-svg-icons", "npm install svelte-fa -D", "import Fa from 'svelte-fa/src/fa.svelte'\nimport { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons/index.es'", "// app.d.ts\ndeclare module '@fortawesome/pro-solid-svg-icons/index.es' {\n  export * from '@fortawesome/pro-solid-svg-icons';\n}"],
-      basicUse: ["<script>\n  import Fa from 'svelte-fa'\n  import { faFlag } from '@fortawesome/free-solid-svg-icons'\n</script>\n\n<Fa icon={faFlag} /> Flag", "<div style=\"font-size: 3em; color: tomato\">\n  <Fa icon={faFlag} />\n</div>"],
-      additionalStyling: ["<Fa icon={faFlag} size=\"xs\" />\n<Fa icon={faFlag} size=\"sm\" />\n<Fa icon={faFlag} size=\"lg\" />\n<Fa icon={faFlag} size=\"2x\" />\n<Fa icon={faFlag} size=\"2.5x\" />\n<Fa icon={faFlag} size=\"5x\" />\n<Fa icon={faFlag} size=\"7x\" />\n<Fa icon={faFlag} size=\"10x\" />", "<div>\n  <Fa icon={faHome} fw style=\"background: mistyrose\" /> Home\n</div>\n<div>\n  <Fa icon={faInfo} fw style=\"background: mistyrose\" /> Info\n</div>\n<div>\n  <Fa icon={faBook} fw style=\"background: mistyrose\" /> Library\n</div>\n<div>\n  <Fa icon={faPencilAlt} fw style=\"background: mistyrose\" /> Applications\n</div>\n<div>\n  <Fa icon={faCog} fw style=\"background: mistyrose\" /> Settins\n</div>", "<Fa icon={faQuoteLeft} pull=\"left\" size=\"2x\" />\n<Fa icon={faQuoteRight} pull=\"right\" size=\"2x\" />\nGatsby believed in the green light, the orgastic future that year by year recedes before us. It eluded us then, but that\u2019s no matter \u2014 tomorrow we will run faster, stretch our arms further... And one fine morning \u2014 So we beat on, boats against the current, borne back ceaselessly into the past."],
-      animatingIcons: ["<Fa icon={faSpinner} size=\"3x\" spin />\n<Fa icon={faCircleNotch} size=\"3x\" spin />\n<Fa icon={faSync} size=\"3x\" spin />\n<Fa icon={faCog} size=\"3x\" spin />\n<Fa icon={faSpinner} size=\"3x\" pulse />\n<Fa icon={faStroopwafel} size=\"3x\" spin />"],
-      powerTransforms: ["<Fa icon={faSeedling} size=\"4x\" style=\"background: mistyrose\" />\n<Fa icon={faSeedling} scale={0.5} size=\"4x\" style=\"background: mistyrose\" />\n<Fa icon={faSeedling} scale={1.2} size=\"4x\" style=\"background: mistyrose\" />", "<Fa icon={faSeedling} scale={0.5} size=\"4x\" style=\"background: mistyrose\" />\n<Fa icon={faSeedling} scale={0.5} translateX={0.2} size=\"4x\" style=\"background: mistyrose\" />\n<Fa icon={faSeedling} scale={0.5} translateX={-0.2} size=\"4x\" style=\"background: mistyrose\" />\n<Fa icon={faSeedling} scale={0.5} translateY={0.2} size=\"4x\" style=\"background: mistyrose\" />\n<Fa icon={faSeedling} scale={0.5} translateY={-0.2} size=\"4x\" style=\"background: mistyrose\" />", "<Fa icon={faSeedling} size=\"4x\" rotate={90} style=\"background: mistyrose\" />\n<Fa icon={faSeedling} size=\"4x\" rotate={180} style=\"background: mistyrose\" />\n<Fa icon={faSeedling} size=\"4x\" rotate=\"270\" style=\"background: mistyrose\" />\n<Fa icon={faSeedling} size=\"4x\" rotate=\"30\" style=\"background: mistyrose\" />\n<Fa icon={faSeedling} size=\"4x\" rotate=\"-30\" style=\"background: mistyrose\" />\n<Fa icon={faSeedling} size=\"4x\" flip=\"vertical\" style=\"background: mistyrose\" />\n<Fa icon={faSeedling} size=\"4x\" flip=\"horizontal\" style=\"background: mistyrose\" />\n<Fa icon={faSeedling} size=\"4x\" flip=\"both\" style=\"background: mistyrose\" />\n<Fa icon={faSeedling} size=\"4x\" flip=\"both\" style=\"background: mistyrose\" />"],
-      layering: ["import Fa, {\n  FaLayers,\n  FaLayersText,\n} from 'svelte-fa';", "<FaLayers size=\"4x\" style=\"background: mistyrose\">\n  <Fa icon={faCircle} color=\"tomato\" />\n  <Fa icon={faTimes} scale={0.5} color=\"white\" />\n</FaLayers>\n<FaLayers size=\"4x\" style=\"background: mistyrose\">\n  <Fa icon={faBookmark} />\n  <Fa icon={faHeart} scale={0.4} translateY={-0.1} color=\"tomato\" />\n</FaLayers>\n<FaLayers size=\"4x\" style=\"background: mistyrose\">\n  <Fa icon={faPlay} scale={1.2} rotate={-90} />\n  <Fa icon={faSun} scale={0.35} translateY={-0.2} color=\"white\" />\n  <Fa icon={faMoon} scale={0.3} translateX={-0.25} translateY={0.25} color=\"white\" />\n  <Fa icon={faStar} scale={0.3} translateX={0.25} translateY={0.25} color=\"white\" />\n</FaLayers>\n<FaLayers size=\"4x\" style=\"background: mistyrose\">\n  <Fa icon={faCalendar} />\n  <FaLayersText scale={0.45} translateY={0.06} color=\"white\" style=\"font-weight: 900\">\n    27\n  </FaLayersText>\n</FaLayers>\n<FaLayers size=\"4x\" style=\"background: mistyrose\">\n  <Fa icon={faCertificate} />\n  <FaLayersText scale={0.25} rotate={-30} color=\"white\" style=\"font-weight: 900\">\n    NEW\n  </FaLayersText>\n</FaLayers>\n<FaLayers size=\"4x\" style=\"background: mistyrose\">\n  <Fa icon={faEnvelope} />\n  <FaLayersText scale={0.2} translateX={0.4} translateY={-0.4} color=\"white\" style=\"padding: 0 .2em; background: tomato; border-radius: 1em\">\n    1,419\n  </FaLayersText>\n</FaLayers>"],
-      duotoneIcons: ["import {\n  faCamera,\n  faFireAlt,\n  faBusAlt,\n  faFillDrip,\n} from '@fortawesome/pro-duotone-svg-icons'", "<Fa icon={faCamera} size=\"3x\" />\n<Fa icon={faFireAlt} size=\"3x\" />\n<Fa icon={faBusAlt} size=\"3x\" />\n<Fa icon={faFillDrip} size=\"3x\" />", "<Fa icon={faCamera} size=\"3x\" />\n<Fa icon={faCamera} size=\"3x\" swapOpacity />\n<Fa icon={faFireAlt} size=\"3x\" />\n<Fa icon={faFireAlt} size=\"3x\" swapOpacity />\n<Fa icon={faBusAlt} size=\"3x\" />\n<Fa icon={faBusAlt} size=\"3x\" swapOpacity />\n<Fa icon={faFillDrip} size=\"3x\" />\n<Fa icon={faFillDrip} size=\"3x\" swapOpacity />", "<Fa icon={faBusAlt} size=\"3x\" secondaryOpacity={.2} />\n<Fa icon={faBusAlt} size=\"3x\" secondaryOpacity={.4} />\n<Fa icon={faBusAlt} size=\"3x\" secondaryOpacity={.6} />\n<Fa icon={faBusAlt} size=\"3x\" secondaryOpacity={.8} />\n<Fa icon={faBusAlt} size=\"3x\" secondaryOpacity={1} />", "<Fa icon={faBusAlt} size=\"3x\" primaryOpacity={.2} />\n<Fa icon={faBusAlt} size=\"3x\" primaryOpacity={.4} />\n<Fa icon={faBusAlt} size=\"3x\" primaryOpacity={.6} />\n<Fa icon={faBusAlt} size=\"3x\" primaryOpacity={.8} />\n<Fa icon={faBusAlt} size=\"3x\" primaryOpacity={1} />", "<Fa icon={faBusAlt} size=\"3x\" primaryColor=\"gold\" />\n<Fa icon={faBusAlt} size=\"3x\" primaryColor=\"orangered\" />\n<Fa icon={faFillDrip} size=\"3x\" secondaryColor=\"limegreen\" />\n<Fa icon={faFillDrip} size=\"3x\" secondaryColor=\"rebeccapurple\" />\n<Fa icon={faBatteryFull} size=\"3x\" primaryColor=\"limegreen\" secondaryColor=\"dimgray\" />\n<Fa icon={faBatteryQuarter} size=\"3x\" primaryColor=\"orange\" secondaryColor=\"dimgray\" />", "<Fa icon={faBook} size=\"3x\" secondaryOpacity={1} primaryColor=\"lightseagreen\" secondaryColor=\"linen\" />\n<Fa icon={faBookSpells} size=\"3x\" secondaryOpacity={1} primaryColor=\"mediumpurple\" secondaryColor=\"linen\" />\n<Fa icon={faBookMedical} size=\"3x\" secondaryOpacity={1} primaryColor=\"crimson\" secondaryColor=\"linen\" />\n<Fa icon={faBookUser} size=\"3x\" secondaryOpacity={1} primaryColor=\"peru\" secondaryColor=\"linen\" />\n<Fa icon={faToggleOff} size=\"3x\" secondaryOpacity={1} primaryColor=\"white\" secondaryColor=\"gray\" />\n<Fa icon={faToggleOn} size=\"3x\" secondaryOpacity={1} primaryColor=\"dodgerblue\" secondaryColor=\"white\" />\n<Fa icon={faFilePlus} size=\"3x\" secondaryOpacity={1} primaryColor=\"white\" secondaryColor=\"limegreen\" />\n<Fa icon={faFileExclamation} size=\"3x\" secondaryOpacity={1} primaryColor=\"white\" secondaryColor=\"gold\" />\n<Fa icon={faFileTimes} size=\"3x\" secondaryOpacity={1} primaryColor=\"white\" secondaryColor=\"tomato\" />", "<Fa icon={faCrow} size=\"3x\" secondaryOpacity={1} primaryColor=\"dodgerblue\" secondaryColor=\"gold\" />\n<Fa icon={faCampfire} size=\"3x\" secondaryOpacity={1} primaryColor=\"sienna\" secondaryColor=\"red\" />\n<Fa icon={faBirthdayCake} size=\"3x\" secondaryOpacity={1} primaryColor=\"pink\" secondaryColor=\"palevioletred\" />\n<Fa icon={faEar} size=\"3x\" secondaryOpacity={1} primaryColor=\"sandybrown\" secondaryColor=\"bisque\" />\n<Fa icon={faCorn} size=\"3x\" secondaryOpacity={1} primaryColor=\"mediumseagreen\" secondaryColor=\"gold\" />\n<Fa icon={faCookieBite} size=\"3x\" secondaryOpacity={1} primaryColor=\"saddlebrown\" secondaryColor=\"burlywood\" />", "const themeRavenclaw = {\n  secondaryOpacity: 1,\n  primaryColor: '#0438a1',\n  secondaryColor: '#6c6c6c',\n}", "<Fa icon={faHatWizard} size=\"3x\" {...themeRavenclaw} />\n<Fa icon={faFlaskPotion} size=\"3x\" {...themeRavenclaw} />\n<Fa icon={faWandMagic} size=\"3x\" {...themeRavenclaw} />\n<Fa icon={faScarf} size=\"3x\" {...themeRavenclaw} />\n<Fa icon={faBookSpells} size=\"3x\" {...themeRavenclaw} />"]
+  var Layering_and_text = /*#__PURE__*/function (_SvelteComponent) {
+    _inheritsLoose(Layering_and_text, _SvelteComponent);
+
+    function Layering_and_text(options) {
+      var _this;
+
+      _this = _SvelteComponent.call(this) || this;
+      init(_assertThisInitialized(_this), options, null, create_fragment$3, safe_not_equal, {});
+      return _this;
+    }
+
+    return Layering_and_text;
+  }(SvelteComponent);
+
+  var LayeringAndText = Layering_and_text;
+
+  function create_fragment$2(ctx) {
+    var t0;
+    var t1;
+    var div0;
+    var t2;
+    var t3;
+    var t4;
+    var t5;
+    var t6;
+    var div1;
+    var t7;
+    var t8;
+    var t9;
+    var t10;
+    var t11;
+    var t12;
+    var t13;
+    var div2;
+    var t14;
+    var t15;
+    var t16;
+    var t17;
+    var t18;
+    var t19;
+    var t20;
+    var t21;
+    var t22;
+    var current;
+    var docstitle0 = new DocsTitle({
+      props: {
+        title: "Power Transforms"
+      }
+    });
+    var docstitle1 = new DocsTitle({
+      props: {
+        title: "Scaling",
+        level: 3
+      }
+    });
+    var fa0 = new Fa__default["default"]({
+      props: {
+        icon: faSeedling,
+        size: "4x",
+        style: "background: mistyrose"
+      }
+    });
+    var fa1 = new Fa__default["default"]({
+      props: {
+        icon: faSeedling,
+        scale: 0.5,
+        size: "4x",
+        style: "background: mistyrose"
+      }
+    });
+    var fa2 = new Fa__default["default"]({
+      props: {
+        icon: faSeedling,
+        scale: 1.2,
+        size: "4x",
+        style: "background: mistyrose"
+      }
+    });
+    var docscode0 = new DocsCode({
+      props: {
+        code: codes$1.powerTransforms[0]
+      }
+    });
+    var docstitle2 = new DocsTitle({
+      props: {
+        title: "Positioning",
+        level: 3
+      }
+    });
+    var fa3 = new Fa__default["default"]({
+      props: {
+        icon: faSeedling,
+        scale: 0.5,
+        size: "4x",
+        style: "background: mistyrose"
+      }
+    });
+    var fa4 = new Fa__default["default"]({
+      props: {
+        icon: faSeedling,
+        scale: 0.5,
+        translateX: 0.2,
+        size: "4x",
+        style: "background: mistyrose"
+      }
+    });
+    var fa5 = new Fa__default["default"]({
+      props: {
+        icon: faSeedling,
+        scale: 0.5,
+        translateX: -0.2,
+        size: "4x",
+        style: "background: mistyrose"
+      }
+    });
+    var fa6 = new Fa__default["default"]({
+      props: {
+        icon: faSeedling,
+        scale: 0.5,
+        translateY: 0.2,
+        size: "4x",
+        style: "background: mistyrose"
+      }
+    });
+    var fa7 = new Fa__default["default"]({
+      props: {
+        icon: faSeedling,
+        scale: 0.5,
+        translateY: -0.2,
+        size: "4x",
+        style: "background: mistyrose"
+      }
+    });
+    var docscode1 = new DocsCode({
+      props: {
+        code: codes$1.powerTransforms[1]
+      }
+    });
+    var docstitle3 = new DocsTitle({
+      props: {
+        title: "Rotating & Flipping",
+        level: 3
+      }
+    });
+    var fa8 = new Fa__default["default"]({
+      props: {
+        icon: faSeedling,
+        rotate: 90,
+        size: "4x",
+        style: "background: mistyrose"
+      }
+    });
+    var fa9 = new Fa__default["default"]({
+      props: {
+        icon: faSeedling,
+        rotate: 180,
+        size: "4x",
+        style: "background: mistyrose"
+      }
+    });
+    var fa10 = new Fa__default["default"]({
+      props: {
+        icon: faSeedling,
+        size: "4x",
+        rotate: "270",
+        style: "background: mistyrose"
+      }
+    });
+    var fa11 = new Fa__default["default"]({
+      props: {
+        icon: faSeedling,
+        size: "4x",
+        rotate: "30",
+        style: "background: mistyrose"
+      }
+    });
+    var fa12 = new Fa__default["default"]({
+      props: {
+        icon: faSeedling,
+        size: "4x",
+        rotate: "-30",
+        style: "background: mistyrose"
+      }
+    });
+    var fa13 = new Fa__default["default"]({
+      props: {
+        icon: faSeedling,
+        size: "4x",
+        flip: "vertical",
+        style: "background: mistyrose"
+      }
+    });
+    var fa14 = new Fa__default["default"]({
+      props: {
+        icon: faSeedling,
+        size: "4x",
+        flip: "horizontal",
+        style: "background: mistyrose"
+      }
+    });
+    var fa15 = new Fa__default["default"]({
+      props: {
+        icon: faSeedling,
+        size: "4x",
+        flip: "both",
+        style: "background: mistyrose"
+      }
+    });
+    var fa16 = new Fa__default["default"]({
+      props: {
+        icon: faSeedling,
+        size: "4x",
+        flip: "both",
+        rotate: "30",
+        style: "background: mistyrose"
+      }
+    });
+    var docscode2 = new DocsCode({
+      props: {
+        code: codes$1.powerTransforms[2]
+      }
+    });
+    return {
+      c: function c() {
+        create_component(docstitle0.$$.fragment);
+        t0 = space();
+        create_component(docstitle1.$$.fragment);
+        t1 = space();
+        div0 = element("div");
+        create_component(fa0.$$.fragment);
+        t2 = space();
+        create_component(fa1.$$.fragment);
+        t3 = space();
+        create_component(fa2.$$.fragment);
+        t4 = space();
+        create_component(docscode0.$$.fragment);
+        t5 = space();
+        create_component(docstitle2.$$.fragment);
+        t6 = space();
+        div1 = element("div");
+        create_component(fa3.$$.fragment);
+        t7 = space();
+        create_component(fa4.$$.fragment);
+        t8 = space();
+        create_component(fa5.$$.fragment);
+        t9 = space();
+        create_component(fa6.$$.fragment);
+        t10 = space();
+        create_component(fa7.$$.fragment);
+        t11 = space();
+        create_component(docscode1.$$.fragment);
+        t12 = space();
+        create_component(docstitle3.$$.fragment);
+        t13 = space();
+        div2 = element("div");
+        create_component(fa8.$$.fragment);
+        t14 = space();
+        create_component(fa9.$$.fragment);
+        t15 = space();
+        create_component(fa10.$$.fragment);
+        t16 = space();
+        create_component(fa11.$$.fragment);
+        t17 = space();
+        create_component(fa12.$$.fragment);
+        t18 = space();
+        create_component(fa13.$$.fragment);
+        t19 = space();
+        create_component(fa14.$$.fragment);
+        t20 = space();
+        create_component(fa15.$$.fragment);
+        t21 = space();
+        create_component(fa16.$$.fragment);
+        t22 = space();
+        create_component(docscode2.$$.fragment);
+        attr(div0, "class", "shadow-sm p-3 mb-3 rounded");
+        attr(div1, "class", "shadow-sm p-3 mb-3 rounded");
+        attr(div2, "class", "shadow-sm p-3 mb-3 rounded");
+      },
+      m: function m(target, anchor) {
+        mount_component(docstitle0, target, anchor);
+        insert(target, t0, anchor);
+        mount_component(docstitle1, target, anchor);
+        insert(target, t1, anchor);
+        insert(target, div0, anchor);
+        mount_component(fa0, div0, null);
+        append(div0, t2);
+        mount_component(fa1, div0, null);
+        append(div0, t3);
+        mount_component(fa2, div0, null);
+        insert(target, t4, anchor);
+        mount_component(docscode0, target, anchor);
+        insert(target, t5, anchor);
+        mount_component(docstitle2, target, anchor);
+        insert(target, t6, anchor);
+        insert(target, div1, anchor);
+        mount_component(fa3, div1, null);
+        append(div1, t7);
+        mount_component(fa4, div1, null);
+        append(div1, t8);
+        mount_component(fa5, div1, null);
+        append(div1, t9);
+        mount_component(fa6, div1, null);
+        append(div1, t10);
+        mount_component(fa7, div1, null);
+        insert(target, t11, anchor);
+        mount_component(docscode1, target, anchor);
+        insert(target, t12, anchor);
+        mount_component(docstitle3, target, anchor);
+        insert(target, t13, anchor);
+        insert(target, div2, anchor);
+        mount_component(fa8, div2, null);
+        append(div2, t14);
+        mount_component(fa9, div2, null);
+        append(div2, t15);
+        mount_component(fa10, div2, null);
+        append(div2, t16);
+        mount_component(fa11, div2, null);
+        append(div2, t17);
+        mount_component(fa12, div2, null);
+        append(div2, t18);
+        mount_component(fa13, div2, null);
+        append(div2, t19);
+        mount_component(fa14, div2, null);
+        append(div2, t20);
+        mount_component(fa15, div2, null);
+        append(div2, t21);
+        mount_component(fa16, div2, null);
+        insert(target, t22, anchor);
+        mount_component(docscode2, target, anchor);
+        current = true;
+      },
+      p: noop,
+      i: function i(local) {
+        if (current) return;
+        transition_in(docstitle0.$$.fragment, local);
+        transition_in(docstitle1.$$.fragment, local);
+        transition_in(fa0.$$.fragment, local);
+        transition_in(fa1.$$.fragment, local);
+        transition_in(fa2.$$.fragment, local);
+        transition_in(docscode0.$$.fragment, local);
+        transition_in(docstitle2.$$.fragment, local);
+        transition_in(fa3.$$.fragment, local);
+        transition_in(fa4.$$.fragment, local);
+        transition_in(fa5.$$.fragment, local);
+        transition_in(fa6.$$.fragment, local);
+        transition_in(fa7.$$.fragment, local);
+        transition_in(docscode1.$$.fragment, local);
+        transition_in(docstitle3.$$.fragment, local);
+        transition_in(fa8.$$.fragment, local);
+        transition_in(fa9.$$.fragment, local);
+        transition_in(fa10.$$.fragment, local);
+        transition_in(fa11.$$.fragment, local);
+        transition_in(fa12.$$.fragment, local);
+        transition_in(fa13.$$.fragment, local);
+        transition_in(fa14.$$.fragment, local);
+        transition_in(fa15.$$.fragment, local);
+        transition_in(fa16.$$.fragment, local);
+        transition_in(docscode2.$$.fragment, local);
+        current = true;
+      },
+      o: function o(local) {
+        transition_out(docstitle0.$$.fragment, local);
+        transition_out(docstitle1.$$.fragment, local);
+        transition_out(fa0.$$.fragment, local);
+        transition_out(fa1.$$.fragment, local);
+        transition_out(fa2.$$.fragment, local);
+        transition_out(docscode0.$$.fragment, local);
+        transition_out(docstitle2.$$.fragment, local);
+        transition_out(fa3.$$.fragment, local);
+        transition_out(fa4.$$.fragment, local);
+        transition_out(fa5.$$.fragment, local);
+        transition_out(fa6.$$.fragment, local);
+        transition_out(fa7.$$.fragment, local);
+        transition_out(docscode1.$$.fragment, local);
+        transition_out(docstitle3.$$.fragment, local);
+        transition_out(fa8.$$.fragment, local);
+        transition_out(fa9.$$.fragment, local);
+        transition_out(fa10.$$.fragment, local);
+        transition_out(fa11.$$.fragment, local);
+        transition_out(fa12.$$.fragment, local);
+        transition_out(fa13.$$.fragment, local);
+        transition_out(fa14.$$.fragment, local);
+        transition_out(fa15.$$.fragment, local);
+        transition_out(fa16.$$.fragment, local);
+        transition_out(docscode2.$$.fragment, local);
+        current = false;
+      },
+      d: function d(detaching) {
+        destroy_component(docstitle0, detaching);
+        if (detaching) detach(t0);
+        destroy_component(docstitle1, detaching);
+        if (detaching) detach(t1);
+        if (detaching) detach(div0);
+        destroy_component(fa0);
+        destroy_component(fa1);
+        destroy_component(fa2);
+        if (detaching) detach(t4);
+        destroy_component(docscode0, detaching);
+        if (detaching) detach(t5);
+        destroy_component(docstitle2, detaching);
+        if (detaching) detach(t6);
+        if (detaching) detach(div1);
+        destroy_component(fa3);
+        destroy_component(fa4);
+        destroy_component(fa5);
+        destroy_component(fa6);
+        destroy_component(fa7);
+        if (detaching) detach(t11);
+        destroy_component(docscode1, detaching);
+        if (detaching) detach(t12);
+        destroy_component(docstitle3, detaching);
+        if (detaching) detach(t13);
+        if (detaching) detach(div2);
+        destroy_component(fa8);
+        destroy_component(fa9);
+        destroy_component(fa10);
+        destroy_component(fa11);
+        destroy_component(fa12);
+        destroy_component(fa13);
+        destroy_component(fa14);
+        destroy_component(fa15);
+        destroy_component(fa16);
+        if (detaching) detach(t22);
+        destroy_component(docscode2, detaching);
+      }
     };
-    return [codes];
+  }
+
+  var Power_transforms = /*#__PURE__*/function (_SvelteComponent) {
+    _inheritsLoose(Power_transforms, _SvelteComponent);
+
+    function Power_transforms(options) {
+      var _this;
+
+      _this = _SvelteComponent.call(this) || this;
+      init(_assertThisInitialized(_this), options, null, create_fragment$2, safe_not_equal, {});
+      return _this;
+    }
+
+    return Power_transforms;
+  }(SvelteComponent);
+
+  var PowerTransforms = Power_transforms;
+
+  function create_fragment$1(ctx) {
+    var div;
+    var t0;
+    var t1;
+    var t2;
+    var t3;
+    var t4;
+    var t5;
+    var current;
+    var installation = new Installation$1({});
+    var basicuse = new BasicUse({});
+    var additionalstyling = new AdditionalStyling({});
+    var animatingicons = new AnimatingIcons({});
+    var powertransforms = new PowerTransforms({});
+    var layeringandtext = new LayeringAndText({});
+    var duotoneicons = new DuotoneIcons({});
+    return {
+      c: function c() {
+        div = element("div");
+        create_component(installation.$$.fragment);
+        t0 = space();
+        create_component(basicuse.$$.fragment);
+        t1 = space();
+        create_component(additionalstyling.$$.fragment);
+        t2 = space();
+        create_component(animatingicons.$$.fragment);
+        t3 = space();
+        create_component(powertransforms.$$.fragment);
+        t4 = space();
+        create_component(layeringandtext.$$.fragment);
+        t5 = space();
+        create_component(duotoneicons.$$.fragment);
+      },
+      m: function m(target, anchor) {
+        insert(target, div, anchor);
+        mount_component(installation, div, null);
+        append(div, t0);
+        mount_component(basicuse, div, null);
+        append(div, t1);
+        mount_component(additionalstyling, div, null);
+        append(div, t2);
+        mount_component(animatingicons, div, null);
+        append(div, t3);
+        mount_component(powertransforms, div, null);
+        append(div, t4);
+        mount_component(layeringandtext, div, null);
+        append(div, t5);
+        mount_component(duotoneicons, div, null);
+        current = true;
+      },
+      p: noop,
+      i: function i(local) {
+        if (current) return;
+        transition_in(installation.$$.fragment, local);
+        transition_in(basicuse.$$.fragment, local);
+        transition_in(additionalstyling.$$.fragment, local);
+        transition_in(animatingicons.$$.fragment, local);
+        transition_in(powertransforms.$$.fragment, local);
+        transition_in(layeringandtext.$$.fragment, local);
+        transition_in(duotoneicons.$$.fragment, local);
+        current = true;
+      },
+      o: function o(local) {
+        transition_out(installation.$$.fragment, local);
+        transition_out(basicuse.$$.fragment, local);
+        transition_out(additionalstyling.$$.fragment, local);
+        transition_out(animatingicons.$$.fragment, local);
+        transition_out(powertransforms.$$.fragment, local);
+        transition_out(layeringandtext.$$.fragment, local);
+        transition_out(duotoneicons.$$.fragment, local);
+        current = false;
+      },
+      d: function d(detaching) {
+        if (detaching) detach(div);
+        destroy_component(installation);
+        destroy_component(basicuse);
+        destroy_component(additionalstyling);
+        destroy_component(animatingicons);
+        destroy_component(powertransforms);
+        destroy_component(layeringandtext);
+        destroy_component(duotoneicons);
+      }
+    };
   }
 
   var Docs = /*#__PURE__*/function (_SvelteComponent) {
@@ -3783,7 +4105,7 @@
       var _this;
 
       _this = _SvelteComponent.call(this) || this;
-      init(_assertThisInitialized(_this), options, instance, create_fragment$1, safe_not_equal, {});
+      init(_assertThisInitialized(_this), options, null, create_fragment$1, safe_not_equal, {});
       return _this;
     }
 
