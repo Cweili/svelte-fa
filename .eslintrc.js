@@ -6,8 +6,11 @@
 // ===============================================================
 
 module.exports = {
-  extends: ['airbnb-base'],
-  plugins: ['svelte3'],
+  extends: [
+    'airbnb-base',
+    'plugin:svelte/recommended',
+  ],
+  plugins: ['svelte'],
   env: {
     es6: true,
     browser: true,
@@ -20,9 +23,18 @@ module.exports = {
   overrides: [
     {
       files: ['*.svelte'],
-      processor: 'svelte3/svelte3',
+      parser: 'svelte-eslint-parser',
+      parserOptions: {
+        parser: '@babel/eslint-parser',
+      },
     },
   ],
+  settings: {
+    'import/parsers': {
+      '@babel/eslint-parser': ['.js'],
+      'svelte-eslint-parser': ['.svelte'],
+    },
+  },
   rules: {
     eqeqeq: 0,
     'no-multi-assign': 0,
