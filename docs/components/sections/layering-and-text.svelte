@@ -1,5 +1,9 @@
 <script>
-  import Fa, { FaLayers, FaLayersText } from "svelte-fa";
+  import {
+    Fa,
+    FaLayers,
+    FaLayersText,
+  } from 'svelte-fa';
   import {
     faBookmark,
     faCalendar,
@@ -14,10 +18,10 @@
     faTimes,
   } from "@fortawesome/free-solid-svg-icons";
 
-  import DocsCode from "../ui/docs-code.svelte";
-  import DocsTitle from "../ui/docs-title.svelte";
+  import DocsCode from '../ui/docs-code.svelte';
+  import DocsTitle from '../ui/docs-title.svelte';
 
-  import codes from "../../content/codes";
+  import codes from '../../content/codes';
 </script>
 
 <DocsTitle title="Layering &amp; Text" />

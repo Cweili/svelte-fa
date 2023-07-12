@@ -1,9 +1,9 @@
 <script>
-  import DocsCode from "../ui/docs-code.svelte";
-  import DocsImg from "../ui/docs-img.svelte";
-  import DocsTitle from "../ui/docs-title.svelte";
+  import DocsCode from '../ui/docs-code.svelte';
+  import DocsImg from '../ui/docs-img.svelte';
+  import DocsTitle from '../ui/docs-title.svelte';
 
-  import codes from "../../content/codes";
+  import codes from '../../content/codes';
 </script>
 
 <DocsTitle title="Duotone Icons" />

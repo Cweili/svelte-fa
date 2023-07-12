@@ -1,11 +1,11 @@
 <script>
-  import Fa from "svelte-fa";
-  import { faSeedling } from "@fortawesome/free-solid-svg-icons";
+  import { Fa } from 'svelte-fa';
+  import { faSeedling } from '@fortawesome/free-solid-svg-icons';
 
-  import DocsCode from "../ui/docs-code.svelte";
-  import DocsTitle from "../ui/docs-title.svelte";
+  import DocsCode from '../ui/docs-code.svelte';
+  import DocsTitle from '../ui/docs-title.svelte';
 
-  import codes from "../../content/codes";
+  import codes from '../../content/codes';
 </script>
 
 <DocsTitle title="Power Transforms" />

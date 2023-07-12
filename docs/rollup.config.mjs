@@ -25,6 +25,8 @@ export default {
     }),
     resolve({
       browser: true,
+      exportConditions: ['svelte'],
+      extensions: ['.svelte'],
     }),
     replace({
       'process.env.NODE_ENV': JSON.stringify('production'),

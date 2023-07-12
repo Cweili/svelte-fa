@@ -24,6 +24,8 @@ export default [
       }),
       resolve({
         browser: true,
+        exportConditions: ['svelte'],
+        extensions: ['.svelte'],
       }),
       common(),
       babel({
