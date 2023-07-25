@@ -1,9 +1,11 @@
-import {
+import faIcon from '@cweili/fa-test-util';
+import Fa from '../src/fa.svelte';
+
+const {
   fasFlag,
   fadFlag,
   fadInfo,
-} from '@cweili/fa-test-util';
-import Fa from '../src/fa.svelte';
+} = faIcon;
 
 let fa;
 function unmountFa() {

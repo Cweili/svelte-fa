@@ -1,29 +1,15 @@
-const exclude = [
-  '@babel/plugin-transform-async-to-generator',
-  '@babel/plugin-transform-regenerator',
-  '@babel/plugin-transform-typeof-symbol',
-];
-
-module.exports = {
+export default {
   presets: [
     [
       '@babel/preset-env', {
         loose: true,
         modules: false,
-        exclude,
+        exclude: [
+          '@babel/plugin-transform-async-to-generator',
+          '@babel/plugin-transform-regenerator',
+          '@babel/plugin-transform-typeof-symbol',
+        ],
       },
     ],
   ],
-  env: {
-    test: {
-      presets: [
-        [
-          '@babel/preset-env', {
-            loose: true,
-            exclude,
-          },
-        ],
-      ],
-    },
-  },
 };

@@ -1,12 +1,16 @@
-module.exports = {
+export default {
   testEnvironment: 'jsdom',
   moduleFileExtensions: [
     'js',
     'ts',
     'svelte',
   ],
+  extensionsToTreatAsEsm: [
+    '.ts',
+    '.svelte',
+  ],
   transform: {
-    '^.+\\.[jt]s$': 'babel-jest',
+    '^.+\\.ts$': 'babel-jest',
     '^.+\\.svelte$': 'svelte-jester',
   },
   transformIgnorePatterns: [
