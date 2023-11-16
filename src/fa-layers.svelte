@@ -1,6 +1,8 @@
 <script>
+import { onMount } from 'svelte';
+
 import {
-  getStyles,
+  setCustomSize,
 } from './utils';
 
 let clazz = '';
@@ -11,9 +13,9 @@ export let style = '';
 export let size = '';
 export let pull = '';
 
-let s;
+let containerElement;
 
-$: s = getStyles(style, size);
+onMount(setCustomSize(containerElement, size));
 </script>
 
 <style>
@@ -46,13 +48,14 @@ $: s = getStyles(style, size);
 
 <span
   id={id}
+  bind:this={containerElement}
   class="svelte-fa-layers svelte-fa-base svelte-fa-fw {clazz}"
   class:svelte-fa-size-lg={size === 'lg'}
   class:svelte-fa-size-sm={size === 'sm'}
   class:svelte-fa-size-xs={size === 'xs'}
   class:svelte-fa-pull-left={pull === 'left'}
   class:svelte-fa-pull-right={pull === 'right'}
-  style={s}
+  {style}
 >
   <slot></slot>
 </span>

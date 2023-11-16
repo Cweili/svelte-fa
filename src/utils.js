@@ -15,19 +15,13 @@ export function joinCss(obj, separator = ';') {
   return texts.join(separator);
 }
 
-export function getStyles(style, size) {
-  let fontSize;
-
-  if (size && size !== 'lg' && size !== 'xs' && size !== 'sm') {
-    fontSize = size.replace('x', 'em');
+export function setCustomSize(element, size) {
+  if (!size || size === 'lg' || size === 'sm' || size === 'xs') {
+    return () => {};
   }
-
-  return joinCss([
-    joinCss({
-      'font-size': fontSize,
-    }),
-    style,
-  ]);
+  return () => {
+    element.style.fontSize = size.replace('x', 'em');
+  };
 }
 
 export function getTransform(
