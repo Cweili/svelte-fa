@@ -51,7 +51,6 @@ export function getStyles(style, size, pull, fw) {
       height,
       'font-size': fontSize,
       'text-align': textAlign,
-      'transform-origin': 'center',
       overflow,
     }),
     style,
