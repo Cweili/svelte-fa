@@ -45,6 +45,15 @@ $: transform = getTransform(scale, translateX, translateY, rotate, flip, 512);
 </script>
 
 <style>
+:global(.svelte-fa-base) {
+  overflow: visible;
+  transform-origin: center;
+  vertical-align: -.125em;
+}
+
+:global(.svelte-fa-fw) {
+}
+
 :global(.svelte-fa-lg) {
   line-height: .75em;
   vertical-align: -.225em;
@@ -52,12 +61,6 @@ $: transform = getTransform(scale, translateX, translateY, rotate, flip, 512);
 
 .spin {
   animation: spin 2s 0s infinite linear;
-}
-
-:global(.svelte-fa-base) {
-  overflow: visible;
-  transform-origin: center;
-  vertical-align: -.125em;
 }
 
 .pulse {
@@ -80,6 +83,7 @@ $: transform = getTransform(scale, translateX, translateY, rotate, flip, 512);
     class="svelte-fa svelte-fa-base {clazz}"
     class:pulse
     class:svelte-fa-lg={size=='lg'}
+    class:svelte-fa-fw={fw}
     class:spin
     style={s}
     viewBox="0 0 {i[0]} {i[1]}"
