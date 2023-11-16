@@ -25,8 +25,6 @@ $: s = getStyles(
   joinCss([
     joinCss({
       color,
-      display: 'inline-block',
-      height: 'auto',
       transform: getTransform(scale, translateX, translateY, rotate, flip, undefined, 'em', 'deg'),
     }),
     style,
@@ -35,9 +33,16 @@ $: s = getStyles(
 );
 </script>
 
+<style>
+.inner {
+  display: inline-block;
+  height: auto;
+}
+</style>
+
 <span id={id} class="svelte-fa-layers-text {clazz}">
   <span
-    class="svelte-fa-base"
+    class="svelte-fa-base inner"
     class:svelte-fa-size-lg={size === 'lg'}
     class:svelte-fa-size-sm={size === 'sm'}
     class:svelte-fa-size-xs={size === 'xs'}
