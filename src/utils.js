@@ -17,7 +17,6 @@ export function joinCss(obj, separator = ';') {
 
 export function getStyles(style, size, pull) {
   let float;
-  const height = '1em';
   let fontSize;
 
   if (pull) {
@@ -39,7 +38,6 @@ export function getStyles(style, size, pull) {
   return joinCss([
     joinCss({
       float,
-      height,
       'font-size': fontSize,
     }),
     style,

@@ -46,6 +46,7 @@ $: transform = getTransform(scale, translateX, translateY, rotate, flip, 512);
 
 <style>
 :global(.svelte-fa-base) {
+  height: 1em;
   overflow: visible;
   transform-origin: center;
   vertical-align: -.125em;
