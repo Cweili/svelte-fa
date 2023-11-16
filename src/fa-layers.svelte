@@ -17,6 +17,10 @@ $: s = getStyles(style, size, pull, true);
 </script>
 
 <style>
+.size-lg {
+  line-height: .75em;
+}
+
 .svelte-fa-layers {
   display: inline-block;
   position: relative;
@@ -47,6 +51,7 @@ $: s = getStyles(style, size, pull, true);
 <span
   id={id}
   class="svelte-fa-layers {clazz}"
+  class:size-lg={size=='lg'}
   style={s}
 >
   <slot></slot>

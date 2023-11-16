@@ -45,6 +45,10 @@ $: transform = getTransform(scale, translateX, translateY, rotate, flip, 512);
 </script>
 
 <style>
+.size-lg {
+  line-height: .75em;
+}
+
 .spin {
   animation: spin 2s 0s infinite linear;
 }
@@ -68,6 +72,7 @@ $: transform = getTransform(scale, translateX, translateY, rotate, flip, 512);
     id={id || undefined}
     class="svelte-fa {clazz}"
     class:pulse
+    class:size-lg={size=='lg'}
     class:spin
     style={s}
     viewBox="0 0 {i[0]} {i[1]}"

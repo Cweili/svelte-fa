@@ -35,8 +35,17 @@ $: s = getStyles(
 );
 </script>
 
+<style>
+.size-lg {
+  line-height: .75em;
+}
+</style>
+
 <span id={id} class="svelte-fa-layers-text {clazz}">
-  <span style={s}>
+  <span
+    class:size-lg={size=='lg'}
+    style={s}
+  >
     <slot></slot>
   </span>
 </span>

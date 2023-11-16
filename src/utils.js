@@ -19,7 +19,6 @@ export function getStyles(style, size, pull, fw) {
   let float;
   let width;
   const height = '1em';
-  let lineHeight;
   let fontSize;
   let textAlign;
   let verticalAlign = '-.125em';
@@ -37,7 +36,6 @@ export function getStyles(style, size, pull, fw) {
   if (size) {
     if (size == 'lg') {
       fontSize = '1.33333em';
-      lineHeight = '.75em';
       verticalAlign = '-.225em';
     } else if (size == 'xs') {
       fontSize = '.75em';
@@ -53,7 +51,6 @@ export function getStyles(style, size, pull, fw) {
       float,
       width,
       height,
-      'line-height': lineHeight,
       'font-size': fontSize,
       'text-align': textAlign,
       'vertical-align': verticalAlign,
