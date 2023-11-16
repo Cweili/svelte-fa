@@ -45,7 +45,7 @@ $: transform = getTransform(scale, translateX, translateY, rotate, flip, 512);
 </script>
 
 <style>
-.size-lg {
+:global(.size-lg) {
   line-height: .75em;
 }
 

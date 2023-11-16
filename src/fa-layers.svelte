@@ -17,10 +17,6 @@ $: s = getStyles(style, size, pull, true);
 </script>
 
 <style>
-.size-lg {
-  line-height: .75em;
-}
-
 .svelte-fa-layers {
   display: inline-block;
   position: relative;

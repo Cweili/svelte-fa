@@ -35,12 +35,6 @@ $: s = getStyles(
 );
 </script>
 
-<style>
-.size-lg {
-  line-height: .75em;
-}
-</style>
-
 <span id={id} class="svelte-fa-layers-text {clazz}">
   <span
     class:size-lg={size=='lg'}
