@@ -55,6 +55,7 @@ $: transform = getTransform(scale, translateX, translateY, rotate, flip, 512);
 }
 
 :global(.svelte-fa-base) {
+  overflow: visible;
   transform-origin: center;
   vertical-align: -.125em;
 }

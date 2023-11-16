@@ -21,7 +21,6 @@ export function getStyles(style, size, pull, fw) {
   const height = '1em';
   let fontSize;
   let textAlign;
-  const overflow = 'visible';
 
   if (fw) {
     textAlign = 'center';
@@ -51,7 +50,6 @@ export function getStyles(style, size, pull, fw) {
       height,
       'font-size': fontSize,
       'text-align': textAlign,
-      overflow,
     }),
     style,
   ]);
