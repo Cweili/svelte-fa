@@ -39,7 +39,7 @@ let transform;
 
 $: i = (icon && icon.icon) || [0, 0, '', [], ''];
 
-$: s = getStyles(style, size, pull);
+$: s = getStyles(style, size);
 
 $: transform = getTransform(scale, translateX, translateY, rotate, flip, 512);
 </script>
@@ -60,6 +60,14 @@ $: transform = getTransform(scale, translateX, translateY, rotate, flip, 512);
 :global(.svelte-fa-lg) {
   line-height: .75em;
   vertical-align: -.225em;
+}
+
+:global(.svelte-fa-pull-left) {
+  float: left;
+}
+
+:global(.svelte-fa-pull-right) {
+  float: right;
 }
 
 .spin {
@@ -85,8 +93,10 @@ $: transform = getTransform(scale, translateX, translateY, rotate, flip, 512);
     id={id || undefined}
     class="svelte-fa svelte-fa-base {clazz}"
     class:pulse
-    class:svelte-fa-lg={size=='lg'}
+    class:svelte-fa-lg={size === 'lg'}
     class:svelte-fa-fw={fw}
+    class:svelte-fa-pull-left={pull === 'left'}
+    class:svelte-fa-pull-right={pull === 'right'}
     class:spin
     style={s}
     viewBox="0 0 {i[0]} {i[1]}"

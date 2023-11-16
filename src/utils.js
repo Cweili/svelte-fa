@@ -15,13 +15,8 @@ export function joinCss(obj, separator = ';') {
   return texts.join(separator);
 }
 
-export function getStyles(style, size, pull) {
-  let float;
+export function getStyles(style, size) {
   let fontSize;
-
-  if (pull) {
-    float = pull;
-  }
 
   if (size) {
     if (size == 'lg') {
@@ -37,7 +32,6 @@ export function getStyles(style, size, pull) {
 
   return joinCss([
     joinCss({
-      float,
       'font-size': fontSize,
     }),
     style,

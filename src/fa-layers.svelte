@@ -13,7 +13,7 @@ export let pull = '';
 
 let s;
 
-$: s = getStyles(style, size, pull);
+$: s = getStyles(style, size);
 </script>
 
 <style>
@@ -47,7 +47,9 @@ $: s = getStyles(style, size, pull);
 <span
   id={id}
   class="svelte-fa-layers svelte-fa-base svelte-fa-fw {clazz}"
-  class:svelte-fa-lg={size=='lg'}
+  class:svelte-fa-lg={size === 'lg'}
+  class:svelte-fa-pull-left={pull === 'left'}
+  class:svelte-fa-pull-right={pull === 'right'}
   style={s}
 >
   <slot></slot>
