@@ -47,7 +47,7 @@ $: s = getStyles(style, size, pull, true);
 <span
   id={id}
   class="svelte-fa-layers {clazz}"
-  class:size-lg={size=='lg'}
+  class:svelte-fa-lg={size=='lg'}
   style={s}
 >
   <slot></slot>

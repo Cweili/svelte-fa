@@ -45,7 +45,7 @@ $: transform = getTransform(scale, translateX, translateY, rotate, flip, 512);
 </script>
 
 <style>
-:global(.size-lg) {
+:global(.svelte-fa-lg) {
   line-height: .75em;
 }
 
@@ -72,7 +72,7 @@ $: transform = getTransform(scale, translateX, translateY, rotate, flip, 512);
     id={id || undefined}
     class="svelte-fa {clazz}"
     class:pulse
-    class:size-lg={size=='lg'}
+    class:svelte-fa-lg={size=='lg'}
     class:spin
     style={s}
     viewBox="0 0 {i[0]} {i[1]}"
