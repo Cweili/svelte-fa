@@ -18,16 +18,8 @@ export function joinCss(obj, separator = ';') {
 export function getStyles(style, size) {
   let fontSize;
 
-  if (size) {
-    if (size == 'lg') {
-      fontSize = '1.33333em';
-    } else if (size == 'xs') {
-      fontSize = '.75em';
-    } else if (size == 'sm') {
-      fontSize = '.875em';
-    } else {
-      fontSize = size.replace('x', 'em');
-    }
+  if (size && size !== 'lg' && size !== 'xs' && size !== 'sm') {
+    fontSize = size.replace('x', 'em');
   }
 
   return joinCss([

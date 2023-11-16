@@ -47,7 +47,9 @@ $: s = getStyles(style, size);
 <span
   id={id}
   class="svelte-fa-layers svelte-fa-base svelte-fa-fw {clazz}"
-  class:svelte-fa-lg={size === 'lg'}
+  class:svelte-fa-size-lg={size === 'lg'}
+  class:svelte-fa-size-sm={size === 'sm'}
+  class:svelte-fa-size-xs={size === 'xs'}
   class:svelte-fa-pull-left={pull === 'left'}
   class:svelte-fa-pull-right={pull === 'right'}
   style={s}
