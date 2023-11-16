@@ -37,6 +37,7 @@ $: s = getStyles(
 
 <span id={id} class="svelte-fa-layers-text {clazz}">
   <span
+    class="svelte-fa-base"
     class:svelte-fa-lg={size=='lg'}
     style={s}
   >

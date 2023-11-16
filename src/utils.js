@@ -21,7 +21,6 @@ export function getStyles(style, size, pull, fw) {
   const height = '1em';
   let fontSize;
   let textAlign;
-  let verticalAlign = '-.125em';
   const overflow = 'visible';
 
   if (fw) {
@@ -36,7 +35,6 @@ export function getStyles(style, size, pull, fw) {
   if (size) {
     if (size == 'lg') {
       fontSize = '1.33333em';
-      verticalAlign = '-.225em';
     } else if (size == 'xs') {
       fontSize = '.75em';
     } else if (size == 'sm') {
@@ -53,7 +51,6 @@ export function getStyles(style, size, pull, fw) {
       height,
       'font-size': fontSize,
       'text-align': textAlign,
-      'vertical-align': verticalAlign,
       'transform-origin': 'center',
       overflow,
     }),

@@ -47,10 +47,15 @@ $: transform = getTransform(scale, translateX, translateY, rotate, flip, 512);
 <style>
 :global(.svelte-fa-lg) {
   line-height: .75em;
+  vertical-align: -.225em;
 }
 
 .spin {
   animation: spin 2s 0s infinite linear;
+}
+
+:global(.svelte-fa-base) {
+  vertical-align: -.125em;
 }
 
 .pulse {
@@ -70,7 +75,7 @@ $: transform = getTransform(scale, translateX, translateY, rotate, flip, 512);
 {#if i[4]}
   <svg
     id={id || undefined}
-    class="svelte-fa {clazz}"
+    class="svelte-fa svelte-fa-base {clazz}"
     class:pulse
     class:svelte-fa-lg={size=='lg'}
     class:spin
