@@ -39,7 +39,7 @@ let transform;
 
 $: i = (icon && icon.icon) || [0, 0, '', [], ''];
 
-$: s = getStyles(style, size, pull, fw);
+$: s = getStyles(style, size, pull);
 
 $: transform = getTransform(scale, translateX, translateY, rotate, flip, 512);
 </script>
@@ -52,6 +52,8 @@ $: transform = getTransform(scale, translateX, translateY, rotate, flip, 512);
 }
 
 :global(.svelte-fa-fw) {
+  text-align: center;
+  width: 1.25em;
 }
 
 :global(.svelte-fa-lg) {

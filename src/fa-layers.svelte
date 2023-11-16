@@ -13,7 +13,7 @@ export let pull = '';
 
 let s;
 
-$: s = getStyles(style, size, pull, true);
+$: s = getStyles(style, size, pull);
 </script>
 
 <style>

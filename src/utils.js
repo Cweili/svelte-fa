@@ -15,17 +15,10 @@ export function joinCss(obj, separator = ';') {
   return texts.join(separator);
 }
 
-export function getStyles(style, size, pull, fw) {
+export function getStyles(style, size, pull) {
   let float;
-  let width;
   const height = '1em';
   let fontSize;
-  let textAlign;
-
-  if (fw) {
-    textAlign = 'center';
-    width = '1.25em';
-  }
 
   if (pull) {
     float = pull;
@@ -46,10 +39,8 @@ export function getStyles(style, size, pull, fw) {
   return joinCss([
     joinCss({
       float,
-      width,
       height,
       'font-size': fontSize,
-      'text-align': textAlign,
     }),
     style,
   ]);
