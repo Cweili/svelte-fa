@@ -15,7 +15,7 @@ export let pull = '';
 
 let containerElement;
 
-onMount(setCustomSize(containerElement, size));
+onMount(() => { setCustomSize(containerElement, size); });
 </script>
 
 <style>

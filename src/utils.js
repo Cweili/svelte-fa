@@ -16,12 +16,9 @@ export function joinCss(obj, separator = ';') {
 }
 
 export function setCustomSize(element, size) {
-  if (!size || size === 'lg' || size === 'sm' || size === 'xs') {
-    return () => {};
-  }
-  return () => {
+  if (size && size !== 'lg' && size !== 'sm' && size !== 'xs') {
     element.style.fontSize = size.replace('x', 'em');
-  };
+  }
 }
 
 export function getTransform(

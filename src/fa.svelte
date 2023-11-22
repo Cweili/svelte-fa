@@ -39,7 +39,7 @@ let i;
 let transform;
 let svgElement;
 
-onMount(setCustomSize(svgElement, size));
+onMount(() => { setCustomSize(svgElement, size); });
 
 $: i = (icon && icon.icon) || [0, 0, '', [], ''];
 

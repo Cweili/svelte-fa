@@ -24,7 +24,7 @@ export let flip = false;
 let s;
 let containerElement;
 
-onMount(setCustomSize(containerElement, size));
+onMount(() => { setCustomSize(containerElement, size); });
 
 $: s = joinCss([
   joinCss({
