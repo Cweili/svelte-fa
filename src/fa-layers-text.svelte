@@ -2,7 +2,6 @@
 import { onMount } from 'svelte';
 
 import {
-  joinCss,
   getTransform,
   setCustomSize,
 } from './utils';
@@ -21,20 +20,13 @@ export let translateY = 0;
 export let rotate = '';
 export let flip = false;
 
-let s;
 let containerElement;
 
 onMount(() => {
   containerElement.style.color = color;
+  containerElement.style.transform = getTransform(scale, translateX, translateY, rotate, flip, undefined, 'em', 'deg');
   setCustomSize(containerElement, size);
 });
-
-$: s = joinCss([
-  joinCss({
-    transform: getTransform(scale, translateX, translateY, rotate, flip, undefined, 'em', 'deg'),
-  }),
-  style,
-]);
 </script>
 
 <style>
@@ -51,7 +43,7 @@ $: s = joinCss([
     class:svelte-fa-size-lg={size === 'lg'}
     class:svelte-fa-size-sm={size === 'sm'}
     class:svelte-fa-size-xs={size === 'xs'}
-    style={s}
+    {style}
   >
     <slot></slot>
   </span>
