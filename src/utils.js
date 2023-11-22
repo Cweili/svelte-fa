@@ -1,20 +1,5 @@
 const parseNumber = parseFloat;
 
-export function joinCss(obj, separator = ';') {
-  let texts;
-  if (Array.isArray(obj)) {
-    texts = obj.filter((text) => text);
-  } else {
-    texts = [];
-    for (const prop in obj) {
-      if (obj[prop]) {
-        texts.push(`${prop}:${obj[prop]}`);
-      }
-    }
-  }
-  return texts.join(separator);
-}
-
 export function setCustomSize(element, size) {
   if (size && size !== 'lg' && size !== 'sm' && size !== 'xs') {
     element.style.fontSize = size.replace('x', 'em');
@@ -44,12 +29,9 @@ export function getTransform(
     }
   }
 
-  return joinCss(
-    [
-      `translate(${parseNumber(translateX) * translateTimes}${translateUnit},${parseNumber(translateY) * translateTimes}${translateUnit})`,
-      `scale(${flipX * parseNumber(scale)},${flipY * parseNumber(scale)})`,
-      rotate && `rotate(${rotate}${rotateUnit})`,
-    ],
-    ' ',
-  );
+  let output = `translate(${parseNumber(translateX) * translateTimes}${translateUnit},${parseNumber(translateY) * translateTimes}${translateUnit}) scale(${flipX * parseNumber(scale)},${flipY * parseNumber(scale)})`;
+  if (rotate) {
+    output += ` rotate(${rotate}${rotateUnit})`;
+  }
+  return output;
 }
