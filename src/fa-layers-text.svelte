@@ -24,11 +24,13 @@ export let flip = false;
 let s;
 let containerElement;
 
-onMount(() => { setCustomSize(containerElement, size); });
+onMount(() => {
+  containerElement.style.color = color;
+  setCustomSize(containerElement, size);
+});
 
 $: s = joinCss([
   joinCss({
-    color,
     transform: getTransform(scale, translateX, translateY, rotate, flip, undefined, 'em', 'deg'),
   }),
   style,
