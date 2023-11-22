@@ -10,11 +10,7 @@ export default {
     file: 'dist/index.js',
     name: 'svelteFaExamples',
     format: 'iife',
-    globals: {
-      'svelte-fa': 'SvelteFa',
-    },
   },
-  external: ['svelte-fa'],
   plugins: [
     svelte({
       emitCss: false,

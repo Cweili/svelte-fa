@@ -1,5 +1,7 @@
 <script>
-  import { Fa, FaLayers, FaLayersText } from "svelte-fa";
+  import Fa from "../../../src/fa.svelte";
+  import FaLayers from "../../../src/fa-layers.svelte";
+  import FaLayersText from "../../../src/fa-layers-text.svelte";
   import {
     faBookmark,
     faCalendar,
