@@ -1,5 +1,5 @@
 <script>
-  import Fa from "svelte-fa";
+  import { Fa } from "svelte-fa";
   import { faSeedling } from "@fortawesome/free-solid-svg-icons";
 
   import DocsCode from "../ui/docs-code.svelte";

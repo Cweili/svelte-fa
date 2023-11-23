@@ -1,5 +1,5 @@
 <script>
-  import Fa from "svelte-fa";
+  import { Fa } from "svelte-fa";
   import {
     faBook,
     faCog,

@@ -1,5 +1,5 @@
 <script>
-import Fa from 'svelte-fa';
+import { Fa } from 'svelte-fa';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
 
 export let level = 2;
