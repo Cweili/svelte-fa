@@ -1,2 +1,0 @@
-Header always set Content-Security-Policy "upgrade-insecure-requests; default-src 'none'; script-src 'self' https://cdn.jsdelivr.net/; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net/; img-src 'self' https://img.shields.io/"
-#Header always set Content-Security-Policy "upgrade-insecure-requests; default-src 'none'; script-src 'self' https://cdn.jsdelivr.net/; style-src 'self' https://cdn.jsdelivr.net/; img-src 'self' https://img.shields.io/"
