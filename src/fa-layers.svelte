@@ -55,7 +55,7 @@ onMount(() => { setCustomSize(containerElement, size); });
   class:svelte-fa-size-xs={size === 'xs'}
   class:svelte-fa-pull-left={pull === 'left'}
   class:svelte-fa-pull-right={pull === 'right'}
-  {style}
+  style={style !== '' ? style : null}
 >
   <slot></slot>
 </span>

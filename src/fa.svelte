@@ -112,7 +112,7 @@ $: transform = getTransform(scale, translateX, translateY, rotate, flip, 512);
     class:svelte-fa-pull-left={pull === 'left'}
     class:svelte-fa-pull-right={pull === 'right'}
     class:spin
-    {style}
+    style={style !== '' ? style : null}
     viewBox="0 0 {i[0]} {i[1]}"
     aria-hidden="true"
     role="img"

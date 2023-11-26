@@ -43,7 +43,7 @@ onMount(() => {
     class:svelte-fa-size-lg={size === 'lg'}
     class:svelte-fa-size-sm={size === 'sm'}
     class:svelte-fa-size-xs={size === 'xs'}
-    {style}
+    style={style !== '' ? style : null}
   >
     <slot></slot>
   </span>
