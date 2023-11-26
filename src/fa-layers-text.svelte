@@ -34,6 +34,20 @@ onMount(() => {
   display: inline-block;
   height: auto;
 }
+
+.svelte-fa-size-lg {
+  font-size: 1.33333em;
+  line-height: .75em;
+  vertical-align: -.225em;
+}
+
+.svelte-fa-size-sm {
+  font-size: .875em;
+}
+
+.svelte-fa-size-xs {
+  font-size: .75em;
+}
 </style>
 
 <span id={id} class="svelte-fa-layers-text {clazz}">

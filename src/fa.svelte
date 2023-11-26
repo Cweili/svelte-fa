@@ -59,25 +59,25 @@ $: transform = getTransform(scale, translateX, translateY, rotate, flip, 512);
   width: 1.25em;
 }
 
-:global(.svelte-fa-pull-left) {
+.svelte-fa-pull-left {
   float: left;
 }
 
-:global(.svelte-fa-pull-right) {
+.svelte-fa-pull-right {
   float: right;
 }
 
-:global(.svelte-fa-size-lg) {
+.svelte-fa-size-lg {
   font-size: 1.33333em;
   line-height: .75em;
   vertical-align: -.225em;
 }
 
-:global(.svelte-fa-size-sm) {
+.svelte-fa-size-sm {
   font-size: .875em;
 }
 
-:global(.svelte-fa-size-xs) {
+.svelte-fa-size-xs {
   font-size: .75em;
 }
 
