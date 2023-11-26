@@ -91,8 +91,8 @@ test('pull', async () => {
   await setProps(faLayers, {
     pull: 'right',
   });
-  style = getFaLayers().getAttribute('style');
-  expect(style).toContain('float:right');
+  style = getComputedStyle(getFaLayers());
+  expect(style.float).toBe('right');
 });
 
 describe('size', () => {
