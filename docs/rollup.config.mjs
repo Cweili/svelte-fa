@@ -17,10 +17,9 @@ export default {
   external: ['svelte-fa'],
   plugins: [
     svelte({
-      emitCss: false,
+      emitCss: true,
       compilerOptions: {
         legacy: true,
-        css: true,
       },
     }),
     resolve({
@@ -33,6 +32,7 @@ export default {
       extensions: ['.js', '.jsx', '.es6', '.es', '.mjs', '.svelte'],
     }),
     postcss({
+      extract: true,
       extensions: ['.css'],
     }),
   ],

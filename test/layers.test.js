@@ -72,7 +72,8 @@ test('color', async () => {
       color: 'red',
     },
   );
-  expect(getFaLayersText().querySelector('span').getAttribute('style')).toContain('color:red');
+  const style = getComputedStyle(getFaLayersText().querySelector('span'));
+  expect(style.color).toBe('red');
 
   await setProps(faLayersText, {
     color: undefined,
@@ -84,139 +85,198 @@ test('pull', async () => {
   mountFaLayers({
     pull: 'left',
   });
-  let style = getFaLayers().getAttribute('style');
-  expect(style).toContain('float:left');
+  let style = getComputedStyle(getFaLayers());
+  expect(style.float).toBe('left');
 
   await setProps(faLayers, {
     pull: 'right',
   });
-  style = getFaLayers().getAttribute('style');
-  expect(style).toContain('float:right');
+  style = getComputedStyle(getFaLayers());
+  expect(style.float).toBe('right');
 });
 
-test('size', async () => {
-  mountFaLayers(
-    {
-      size: '2x',
-    },
-    {
-      size: '2x',
-    },
-  );
-  let style = getFaLayers().getAttribute('style');
-  let styleText = getFaLayersText().querySelector('span').getAttribute('style');
-  expect(style).toContain('font-size:2em');
-  expect(styleText).toContain('font-size:2em');
+describe('size', () => {
+  test('2x', async () => {
+    mountFaLayers(
+      {
+        size: '2x',
+      },
+      {
+        size: '2x',
+      },
+    );
+    const style = getComputedStyle(getFaLayers());
+    const styleText = getComputedStyle(getFaLayersText().querySelector('span'));
+    expect(style['font-size']).toBe('2em');
+    expect(style['line-height']).toBe('');
+    expect(style['vertical-align']).toBe('');
+    expect(styleText['font-size']).toBe('2em');
+    expect(styleText['line-height']).toBe('');
+    expect(styleText['vertical-align']).toBe('');
+  });
 
-  await setProps(faLayers, {
-    size: 'lg',
+  test('lg', async () => {
+    mountFaLayers(
+      {
+        size: 'lg',
+      },
+      {
+        size: 'lg',
+      },
+    );
+    const style = getComputedStyle(getFaLayers());
+    const styleText = getComputedStyle(getFaLayersText().querySelector('span'));
+    expect(style['font-size']).toBe('1.33333em');
+    expect(style['line-height']).toBe('.75em');
+    expect(style['vertical-align']).toBe('-.225em');
+    expect(styleText['font-size']).toBe('1.33333em');
+    expect(styleText['line-height']).toBe('.75em');
+    expect(styleText['vertical-align']).toBe('-.225em');
   });
-  await setProps(faLayersText, {
-    size: 'lg',
-  });
-  style = getFaLayers().getAttribute('style');
-  styleText = getFaLayersText().querySelector('span').getAttribute('style');
-  expect(style).toContain('font-size:1.33333em');
-  expect(style).toContain('line-height:.75em');
-  expect(style).toContain('vertical-align:-.225em');
-  expect(styleText).toContain('font-size:1.33333em');
-  expect(styleText).toContain('line-height:.75em');
-  expect(styleText).toContain('vertical-align:-.225em');
 
-  await setProps(faLayers, {
-    size: 'xs',
+  test('xs', async () => {
+    mountFaLayers(
+      {
+        size: 'xs',
+      },
+      {
+        size: 'xs',
+      },
+    );
+    const style = getComputedStyle(getFaLayers());
+    const styleText = getComputedStyle(getFaLayersText().querySelector('span'));
+    expect(style['font-size']).toBe('.75em');
+    expect(style['line-height']).toBe('');
+    expect(style['vertical-align']).toBe('');
+    expect(styleText['font-size']).toBe('.75em');
+    expect(styleText['line-height']).toBe('');
+    expect(styleText['vertical-align']).toBe('');
   });
-  await setProps(faLayersText, {
-    size: 'xs',
-  });
-  style = getFaLayers().getAttribute('style');
-  styleText = getFaLayersText().querySelector('span').getAttribute('style');
-  expect(style).toContain('font-size:.75em');
-  expect(styleText).toContain('font-size:.75em');
 
-  await setProps(faLayers, {
-    size: 'sm',
+  test('sm', async () => {
+    mountFaLayers(
+      {
+        size: 'sm',
+      },
+      {
+        size: 'sm',
+      },
+    );
+    const style = getComputedStyle(getFaLayers());
+    const styleText = getComputedStyle(getFaLayersText().querySelector('span'));
+    expect(style['font-size']).toBe('.875em');
+    expect(style['line-height']).toBe('');
+    expect(style['vertical-align']).toBe('');
+    expect(styleText['font-size']).toBe('.875em');
+    expect(styleText['line-height']).toBe('');
+    expect(styleText['vertical-align']).toBe('');
   });
-  await setProps(faLayersText, {
-    size: 'sm',
-  });
-  style = getFaLayers().getAttribute('style');
-  styleText = getFaLayersText().querySelector('span').getAttribute('style');
-  expect(style).toContain('font-size:.875em');
-  expect(styleText).toContain('font-size:.875em');
 });
 
-test('scale', async () => {
-  mountFaLayers(
-    {},
-    {
-      scale: 0.5,
-    },
-  );
-  let transform = getFaLayersText().querySelector('span').getAttribute('style');
-  expect(transform).toContain('scale(0.5,0.5)');
-
-  await setProps(faLayersText, {
-    scale: 2,
+describe('scale', () => {
+  test('half', async () => {
+    mountFaLayers(
+      {},
+      {
+        scale: 0.5,
+      },
+    );
+    const style = getComputedStyle(getFaLayersText().querySelector('span'));
+    expect(style.transform).toContain('scale(0.5,0.5)');
   });
-  transform = getFaLayersText().querySelector('span').getAttribute('style');
-  expect(transform).toContain('scale(2,2)');
+
+  test('double', async () => {
+    mountFaLayers(
+      {},
+      {
+        scale: 2,
+      },
+    );
+    const style = getComputedStyle(getFaLayersText().querySelector('span'));
+    expect(style.transform).toContain('scale(2,2)');
+  });
 });
 
-test('translate', async () => {
-  mountFaLayers(
-    {},
-    {
-      translateX: 1,
-    },
-  );
-  let transform = getFaLayersText().querySelector('span').getAttribute('style');
-  expect(transform).toContain('translate(1em,0em)');
-
-  await setProps(faLayersText, {
-    translateX: 0,
-    translateY: 1,
+describe('translate', () => {
+  test('X', async () => {
+    mountFaLayers(
+      {},
+      {
+        translateX: 1,
+      },
+    );
+    const style = getComputedStyle(getFaLayersText().querySelector('span'));
+    expect(style.transform).toContain('translate(1em,0em)');
   });
-  transform = getFaLayersText().querySelector('span').getAttribute('style');
-  expect(transform).toContain('translate(0em,1em)');
+
+  test('Y', async () => {
+    mountFaLayers(
+      {},
+      {
+        translateX: 0,
+        translateY: 1,
+      },
+    );
+
+    const style = getComputedStyle(getFaLayersText().querySelector('span'));
+    expect(style.transform).toContain('translate(0em,1em)');
+  });
 });
 
-test('flip', async () => {
-  mountFaLayers(
-    {},
-    {
-      flip: 'both',
-    },
-  );
-  let transform = getFaLayersText().querySelector('span').getAttribute('style');
-  expect(transform).toContain('scale(-1,-1)');
-
-  await setProps(faLayersText, {
-    flip: 'horizontal',
+describe('flip', () => {
+  test('both', async () => {
+    mountFaLayers(
+      {},
+      {
+        flip: 'both',
+      },
+    );
+    const style = getComputedStyle(getFaLayersText().querySelector('span'));
+    expect(style.transform).toContain('scale(-1,-1)');
   });
-  transform = getFaLayersText().querySelector('span').getAttribute('style');
-  expect(transform).toContain('scale(-1,1)');
-
-  await setProps(faLayersText, {
-    flip: 'vertical',
+  test('horizontal', async () => {
+    mountFaLayers(
+      {},
+      {
+        flip: 'horizontal',
+      },
+    );
+    const style = getComputedStyle(getFaLayersText().querySelector('span'));
+    expect(style.transform).toContain('scale(-1,1)');
   });
-  transform = getFaLayersText().querySelector('span').getAttribute('style');
-  expect(transform).toContain('scale(1,-1)');
+
+  test('vertical', async () => {
+    mountFaLayers(
+      {},
+      {
+        flip: 'vertical',
+      },
+    );
+    const style = getComputedStyle(getFaLayersText().querySelector('span'));
+    expect(style.transform).toContain('scale(1,-1)');
+  });
 });
 
-test('rotate', async () => {
-  mountFaLayers(
-    {},
-    {
-      rotate: 90,
-    },
-  );
-  let transform = getFaLayersText().querySelector('span').getAttribute('style');
-  expect(transform).toContain('rotate(90deg)');
-
-  await setProps(faLayersText, {
-    rotate: null,
+describe('rotate', () => {
+  test('90', async () => {
+    mountFaLayers(
+      {},
+      {
+        rotate: 90,
+      },
+    );
+    const style = getComputedStyle(getFaLayersText().querySelector('span'));
+    expect(style.transform).toContain('rotate(90deg)');
   });
-  transform = getFaLayersText().querySelector('span').getAttribute('style');
-  expect(transform).not.toContain('rotate');
+
+  test('null', async () => {
+    mountFaLayers(
+      {},
+      {
+        rotate: null,
+      },
+    );
+    const style = getComputedStyle(getFaLayersText().querySelector('span'));
+    expect(style.transform).not.toContain('rotate');
+  });
 });

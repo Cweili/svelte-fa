@@ -1,7 +1,9 @@
 <script>
+import { onMount } from 'svelte';
+
 import {
-  getStyles,
   getTransform,
+  setCustomSize,
 } from './utils';
 
 let clazz = '';
@@ -34,17 +36,51 @@ export let secondaryOpacity = 0.4;
 export let swapOpacity = false;
 
 let i;
-let s;
 let transform;
+let svgElement;
+
+onMount(() => { setCustomSize(svgElement, size); });
 
 $: i = (icon && icon.icon) || [0, 0, '', [], ''];
-
-$: s = getStyles(style, size, pull, fw);
 
 $: transform = getTransform(scale, translateX, translateY, rotate, flip, 512);
 </script>
 
 <style>
+:global(.svelte-fa-base) {
+  height: 1em;
+  overflow: visible;
+  transform-origin: center;
+  vertical-align: -.125em;
+}
+
+:global(.svelte-fa-fw) {
+  text-align: center;
+  width: 1.25em;
+}
+
+.svelte-fa-pull-left {
+  float: left;
+}
+
+.svelte-fa-pull-right {
+  float: right;
+}
+
+.svelte-fa-size-lg {
+  font-size: 1.33333em;
+  line-height: .75em;
+  vertical-align: -.225em;
+}
+
+.svelte-fa-size-sm {
+  font-size: .875em;
+}
+
+.svelte-fa-size-xs {
+  font-size: .75em;
+}
+
 .spin {
   animation: spin 2s 0s infinite linear;
 }
@@ -66,10 +102,17 @@ $: transform = getTransform(scale, translateX, translateY, rotate, flip, 512);
 {#if i[4]}
   <svg
     id={id || undefined}
-    class="svelte-fa {clazz}"
+    bind:this={svgElement}
+    class="svelte-fa svelte-fa-base {clazz}"
     class:pulse
+    class:svelte-fa-size-lg={size === 'lg'}
+    class:svelte-fa-size-sm={size === 'sm'}
+    class:svelte-fa-size-xs={size === 'xs'}
+    class:svelte-fa-fw={fw}
+    class:svelte-fa-pull-left={pull === 'left'}
+    class:svelte-fa-pull-right={pull === 'right'}
     class:spin
-    style={s}
+    style={style !== '' ? style : null}
     viewBox="0 0 {i[0]} {i[1]}"
     aria-hidden="true"
     role="img"

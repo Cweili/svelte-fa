@@ -1,8 +1,9 @@
 <script>
+import { onMount } from 'svelte';
+
 import {
-  joinCss,
-  getStyles,
   getTransform,
+  setCustomSize,
 } from './utils';
 
 let clazz = '';
@@ -19,24 +20,45 @@ export let translateY = 0;
 export let rotate = '';
 export let flip = false;
 
-let s;
+let containerElement;
 
-$: s = getStyles(
-  joinCss([
-    joinCss({
-      color,
-      display: 'inline-block',
-      height: 'auto',
-      transform: getTransform(scale, translateX, translateY, rotate, flip, undefined, 'em', 'deg'),
-    }),
-    style,
-  ]),
-  size,
-);
+onMount(() => {
+  containerElement.style.color = color;
+  containerElement.style.transform = getTransform(scale, translateX, translateY, rotate, flip, undefined, 'em', 'deg');
+  setCustomSize(containerElement, size);
+});
 </script>
 
+<style>
+.container {
+  display: inline-block;
+  height: auto;
+}
+
+.svelte-fa-size-lg {
+  font-size: 1.33333em;
+  line-height: .75em;
+  vertical-align: -.225em;
+}
+
+.svelte-fa-size-sm {
+  font-size: .875em;
+}
+
+.svelte-fa-size-xs {
+  font-size: .75em;
+}
+</style>
+
 <span id={id} class="svelte-fa-layers-text {clazz}">
-  <span style={s}>
+  <span
+    bind:this={containerElement}
+    class="svelte-fa-base container"
+    class:svelte-fa-size-lg={size === 'lg'}
+    class:svelte-fa-size-sm={size === 'sm'}
+    class:svelte-fa-size-xs={size === 'xs'}
+    style={style !== '' ? style : null}
+  >
     <slot></slot>
   </span>
 </span>

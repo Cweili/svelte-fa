@@ -83,15 +83,16 @@ test('fw', async () => {
   mountFa({
     fw: true,
   });
-  let style = getFa().getAttribute('style');
-  expect(style).toContain('text-align:center');
+  let style = getComputedStyle(getFa());
+  expect(style['text-align']).toBe('center');
   expect(style).toContain('width');
 
   await setProps({
     fw: null,
   });
   style = getFa().getAttribute('style');
-  expect(style).not.toContain('text-align:center');
+  style = getComputedStyle(getFa());
+  expect(style).not.toContain('text-align');
   expect(style).not.toContain('width');
 });
 
@@ -99,42 +100,56 @@ test('pull', async () => {
   mountFa({
     pull: 'left',
   });
-  let style = getFa().getAttribute('style');
-  expect(style).toContain('float:left');
+  let style = getComputedStyle(getFa());
+  expect(style.float).toBe('left');
 
   await setProps({
     pull: 'right',
   });
-  style = getFa().getAttribute('style');
-  expect(style).toContain('float:right');
+  style = getComputedStyle(getFa());
+  expect(style.float).toBe('right');
 });
 
-test('size', async () => {
-  mountFa({
-    size: '2x',
+describe('size', () => {
+  test('2x', async () => {
+    mountFa({
+      size: '2x',
+    });
+    const style = getComputedStyle(getFa());
+    expect(style['font-size']).toBe('2em');
+    expect(style['line-height']).toBe('');
+    expect(style['vertical-align']).toBe('-.125em');
   });
-  let style = getFa().getAttribute('style');
-  expect(style).toContain('font-size:2em');
 
-  await setProps({
-    size: 'lg',
+  test('lg', async () => {
+    mountFa({
+      size: 'lg',
+    });
+    const style = getComputedStyle(getFa());
+    expect(style['font-size']).toBe('1.33333em');
+    expect(style['line-height']).toBe('.75em');
+    expect(style['vertical-align']).toBe('-.225em');
   });
-  style = getFa().getAttribute('style');
-  expect(style).toContain('font-size:1.33333em');
-  expect(style).toContain('line-height:.75em');
-  expect(style).toContain('vertical-align:-.225em');
 
-  await setProps({
-    size: 'xs',
+  test('xs', async () => {
+    mountFa({
+      size: 'xs',
+    });
+    const style = getComputedStyle(getFa());
+    expect(style['font-size']).toBe('.75em');
+    expect(style['line-height']).toBe('');
+    expect(style['vertical-align']).toBe('-.125em');
   });
-  style = getFa().getAttribute('style');
-  expect(style).toContain('font-size:.75em');
 
-  await setProps({
-    size: 'sm',
+  test('sm', async () => {
+    mountFa({
+      size: 'sm',
+    });
+    const style = getComputedStyle(getFa());
+    expect(style['font-size']).toBe('.875em');
+    expect(style['line-height']).toBe('');
+    expect(style['vertical-align']).toBe('-.125em');
   });
-  style = getFa().getAttribute('style');
-  expect(style).toContain('font-size:.875em');
 });
 
 test('scale', async () => {
