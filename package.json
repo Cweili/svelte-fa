@@ -22,56 +22,62 @@
   "bugs": {
     "url": "https://github.com/Cweili/svelte-fa/issues"
   },
-  "svelte": "src/fa.svelte",
-  "browser": "dist/svelte-fa.js",
-  "module": "dist/svelte-fa.mjs",
-  "main": "src/index.js",
-  "types": "src/index.d.ts",
-  "sideEffects": false,
   "scripts": {
-    "build": "rollup -c",
-    "postbuild": "eslint --fix *.js src/*.svelte",
-    "build:docs": "cd docs && rollup -c",
-    "dev:build": "cd docs && rollup -c -w",
-    "dev:serve": "sirv docs --dev",
-    "dev": "run-p dev:build dev:serve",
-    "prepare": "npm run build",
-    "test": "tsd && jest test --coverage"
+    "dev": "vite dev",
+    "build": "vite build && npm run package",
+    "preview": "vite preview",
+    "package": "svelte-kit sync && svelte-package && publint",
+    "prepublishOnly": "npm run package",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "test": "vitest",
+    "lint": "prettier --check . && eslint --ignore-path .gitignore .",
+    "format": "prettier --write .",
+    "deploy": "npm run build && gh-pages -t -d build"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "svelte": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "!dist/**/*.test.*",
+    "!dist/**/*.spec.*"
+  ],
+  "peerDependencies": {
+    "svelte": "^4.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.4",
-    "@babel/eslint-parser": "^7.16.3",
-    "@babel/preset-env": "^7.4.4",
     "@cweili/fa-test-util": "^1.0.0",
-    "@rollup/plugin-babel": "^6.0.3",
-    "@rollup/plugin-commonjs": "^25.0.2",
-    "@rollup/plugin-node-resolve": "^15.1.0",
-    "@rollup/plugin-replace": "^5.0.2",
-    "@types/jest": "^29.4.1",
-    "babel-jest": "^29.5.0",
-    "eslint": "^8.4.1",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.25.3",
-    "eslint-plugin-jest": "^27.2.2",
-    "eslint-plugin-svelte3": "^4.0.0",
-    "jest": "^29.5.0",
-    "jest-environment-jsdom": "^29.5.0",
-    "npm-run-all": "^4.1.5",
-    "postcss": "^8.2.8",
-    "rollup": "^4.1.4",
-    "rollup-plugin-postcss": "^4.0.0",
-    "rollup-plugin-svelte": "^7.1.0",
-    "sirv-cli": "^2.0.2",
-    "svelte": "^3.48.0",
-    "svelte-jester": "^2.3.2",
-    "tsd": "^0.28.1"
+    "@sveltejs/adapter-static": "^3.0.1",
+    "@sveltejs/kit": "^2.0.6",
+    "@sveltejs/package": "^2.2.4",
+    "@sveltejs/vite-plugin-svelte": "^3.0.1",
+    "@testing-library/svelte": "^4.0.5",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "@vitest/coverage-v8": "^1.1.0",
+    "bootstrap": "^5.3.2",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-svelte": "^2.35.1",
+    "gh-pages": "^6.1.1",
+    "highlight.js": "^11.9.0",
+    "jsdom": "^23.0.1",
+    "prettier": "^3.1.1",
+    "prettier-plugin-svelte": "^3.1.2",
+    "publint": "^0.2.6",
+    "sass": "^1.69.5",
+    "svelte": "^4.2.8",
+    "svelte-check": "^3.6.2",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.10",
+    "vitest": "^1.1.0"
   },
-  "tsd": {
-    "directory": "test",
-    "compilerOptions": {
-      "lib": [
-        "dom"
-      ]
-    }
-  }
+  "svelte": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "module"
 }
