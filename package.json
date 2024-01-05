@@ -32,8 +32,7 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "test": "vitest --typecheck",
     "lint": "prettier --check . && eslint --ignore-path .gitignore .",
-    "format": "prettier --write .",
-    "deploy": "npm run build && gh-pages -t -d build"
+    "format": "prettier --write ."
   },
   "exports": {
     ".": {
@@ -63,7 +62,6 @@
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-svelte": "^2.35.1",
-    "gh-pages": "^6.1.1",
     "highlight.js": "^11.9.0",
     "jsdom": "^23.0.1",
     "prettier": "^3.1.1",
