@@ -189,6 +189,11 @@ const theme = {
 />
 ```
 
+## Contributors
+
+<!-- readme: collaborators,contributors -start -->
+<!-- readme: collaborators,contributors -end -->
+
 [fontawesome-icons]: https://fontawesome.com/icons
 [fontawesome]: https://fontawesome.com/
 [fontawesome-npm]: https://www.npmjs.com/search?q=%40fortawesome%20svg%20icons

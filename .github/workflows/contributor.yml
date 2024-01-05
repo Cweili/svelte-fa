@@ -1,0 +1,15 @@
+name: contributor
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  contrib-readme-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Contribute List
+        uses: akhilmhdh/contributors-readme-action@v2.3.6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
