@@ -192,6 +192,94 @@ const theme = {
 ## Contributors
 
 <!-- readme: collaborators,contributors -start -->
+<table>
+<tr>
+    <td align="center">
+        <a href="https://github.com/Cweili">
+            <img src="https://avatars.githubusercontent.com/u/2128450?v=4" width="100;" alt="Cweili"/>
+            <br />
+            <sub><b>Cweili</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/marekdedic">
+            <img src="https://avatars.githubusercontent.com/u/3134692?v=4" width="100;" alt="marekdedic"/>
+            <br />
+            <sub><b>Marek Dědič</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/gtm-nayan">
+            <img src="https://avatars.githubusercontent.com/u/50981692?v=4" width="100;" alt="gtm-nayan"/>
+            <br />
+            <sub><b>Gtmnayan</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/ItzaMi">
+            <img src="https://avatars.githubusercontent.com/u/30603437?v=4" width="100;" alt="ItzaMi"/>
+            <br />
+            <sub><b>Rui Sousa</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/msanguineti">
+            <img src="https://avatars.githubusercontent.com/u/19243840?v=4" width="100;" alt="msanguineti"/>
+            <br />
+            <sub><b>Mirco Sanguineti</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/theodorejb">
+            <img src="https://avatars.githubusercontent.com/u/3053271?v=4" width="100;" alt="theodorejb"/>
+            <br />
+            <sub><b>Theodore Brown</b></sub>
+        </a>
+    </td></tr>
+<tr>
+    <td align="center">
+        <a href="https://github.com/RealA10N">
+            <img src="https://avatars.githubusercontent.com/u/23400213?v=4" width="100;" alt="RealA10N"/>
+            <br />
+            <sub><b>Alon Krymgand</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/connercsbn">
+            <img src="https://avatars.githubusercontent.com/u/65339198?v=4" width="100;" alt="connercsbn"/>
+            <br />
+            <sub><b>Conner</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/prokawsar">
+            <img src="https://avatars.githubusercontent.com/u/9526172?v=4" width="100;" alt="prokawsar"/>
+            <br />
+            <sub><b>Kawsar Ahmed</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/mvolkmann">
+            <img src="https://avatars.githubusercontent.com/u/79312?v=4" width="100;" alt="mvolkmann"/>
+            <br />
+            <sub><b>Mark Volkmann</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/ModischFabrications">
+            <img src="https://avatars.githubusercontent.com/u/25404728?v=4" width="100;" alt="ModischFabrications"/>
+            <br />
+            <sub><b>Robin Modisch</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/RemiKalbe">
+            <img src="https://avatars.githubusercontent.com/u/8604600?v=4" width="100;" alt="RemiKalbe"/>
+            <br />
+            <sub><b>Rémi Kalbe</b></sub>
+        </a>
+    </td></tr>
+</table>
 <!-- readme: collaborators,contributors -end -->
 
 [fontawesome-icons]: https://fontawesome.com/icons
