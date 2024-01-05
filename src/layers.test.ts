@@ -1,8 +1,8 @@
 import { describe, expect, test, afterEach } from "vitest";
 import { render, screen, cleanup, configure } from "@testing-library/svelte";
-import FaLayers from "./lib/fa-layers.svelte";
-import FaLayersText from "./lib/fa-layers-text.svelte";
 import type { ComponentProps } from "svelte";
+
+import { FaLayers, FaLayersText } from "./lib";
 
 configure({ testIdAttribute: "id" });
 afterEach(cleanup);

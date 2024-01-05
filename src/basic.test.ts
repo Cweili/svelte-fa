@@ -3,7 +3,7 @@ import { describe, expect, test, afterEach } from "vitest";
 // @ts-expect-error No typings available
 import { fasFlag, fasInfo } from "@cweili/fa-test-util";
 import { render, screen, cleanup } from "@testing-library/svelte";
-import Fa from "./lib/fa.svelte";
+import Fa from "./lib";
 
 function mountFa(props: Partial<ComponentProps<Fa>>) {
   cleanup();
@@ -125,7 +125,7 @@ describe("size", () => {
 
 test("scale", async () => {
   mountFa({
-    scale: 0.5,
+    scale: "0.5",
   });
   let transform = getFa().querySelector("g > g")?.getAttribute("transform");
   expect(transform).toContain("scale(0.5,0.5)");
@@ -139,7 +139,8 @@ test("scale", async () => {
 
 test("translate", async () => {
   mountFa({
-    translateX: 1,
+    translateX: "1",
+    translateY: "0",
   });
   let transform = getFa().querySelector("g > g")?.getAttribute("transform");
   expect(transform).toContain("translate(512,0)");
