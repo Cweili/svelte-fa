@@ -49,7 +49,7 @@ npm install svelte-fa -D
 You may need to import the component explicitly as below:
 
 ```js
-import Fa from 'svelte-fa/src/fa.svelte'
+import Fa from 'svelte-fa/dist/fa.svelte'
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons/index.es'
 ```
 
