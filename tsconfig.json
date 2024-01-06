@@ -9,8 +9,8 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "noUnusedLocals": true,
-    "strict": true
-  },
-  "module": "nodenext",
-  "moduleResolution": "nodenext"
+    "strict": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext"
+  }
 }
