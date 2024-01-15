@@ -6,13 +6,6 @@ export function setCutomFontSize(element: HTMLElement, size: IconSize | ""): voi
   }
 }
 
-export function getFontSize(size: string) {
-  if (size && size !== "lg" && size !== "sm" && size !== "xs") {
-    return size.replace("x", "em");
-  }
-  return "";
-}
-
 export function getTransform(
   scale: number | string,
   translateX: number | string,
