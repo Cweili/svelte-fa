@@ -17,21 +17,22 @@
 
   let containerElement: HTMLElement;
   $: containerElement && size && setCutomFontSize(containerElement, size);
-
+  $: containerElement && color && (containerElement.style.color = color);
   $: transform = getTransform(scale, translateX, translateY, rotate, flip, 1, "em", "deg");
-  $: fullStyle =
-    `transform: ${transform}` + (color ? `; color:${color}` : "") + (style ? `; ${style}` : "");
+  $: containerElement && transform && (containerElement.style.transform = transform);
 </script>
 
 <span {id} class="svelte-fa-layers-text {clazz}">
+  <!-- eslint-disable svelte/no-inline-styles -- Only styles passed to this component should be included -->
   <span
     class="svelte-fa-base container"
     class:svelte-fa-size-lg={size === "lg"}
     class:svelte-fa-size-sm={size === "sm"}
     class:svelte-fa-size-xs={size === "xs"}
     bind:this={containerElement}
-    style={fullStyle}
+    {style}
   >
+    <!-- eslint-enable -->
     <slot />
   </span>
 </span>

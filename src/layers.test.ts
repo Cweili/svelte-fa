@@ -56,12 +56,14 @@ test("basic", async () => {
 
   expect(getFaLayersText("b").getAttribute("id")).toBe("b");
   expect(getFaLayersText("b").getAttribute("class")).toContain("class-b");
-  expect(getFaLayersText("b").querySelector("span")?.getAttribute("style")).toContain("color:blue");
+  expect(getComputedStyle(getFaLayersText("b").querySelector("span"))["color"]).toBe(
+    "rgb(0, 0, 255)",
+  );
 });
 
 test("color", async () => {
   mountFaLayers({}, { color: "red" });
-  expect(getFaLayersText().querySelector("span")?.getAttribute("style")).toContain("color:red");
+  expect(getComputedStyle(getFaLayersText().querySelector("span"))["color"]).toBe("rgb(255, 0, 0)");
   mountFaLayers({}, { color: undefined });
   expect(getFaLayersText().querySelector("span")?.getAttribute("style")).not.toContain("color:red");
 });
