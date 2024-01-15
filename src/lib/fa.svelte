@@ -31,7 +31,7 @@
   export let secondaryOpacity: number | string = 0.4;
   export let swapOpacity = false;
 
-  let svgElement: HTMLElement;
+  let svgElement: HTMLElement | SVGElement;
   $: svgElement && size && setCutomFontSize(svgElement, size);
 
   $: i = (icon && icon.icon) || [0, 0, "", [], ""];

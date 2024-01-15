@@ -98,7 +98,7 @@ describe("size", () => {
       size: "2x",
     });
     const style = getComputedStyle(getFa());
-    expect(style["font-size"]).toBe("2em");
+    expect(style.getPropertyValue("font-size")).toBe("2em");
   });
 
   test("lg", async () => {
