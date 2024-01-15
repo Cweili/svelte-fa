@@ -1,8 +1,10 @@
-export function setCutomFontSize(element: HTMLElement, size: IconSize | ""): void {
-  if (size && size !== "lg" && size !== "sm" && size !== "xs" && size !== "") {
+import type { IconSize } from "./types.js";
+
+export function setCutomFontSize(element: HTMLElement | SVGElement, size: IconSize | ""): void {
+  if (size && size !== "lg" && size !== "sm" && size !== "xs") {
     element.style.fontSize = size.replace("x", "em");
   } else {
-    element.style.fontSize = undefined;
+    element.style.fontSize = "";
   }
 }
 

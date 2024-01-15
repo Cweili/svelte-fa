@@ -56,14 +56,16 @@ test("basic", async () => {
 
   expect(getFaLayersText("b").getAttribute("id")).toBe("b");
   expect(getFaLayersText("b").getAttribute("class")).toContain("class-b");
-  expect(getComputedStyle(getFaLayersText("b").querySelector("span"))["color"]).toBe(
+  expect(getComputedStyle(getFaLayersText("b").querySelector("span")!)["color"]).toBe(
     "rgb(0, 0, 255)",
   );
 });
 
 test("color", async () => {
   mountFaLayers({}, { color: "red" });
-  expect(getComputedStyle(getFaLayersText().querySelector("span"))["color"]).toBe("rgb(255, 0, 0)");
+  expect(getComputedStyle(getFaLayersText().querySelector("span")!)["color"]).toBe(
+    "rgb(255, 0, 0)",
+  );
   mountFaLayers({}, { color: undefined });
   expect(getFaLayersText().querySelector("span")?.getAttribute("style")).not.toContain("color:red");
 });
@@ -80,9 +82,9 @@ describe("size", () => {
     mountFaLayers({ size: "2x" }, { size: "2x" });
 
     const style = getComputedStyle(getFaLayers());
-    const styleText = getComputedStyle(getFaLayersText().querySelector("span"));
-    expect(style["font-size"]).toBe("2em");
-    expect(styleText["font-size"]).toBe("2em");
+    const styleText = getComputedStyle(getFaLayersText().querySelector("span")!);
+    expect(style.getPropertyValue("font-size")).toBe("2em");
+    expect(styleText.getPropertyValue("font-size")).toBe("2em");
   });
 
   test("lg", async () => {
