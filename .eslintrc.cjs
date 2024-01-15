@@ -26,6 +26,9 @@ module.exports = {
       parserOptions: {
         parser: "@typescript-eslint/parser",
       },
+      rules: {
+        "svelte/no-inline-styles": "error",
+      },
     },
   ],
 };
