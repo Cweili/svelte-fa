@@ -97,8 +97,8 @@ describe("size", () => {
     mountFa({
       size: "2x",
     });
-    const style = getFa().getAttribute("style");
-    expect(style).toBe("font-size:2em");
+    const style = getComputedStyle(getFa());
+    expect(style["font-size"]).toBe("2em");
   });
 
   test("lg", async () => {
