@@ -23,6 +23,7 @@
   <a href="https://fontawesome.com/icons" target="_blank">FontAwesome icons</a>
 </div>
 <div class="shadow-sm p-3 mb-3 rounded">
+  <!-- eslint-disable-next-line svelte/no-inline-styles -->
   <div style="font-size: 3em; color: tomato">
     <Fa icon={faFlag} />
   </div>
