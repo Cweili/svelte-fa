@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getFontSize } from "./utils.js";
+  import { setCutomFontSize } from "./utils.js";
   import type { IconSize, PullDir } from "./types.js";
 
   let clazz = "";
@@ -9,10 +9,11 @@
   export let size: IconSize | "" = "";
   export let pull: PullDir | undefined = undefined;
 
-  $: fontSize = getFontSize(size);
-  $: fullStyle = (fontSize ? `font-size:${fontSize}` : "") + (style ? `; ${style}` : "");
+  let containerElement: HTMLElement;
+  $: containerElement && size && setCutomFontSize(containerElement, size);
 </script>
 
+<!-- eslint-disable svelte/no-inline-styles -- Only styles passed to this component should be included -->
 <span
   {id}
   class="svelte-fa-layers svelte-fa-base svelte-fa-fw {clazz}"
@@ -21,8 +22,10 @@
   class:svelte-fa-size-lg={size === "lg"}
   class:svelte-fa-size-sm={size === "sm"}
   class:svelte-fa-size-xs={size === "xs"}
-  style={fullStyle}
+  bind:this={containerElement}
+  style={style !== "" ? style : null}
 >
+  <!-- eslint-enable -->
   <slot />
 </span>
 
