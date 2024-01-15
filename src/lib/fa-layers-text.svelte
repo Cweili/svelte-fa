@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getFontSize, getTransform } from "./utils.js";
+  import { getTransform, setCutomFontSize } from "./utils.js";
   import type { FlipDir, IconSize } from "./types.js";
 
   let clazz = "";
@@ -15,13 +15,12 @@
   export let rotate: number | string = "";
   export let flip: FlipDir | undefined = undefined;
 
+  let containerElement: HTMLElement;
+  $: containerElement && size && setCutomFontSize(containerElement, size);
+
   $: transform = getTransform(scale, translateX, translateY, rotate, flip, 1, "em", "deg");
-  $: fontSize = getFontSize(size);
   $: fullStyle =
-    `transform: ${transform}` +
-    (color ? `; color:${color}` : "") +
-    (fontSize ? `; font-size:${fontSize}` : "") +
-    (style ? `; ${style}` : "");
+    `transform: ${transform}` + (color ? `; color:${color}` : "") + (style ? `; ${style}` : "");
 </script>
 
 <span {id} class="svelte-fa-layers-text {clazz}">
@@ -30,6 +29,7 @@
     class:svelte-fa-size-lg={size === "lg"}
     class:svelte-fa-size-sm={size === "sm"}
     class:svelte-fa-size-xs={size === "xs"}
+    bind:this={containerElement}
     style={fullStyle}
   >
     <slot />

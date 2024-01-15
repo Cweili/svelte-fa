@@ -78,9 +78,9 @@ describe("size", () => {
     mountFaLayers({ size: "2x" }, { size: "2x" });
 
     const style = getComputedStyle(getFaLayers());
-    const styleText = getFaLayersText().querySelector("span")?.getAttribute("style");
+    const styleText = getComputedStyle(getFaLayersText().querySelector("span"));
     expect(style["font-size"]).toBe("2em");
-    expect(styleText).toContain("font-size:2em");
+    expect(styleText["font-size"]).toBe("2em");
   });
 
   test("lg", async () => {
