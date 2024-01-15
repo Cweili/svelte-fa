@@ -223,17 +223,17 @@ const theme = {
         </a>
     </td>
     <td align="center">
-        <a href="https://github.com/msanguineti">
-            <img src="https://avatars.githubusercontent.com/u/19243840?v=4" width="100;" alt="msanguineti"/>
-            <br />
-            <sub><b>Mirco Sanguineti</b></sub>
-        </a>
-    </td>
-    <td align="center">
         <a href="https://github.com/theodorejb">
             <img src="https://avatars.githubusercontent.com/u/3053271?v=4" width="100;" alt="theodorejb"/>
             <br />
             <sub><b>Theodore Brown</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/msanguineti">
+            <img src="https://avatars.githubusercontent.com/u/19243840?v=4" width="100;" alt="msanguineti"/>
+            <br />
+            <sub><b>Mirco Sanguineti</b></sub>
         </a>
     </td></tr>
 <tr>
