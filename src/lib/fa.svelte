@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { IconDefinition } from "@fortawesome/fontawesome-common-types";
-  import { getFontSize, getTransform } from "./utils.js";
+  import { getTransform, setCutomFontSize } from "./utils.js";
   import type { FlipDir, IconSize, PullDir } from "./types.js";
 
   let clazz = "";
@@ -31,14 +31,16 @@
   export let secondaryOpacity: number | string = 0.4;
   export let swapOpacity = false;
 
+  let svgElement: HTMLElement;
+  $: svgElement && size && setCutomFontSize(svgElement, size);
+
   $: i = (icon && icon.icon) || [0, 0, "", [], ""];
 
   $: transform = getTransform(scale, translateX, translateY, rotate, flip, 512);
-  $: fontSize = getFontSize(size);
-  $: fullStyle = (fontSize ? `font-size:${fontSize}` : "") + (style ? `; ${style}` : "");
 </script>
 
 {#if i[4]}
+  <!-- eslint-disable svelte/no-inline-styles -- Only styles passed to this component should be included -->
   <svg
     id={id || undefined}
     class="svelte-fa svelte-fa-base {clazz}"
@@ -50,12 +52,14 @@
     class:svelte-fa-pull-left={pull === "left"}
     class:svelte-fa-pull-right={pull === "right"}
     class:spin
-    style={fullStyle}
+    bind:this={svgElement}
+    style={style !== "" ? style : null}
     viewBox="0 0 {i[0]} {i[1]}"
     aria-hidden="true"
     role="img"
     xmlns="http://www.w3.org/2000/svg"
   >
+    <!-- eslint-enable -->
     <g transform="translate({i[0] / 2} {i[1] / 2})" transform-origin="{i[0] / 4} 0">
       <g {transform}>
         {#if typeof i[4] == "string"}
