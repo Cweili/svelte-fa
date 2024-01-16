@@ -1,16 +1,16 @@
 <script lang="ts">
   import type { IconDefinition } from "@fortawesome/fontawesome-common-types";
-  import { getTransform, setCutomFontSize } from "./utils.js";
+  import { getTransform, setCustomFontSize } from "./utils.js";
   import type { FlipDir, IconSize, PullDir } from "./types.js";
 
-  let clazz = "";
+  let clazz: string | undefined = undefined;
   export { clazz as class };
-  export let id = "";
-  export let style = "";
+  export let id: string | undefined = undefined;
+  export let style: string | undefined = undefined;
 
   export let icon: IconDefinition;
-  export let size: IconSize | "" = "";
-  export let color = "";
+  export let size: IconSize | undefined = undefined;
+  export let color: string | undefined = undefined;
 
   export let fw = false;
   export let pull: PullDir | undefined = undefined;
@@ -18,7 +18,7 @@
   export let scale: number | string = 1;
   export let translateX: number | string = 0;
   export let translateY: number | string = 0;
-  export let rotate: number | string = "";
+  export let rotate: number | string | undefined = undefined;
   export let flip: FlipDir | undefined = undefined;
 
   export let spin = false;
@@ -32,7 +32,7 @@
   export let swapOpacity = false;
 
   let svgElement: HTMLElement | SVGElement;
-  $: svgElement && size && setCutomFontSize(svgElement, size);
+  $: svgElement && size && setCustomFontSize(svgElement, size);
 
   $: i = (icon && icon.icon) || [0, 0, "", [], ""];
 
@@ -42,7 +42,7 @@
 {#if i[4]}
   <!-- eslint-disable svelte/no-inline-styles -- Only styles passed to this component should be included -->
   <svg
-    id={id || undefined}
+    {id}
     class="svelte-fa svelte-fa-base {clazz}"
     class:pulse
     class:svelte-fa-size-lg={size === "lg"}
@@ -53,7 +53,7 @@
     class:svelte-fa-pull-right={pull === "right"}
     class:spin
     bind:this={svgElement}
-    style={style !== "" ? style : null}
+    {style}
     viewBox="0 0 {i[0]} {i[1]}"
     aria-hidden="true"
     role="img"

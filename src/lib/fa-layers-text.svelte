@@ -1,22 +1,22 @@
 <script lang="ts">
-  import { getTransform, setCutomFontSize } from "./utils.js";
+  import { getTransform, setCustomFontSize } from "./utils.js";
   import type { FlipDir, IconSize } from "./types.js";
 
-  let clazz = "";
+  let clazz: string | undefined = undefined;
   export { clazz as class };
-  export let id = "";
-  export let style = "";
-  export let size: IconSize | "" = "";
+  export let id: string | undefined = undefined;
+  export let style: string | undefined = undefined;
+  export let size: IconSize | undefined = undefined;
   export let color = "";
 
   export let scale: number | string = 1;
   export let translateX: number | string = 0;
   export let translateY: number | string = 0;
-  export let rotate: number | string = "";
+  export let rotate: number | undefined = undefined;
   export let flip: FlipDir | undefined = undefined;
 
   let containerElement: HTMLElement;
-  $: containerElement && size && setCutomFontSize(containerElement, size);
+  $: containerElement && size && setCustomFontSize(containerElement, size);
   $: containerElement && color && (containerElement.style.color = color);
   $: transform = getTransform(scale, translateX, translateY, rotate, flip, 1, "em", "deg");
   $: containerElement && transform && (containerElement.style.transform = transform);

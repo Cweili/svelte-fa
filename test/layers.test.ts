@@ -2,7 +2,7 @@ import { describe, expect, test, afterEach } from "vitest";
 import { render, screen, cleanup, configure } from "@testing-library/svelte";
 import type { ComponentProps } from "svelte";
 
-import { FaLayers, FaLayersText } from "./lib/index.js";
+import { FaLayers, FaLayersText } from "../src/lib/index.js";
 
 configure({ testIdAttribute: "id" });
 afterEach(cleanup);

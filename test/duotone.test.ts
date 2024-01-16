@@ -3,7 +3,7 @@ import { expect, test, afterEach } from "vitest";
 // @ts-expect-error No typings available
 import { fasFlag, fadFlag, fadInfo } from "@cweili/fa-test-util";
 import { render, screen, cleanup } from "@testing-library/svelte";
-import Fa from "./lib/index.js";
+import Fa from "../src/lib/index.js";
 
 function mountFa(props: Partial<ComponentProps<Fa>>) {
   cleanup();

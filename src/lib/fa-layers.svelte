@@ -1,16 +1,16 @@
 <script lang="ts">
-  import { setCutomFontSize } from "./utils.js";
+  import { setCustomFontSize } from "./utils.js";
   import type { IconSize, PullDir } from "./types.js";
 
-  let clazz = "";
+  let clazz: string | undefined = undefined;
   export { clazz as class };
-  export let id = "";
-  export let style = "";
-  export let size: IconSize | "" = "";
+  export let id: string | undefined = undefined;
+  export let style: string | undefined = undefined;
+  export let size: IconSize | undefined = undefined;
   export let pull: PullDir | undefined = undefined;
 
   let containerElement: HTMLElement;
-  $: containerElement && size && setCutomFontSize(containerElement, size);
+  $: containerElement && size && setCustomFontSize(containerElement, size);
 </script>
 
 <!-- eslint-disable svelte/no-inline-styles -- Only styles passed to this component should be included -->
@@ -23,7 +23,7 @@
   class:svelte-fa-size-sm={size === "sm"}
   class:svelte-fa-size-xs={size === "xs"}
   bind:this={containerElement}
-  style={style !== "" ? style : null}
+  {style}
 >
   <!-- eslint-enable -->
   <slot />

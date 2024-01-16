@@ -1,6 +1,6 @@
 import type { IconSize } from "./types.js";
 
-export function setCutomFontSize(element: HTMLElement | SVGElement, size: IconSize | ""): void {
+export function setCustomFontSize(element: HTMLElement | SVGElement, size?: IconSize): void {
   if (size && size !== "lg" && size !== "sm" && size !== "xs") {
     element.style.fontSize = size.replace("x", "em");
   } else {
@@ -12,8 +12,8 @@ export function getTransform(
   scale: number | string,
   translateX: number | string,
   translateY: number | string,
-  rotate: number | string,
-  flip: string | undefined,
+  rotate?: number | string,
+  flip?: string | undefined,
   translateTimes = 1,
   translateUnit = "",
   rotateUnit = "",

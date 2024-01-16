@@ -20,7 +20,7 @@ jobs:
       - run: npm run check
       - run: npm run lint
       - run: npm run build
-      - run: npm test -- --coverage.enabled --coverage.include=src/lib/**
+      - run: npm test
 
       - uses: coverallsapp/github-action@master
         with:
