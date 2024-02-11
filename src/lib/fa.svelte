@@ -54,6 +54,10 @@
     class:spin
     bind:this={svgElement}
     {style}
+    style:--svelte-fa-primary-color={color || primaryColor || "currentColor"}
+    style:--svelte-fa-primary-opacity={swapOpacity != false ? secondaryOpacity : primaryOpacity}
+    style:--svelte-fa-secondary-color={color || secondaryColor || "currentColor"}
+    style:--svelte-fa-secondary-opacity={swapOpacity != false ? primaryOpacity : secondaryOpacity}
     viewBox="0 0 {i[0]} {i[1]}"
     aria-hidden="true"
     role="img"
@@ -65,21 +69,21 @@
         {#if typeof i[4] == "string"}
           <path
             d={i[4]}
-            fill={color || primaryColor || "currentColor"}
+            fill="var(--svelte-fa-primary-color)"
             transform="translate({i[0] / -2} {i[1] / -2})"
           />
         {:else}
           <!-- Duotone icons -->
           <path
             d={i[4][0]}
-            fill={secondaryColor || color || "currentColor"}
-            fill-opacity={swapOpacity != false ? primaryOpacity : secondaryOpacity}
+            fill="var(--svelte-fa-secondary-color)"
+            fill-opacity="var(--svelte-fa-secondary-opacity)"
             transform="translate({i[0] / -2} {i[1] / -2})"
           />
           <path
             d={i[4][1]}
-            fill={primaryColor || color || "currentColor"}
-            fill-opacity={swapOpacity != false ? secondaryOpacity : primaryOpacity}
+            fill="var(--svelte-fa-primary-color)"
+            fill-opacity="var(--svelte-fa-primary-opacity)"
             transform="translate({i[0] / -2} {i[1] / -2})"
           />
         {/if}
