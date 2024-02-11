@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { IconDefinition } from "@fortawesome/fontawesome-common-types";
-  import { getTransform, setCustomFontSize } from "./utils.js";
+  import { onMount } from "svelte";
+  import { getSymbolStoreCtx, getTransform, setCustomFontSize } from "./utils.js";
   import type { FlipDir, IconSize, PullDir } from "./types.js";
 
   let clazz: string | undefined = undefined;
@@ -37,6 +38,32 @@
   $: i = (icon && icon.icon) || [0, 0, "", [], ""];
 
   $: transform = getTransform(scale, translateX, translateY, rotate, flip, 512);
+
+  $: key = `${icon.prefix}|${icon.iconName}`;
+
+  const store = getSymbolStoreCtx();
+
+  onMount(() => {
+    if (store && icon) {
+      store.update(($store) => {
+        const saved = $store.get(key);
+        if (saved) $store.set(key, { icon, count: saved.count + 1 });
+        else $store.set(key, { icon, count: 1 });
+
+        return $store;
+      });
+
+      return () => {
+        store.update(($store) => {
+          const saved = $store.get(key);
+          if (saved && saved.count > 1) $store.set(key, { icon, count: saved.count - 1 });
+          else $store.delete(key);
+
+          return $store;
+        });
+      };
+    }
+  });
 </script>
 
 {#if i[4]}
@@ -54,6 +81,10 @@
     class:spin
     bind:this={svgElement}
     {style}
+    style:--svelte-fa-primary-color={color || primaryColor || "currentColor"}
+    style:--svelte-fa-primary-opacity={swapOpacity != false ? secondaryOpacity : primaryOpacity}
+    style:--svelte-fa-secondary-color={color || secondaryColor || "currentColor"}
+    style:--svelte-fa-secondary-opacity={swapOpacity != false ? primaryOpacity : secondaryOpacity}
     viewBox="0 0 {i[0]} {i[1]}"
     aria-hidden="true"
     role="img"
@@ -62,24 +93,26 @@
     <!-- eslint-enable -->
     <g transform="translate({i[0] / 2} {i[1] / 2})" transform-origin="{i[0] / 4} 0">
       <g {transform}>
-        {#if typeof i[4] == "string"}
+        {#if store}
+          <use href="#{key}"></use>
+        {:else if typeof i[4] == "string"}
           <path
             d={i[4]}
-            fill={color || primaryColor || "currentColor"}
+            fill="var(--svelte-fa-primary-color)"
             transform="translate({i[0] / -2} {i[1] / -2})"
           />
         {:else}
           <!-- Duotone icons -->
           <path
             d={i[4][0]}
-            fill={secondaryColor || color || "currentColor"}
-            fill-opacity={swapOpacity != false ? primaryOpacity : secondaryOpacity}
+            fill="var(--svelte-fa-secondary-color)"
+            fill-opacity="var(--svelte-fa-secondary-opacity)"
             transform="translate({i[0] / -2} {i[1] / -2})"
           />
           <path
             d={i[4][1]}
-            fill={primaryColor || color || "currentColor"}
-            fill-opacity={swapOpacity != false ? secondaryOpacity : primaryOpacity}
+            fill="var(--svelte-fa-primary-color)"
+            fill-opacity="var(--svelte-fa-primary-opacity)"
             transform="translate({i[0] / -2} {i[1] / -2})"
           />
         {/if}

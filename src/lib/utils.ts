@@ -1,3 +1,6 @@
+import type { IconDefinition } from "@fortawesome/fontawesome-common-types";
+import { getContext, setContext } from "svelte";
+import { writable, type Writable } from "svelte/store";
 import type { IconSize } from "./types.js";
 
 export function setCustomFontSize(element: HTMLElement | SVGElement, size?: IconSize): void {
@@ -48,4 +51,16 @@ export function getTransform(
     output += ` rotate(${rotate}${rotateUnit})`;
   }
   return output;
+}
+
+type SymbolStore = Writable<Map<string, { icon: IconDefinition; count: number }>>;
+const symbolStoreKey = Symbol("symbolStore");
+
+export function getSymbolStoreCtx() {
+  return getContext<SymbolStore | undefined>(symbolStoreKey);
+}
+
+export function setSymbolStoreCtx() {
+  const store = writable(new Map());
+  return setContext<SymbolStore>(symbolStoreKey, store);
 }

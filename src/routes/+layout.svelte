@@ -1,5 +1,8 @@
 <script lang="ts">
+  import { FaSymbols } from "$lib/index.js";
   import "../styles.scss";
 </script>
 
-<slot />
+<FaSymbols>
+  <slot />
+</FaSymbols>
