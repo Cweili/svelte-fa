@@ -197,3 +197,15 @@ test("spin", async () => {
   expect(classList.contains("spin")).toBeTruthy();
   expect(classList.contains("pulse")).toBeTruthy();
 });
+
+test("title", async () => {
+  const title = "Svelte FA’s test icon";
+  mountFa({
+    title,
+  });
+
+  const tag = await screen.findByText(title);
+  expect(tag).to.exist;
+  // For backward compatibility with SVG 1.1, according to MDN
+  expect(getFa().querySelector(":first-child")).toBe(tag);
+});

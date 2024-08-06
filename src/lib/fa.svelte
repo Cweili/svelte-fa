@@ -9,6 +9,7 @@
   export let style: string | undefined = undefined;
 
   export let icon: IconDefinition;
+  export let title: string = undefined;
   export let size: IconSize | undefined = undefined;
   export let color: string | undefined = undefined;
 
@@ -60,6 +61,9 @@
     xmlns="http://www.w3.org/2000/svg"
   >
     <!-- eslint-enable -->
+    {#if title}
+      <title>{title}</title>
+    {/if}
     <g transform="translate({i[0] / 2} {i[1] / 2})" transform-origin="{i[0] / 4} 0">
       <g {transform}>
         {#if typeof i[4] == "string"}
