@@ -1,6 +1,5 @@
 import type { ComponentProps } from "svelte";
 import { describe, expect, test, afterEach } from "vitest";
-// @ts-expect-error No typings available
 import { fasFlag, fasInfo } from "@cweili/fa-test-util";
 import { render, screen, cleanup } from "@testing-library/svelte";
 import Fa from "../src/lib/index.js";
@@ -205,6 +204,7 @@ test("title", async () => {
   });
 
   const tag = await screen.findByText(title);
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   expect(tag).to.exist;
   // For backward compatibility with SVG 1.1, according to MDN
   expect(getFa().querySelector(":first-child")).toBe(tag);

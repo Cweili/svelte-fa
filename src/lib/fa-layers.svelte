@@ -10,7 +10,9 @@
   export let pull: PullDir | undefined = undefined;
 
   let containerElement: HTMLElement;
-  $: containerElement && size && setCustomFontSize(containerElement, size);
+  $: if (containerElement && size) {
+    setCustomFontSize(containerElement, size);
+  }
 </script>
 
 <!-- eslint-disable svelte/no-inline-styles -- Only styles passed to this component should be included -->

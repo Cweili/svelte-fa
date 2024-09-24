@@ -33,7 +33,9 @@
   export let swapOpacity = false;
 
   let svgElement: HTMLElement | SVGElement;
-  $: svgElement && size && setCustomFontSize(svgElement, size);
+  $: if (svgElement && size) {
+    setCustomFontSize(svgElement, size);
+  }
 
   $: i = (icon && icon.icon) || [0, 0, "", [], ""];
 

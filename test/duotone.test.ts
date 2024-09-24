@@ -1,6 +1,5 @@
 import type { ComponentProps } from "svelte";
 import { expect, test, afterEach } from "vitest";
-// @ts-expect-error No typings available
 import { fasFlag, fadFlag, fadInfo } from "@cweili/fa-test-util";
 import { render, screen, cleanup } from "@testing-library/svelte";
 import Fa from "../src/lib/index.js";
