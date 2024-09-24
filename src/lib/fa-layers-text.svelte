@@ -16,10 +16,17 @@
   export let flip: FlipDir | undefined = undefined;
 
   let containerElement: HTMLElement;
-  $: containerElement && size && setCustomFontSize(containerElement, size);
-  $: containerElement && color && (containerElement.style.color = color);
+
   $: transform = getTransform(scale, translateX, translateY, rotate, flip, 1, "em", "deg");
-  $: containerElement && transform && (containerElement.style.transform = transform);
+  $: if (containerElement) {
+    containerElement.style.transform = transform;
+  }
+  $: if (containerElement && size) {
+    setCustomFontSize(containerElement, size);
+  }
+  $: if (containerElement && color) {
+    containerElement.style.color = color;
+  }
 </script>
 
 <span {id} class="svelte-fa-layers-text {clazz}">
