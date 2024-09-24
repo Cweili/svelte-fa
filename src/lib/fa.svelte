@@ -9,7 +9,7 @@
   export let style: string | undefined = undefined;
 
   export let icon: IconDefinition;
-  export let title: string = undefined;
+  export let title: string | undefined = undefined;
   export let size: IconSize | undefined = undefined;
   export let color: string | undefined = undefined;
 
