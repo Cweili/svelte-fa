@@ -58,7 +58,7 @@
     bind:this={svgElement}
     {style}
     viewBox="0 0 {i[0]} {i[1]}"
-    aria-hidden="true"
+    aria-hidden={title === undefined}
     role="img"
     xmlns="http://www.w3.org/2000/svg"
   >

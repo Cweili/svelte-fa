@@ -20,6 +20,7 @@
   let pull = ["None", "Left", "Right"];
   let flip = ["None", "Horizontal", "Vertical", "Both"];
   let icons = [faFlag, faHome, faCog, faSeedling];
+  let iconsTitles = ["flag", "home", "cog", "seedling"];
 
   function setPull(value: string) {
     let pull: "left" | "right" | undefined = undefined;
@@ -160,7 +161,7 @@
       </form>
     </div>
     <div class="col-md row">
-      {#each icons as icon}
+      {#each icons as icon, i}
         <div class="col text-center hue">
           <Fa
             {icon}
@@ -168,6 +169,7 @@
             pull={model.pull}
             rotate={model.rotate}
             size={`${model.size}x`}
+            title={iconsTitles[i]}
           />
         </div>
       {/each}
