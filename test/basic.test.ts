@@ -32,6 +32,7 @@ test("basic", async () => {
   });
 
   expect(getFa().getAttribute("id")).toBe("a");
+  expect(getFa().getAttribute("aria-hidden")).toBe("true");
   expect(getFa().getAttribute("class")).toContain("class-a");
   expect(getFa().getAttribute("style")).toContain("color:red");
   expect(getFa().querySelector("path")?.getAttribute("d")).toBe(fasFlag.icon[4]);
@@ -203,6 +204,7 @@ test("title", async () => {
     title,
   });
 
+  expect(getFa().getAttribute("aria-hidden")).toBe("false");
   const tag = await screen.findByText(title);
   // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   expect(tag).to.exist;
