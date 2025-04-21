@@ -71,7 +71,7 @@
     "jsdom": "^25.0.1",
     "prettier": "^3.3.3",
     "prettier-plugin-svelte": "^3.2.6",
-    "publint": "^0.2.11",
+    "publint": "^0.3.12",
     "sass": "1.83.0",
     "svelte": "^4.2.19",
     "svelte-check": "^4.0.2",
