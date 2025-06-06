@@ -64,7 +64,7 @@
     "@vitest/coverage-v8": "^2.1.1",
     "bootstrap": "^5.3.2",
     "eslint": "^9.11.0",
-    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-svelte": "^2.44.0",
     "globals": "^16.2.0",
     "highlight.js": "^11.9.0",
