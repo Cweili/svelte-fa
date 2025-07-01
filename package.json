@@ -65,7 +65,7 @@
     "bootstrap": "^5.3.2",
     "eslint": "^9.11.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-svelte": "^2.44.0",
+    "eslint-plugin-svelte": "^3.10.1",
     "globals": "^16.2.0",
     "highlight.js": "^11.9.0",
     "jsdom": "^25.0.1",
