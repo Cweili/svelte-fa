@@ -46,21 +46,14 @@ npm install svelte-fa -D
 
 ### Work with [SvelteKit][sveltekit]/[Vite][vite]
 
-You may need to import the component explicitly as below:
+Import the component and icons from their package entry points:
 
 ```js
-import Fa from 'svelte-fa/dist/fa.svelte'
-import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons/index.es'
+import Fa from 'svelte-fa'
+import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
 ```
 
-When using typescript with SvelteKit/Vite, you may also needed to add type definitions that redirect to the non-`index.es` export:
-
-```ts
-// app.d.ts
-declare module '@fortawesome/pro-solid-svg-icons/index.es' {
-  export * from '@fortawesome/pro-solid-svg-icons';
-}
-```
+The `svelte-fa/dist/fa.svelte` subpath is not exported. Use `svelte-fa` instead.
 
 ## Usage
 

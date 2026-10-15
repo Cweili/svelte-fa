@@ -4,12 +4,8 @@ const codes = {
     `npm install @fortawesome/free-solid-svg-icons
 npm install @fortawesome/free-brands-svg-icons`,
     "npm install svelte-fa -D",
-    `import Fa from 'svelte-fa/dist/fa.svelte'
-import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons/index.es'`,
-    `// app.d.ts
-declare module '@fortawesome/pro-solid-svg-icons/index.es' {
-  export * from '@fortawesome/pro-solid-svg-icons';
-}`,
+    `import Fa from 'svelte-fa'
+import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'`,
   ],
   basicUse: [
     `<\

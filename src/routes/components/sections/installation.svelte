@@ -25,11 +25,10 @@
       href="https://www.npmjs.com/package/vite"
       target="_blank">Vite</a
     > user:</strong
-  > You may need to import the component explicitly as below:
+  > Import the component and icons from their package entry points:
 </div>
 <DocsCode code={codes.installation[3]} lang="js" />
 <div class="shadow-sm p-3 mb-3 rounded">
-  When using typescript with SvelteKit/Vite, you may also needed to add type definitions that
-  redirect to the non-index.es export:
+  The <code>svelte-fa/dist/fa.svelte</code> subpath is not exported. Use <code>svelte-fa</code>
+  instead.
 </div>
-<DocsCode code={codes.installation[4]} lang="js" />
